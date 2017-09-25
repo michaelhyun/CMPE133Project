@@ -1,8 +1,15 @@
-var Express = require('express')
+const express = require('express')
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const morgan = require('morgan')
 
-var app = Express()
+const app = Express()
 
-app.listen(3000, function() {
-	console.log("Hello world")
-}
+app.use(morgan('combine'))
+app.use(bodyParser.json())
+app.use(cors())
+
+app.listen(process.env.PORT || 3000, function() {
+   console.log("Hello world")
+   }
 )
