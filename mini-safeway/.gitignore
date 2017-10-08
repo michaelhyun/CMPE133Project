@@ -14,3 +14,7 @@ selenium-debug.log
 *.ntvs*
 *.njsproj
 *.sln
+
+# Vim edited files
+*.swap
+*~

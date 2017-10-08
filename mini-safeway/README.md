@@ -1,6 +1,6 @@
-# vue-mini-safeway
+# mini-safeway
 
-> A Vue.js project
+> CMPE133 Group 8 Project
 
 ## Build Setup
 
