@@ -82,7 +82,7 @@
         placeholder="Search"
       ></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn icon to="/cart">
+      <v-btn icon to="/productpage">
         <v-icon>shopping_cart</v-icon>
       </v-btn>
       <v-btn icon to="/register">

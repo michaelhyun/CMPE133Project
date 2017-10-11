@@ -5,6 +5,7 @@ import Profile from '@/views/users/profile'
 import Register from '@/views/users/register'
 import Cart from '@/views/items/cart'
 import Items from '@/views/items/items'
+import ProductPage from '@/views/items/productpage'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/items',
       name: 'Items',
       component: Items
+    },
+    {
+      path: '/productpage',
+      name: 'Product',
+      component: ProductPage
     }
   ],
   mode: 'history'
