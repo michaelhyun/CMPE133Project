@@ -6,6 +6,7 @@ import Register from '@/views/users/register'
 import Cart from '@/views/items/cart'
 import Items from '@/views/items/items'
 import ProductPage from '@/views/items/productpage'
+import RecommendedItems from '@views/items/recItems'
 
 Vue.use(Router)
 
