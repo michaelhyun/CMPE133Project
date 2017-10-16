@@ -6,7 +6,7 @@ import Register from '@/views/users/register'
 import Cart from '@/views/items/cart'
 import Items from '@/views/items/items'
 import ProductPage from '@/views/items/productpage'
-import RecommendedItems from '@views/items/recItems'
+import RecommendedItems from '@/views/items/recItems'
 
 Vue.use(Router)
 
@@ -42,13 +42,11 @@ export default new Router({
       name: 'Items',
       component: Items
     },
-
     {
       path: '/recItems',
-      name: 'RecommendedItems',
+      name: 'recItems',
       component: RecommendedItems
     },
-
     {
       path: '/productpage',
       name: 'Product',
