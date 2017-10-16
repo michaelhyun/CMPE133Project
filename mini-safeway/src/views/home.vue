@@ -4,7 +4,7 @@
       <h2 class="red--text" style="text-align: center">Welcome to MiniSafeway</h2>
       <v-layout justify-center >
         <v-flex xs12 lg10>
-          <v-carousel>
+          <v-carousel hide-controls>
             <v-carousel-item v-for="(item,i) in items" v-bind:src="item.src" :key="i"></v-carousel-item>
           </v-carousel>
         </v-flex>
