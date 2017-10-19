@@ -70,24 +70,27 @@
   // import {db} from '../../../firebase'
   export default {
     data: () => ({
+      // Hard code this for now, so the view has a model to display.
       product: {
-        // Hard code this for now.
-        //
+        name: '',
+        price: '',
+        description: ''
         // As of now, the current design for a product is:
+        //
         // product: {
         //   name: String
         //   price: String
         //   description: String
         // }
         //
-        // The final version of this should be empty because firebase will handle the value of this model.
+        // The final version of this should be empty because firebase will handle the values for this model.
       }
     }),
     props: ['productName']
     // ,
     // firebase: {
     //   product: {
-    //     source: db.ref('endpoint-to-product), // ie. db.ref('product/product-name')
+    //     source: db.ref('endpoint-to-product), // ie. db.ref('product/[productName]'), where productName is acquired as a prop
     //     cancelCallback (err) {
     //       console.error(err)
     //     }
