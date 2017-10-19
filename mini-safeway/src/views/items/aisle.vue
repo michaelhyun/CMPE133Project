@@ -1,7 +1,7 @@
 <template>
   <v-content>
 
-  	<v-container grid-list-xl>
+    <v-container grid-list-xl>
       <v-layout row wrap align-center>
 
         <v-flex xs12 md4>
@@ -49,8 +49,8 @@
             </v-card-title>
 
             <v-card-actions>
-          	<v-btn flat color="red">Add To Cart</v-btn>
-          	</v-card-actions>
+            <v-btn flat color="red">Add To Cart</v-btn>
+            </v-card-actions>
             
             <v-card-text>
               More blah bla blablabla bla bla  blablabla blabla bla  blabla blabla bla
@@ -126,7 +126,7 @@
   <div class="text-xs-center">
     <v-pagination :length="4" v-model="page"></v-pagination>
   </div>
-</template>	
+</template> 
 
     </v-container>
    </v-container>
@@ -136,6 +136,7 @@
 </template>
 <script>
   export default {
+    // import {db} from '../../../firebase'
     data: () => ({
       showMenu: false,
       items: [

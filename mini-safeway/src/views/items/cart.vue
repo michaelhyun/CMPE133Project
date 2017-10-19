@@ -3,7 +3,7 @@
     <v-container fluid fill-height>
       <v-layout justify-center align-center >
         <v-flex xs12 sm8>
-          ITEMS
+          CART
         </v-flex>
       </v-layout>
     </v-container>
