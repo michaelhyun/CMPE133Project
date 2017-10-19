@@ -150,8 +150,40 @@
       ]
     })
   }
-</script>
-<template>
-</template>
-<script>
+  // // import {db} from '../../../firebase'
+  // export default {
+  //   data: () => ({
+  //     // Hard code this for now, so the view has a model to display.
+  //     aisle: {
+  //       products: [
+  //                  'aisle1',
+  //                  'aisle2',
+  //                  'aisle3',
+  //                  ...etc,
+  //                  ]
+  //     }
+  //     // As of now, the current design for a product is:
+  //     //
+  //     // aisle: {
+  //     //   products: Array
+  //     // }
+  //     //
+  //     // where Array is an array of Strings that contain product names.
+  //     //
+  //     // The final version of this should be empty because firebase will handle the values for this model.
+  //     }
+  //   }),
+  //   props: ['aisleName']
+  //   // ,
+  //   // firebase: {
+  //   //   aisle: {
+  //   //     source: db.ref('endpoint-to-aisle), // ie. db.ref('aisle/[aisleName]'), where aisleName is acquired as a prop
+  //   //     cancelCallback (err) {
+  //   //       console.error(err)
+  //   //     }
+  //   //   }
+  //   // }
+  // }
+  
+  // PS: To comment or uncomment multiple lines of code using Sublime, highlight all lines you want to comment, then hit ctrl + '/'.
 </script>
