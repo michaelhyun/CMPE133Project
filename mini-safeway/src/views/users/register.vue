@@ -47,19 +47,17 @@
               :rules="rules.email"
             ></v-text-field>
           </v-flex>
-          
           <v-flex xs12 sm6>
             <v-text-field
               name="input-10-2"
               label="Enter your password"
               hint="At least 8 characters"
               min="8"
-              :append-icon="e3 ? 'visibility' : 'visibility_off'"
-              :append-icon-cb="() => (e3 = !e3)"
-              value=""
+              :append-icon="pass ? 'visibility' : 'visibility_on'"
+              :append-icon-cb="() => (e1 = !e1)"
               type="password"
               class="input-group--focused"
-              :type="e3 ? 'password' : 'text'"
+              :type="e1 ? 'password' : 'text'"
             ></v-text-field>
           </v-flex>
            <v-flex xs12 sm6>
@@ -68,26 +66,22 @@
               label="Confirm your password"
               hint="At least 8 characters"
               min="8"
-              :append-icon="e4 ? 'visibility' : 'visibility_off'"
-              :append-icon-cb="() => (e4 = !e4)"
-              value=""
+              :append-icon="e2 ? 'visibility' : 'visibility_on'"
+              :append-icon-cb="() => (e2 = !e2)"
               type="password"
-              class="input-group--focused"
-              :type="e4 ? 'password' : 'text'"
+              :type="e2 ? 'password' : 'text'"
             ></v-text-field>
           </v-flex>
-
            <v-flex xs12 sm5>
             <v-text-field
               name="input-3-3"
-              label="Hint Text"
-              value="555-696-1234"
-              prepend-icon="phone"
+              label="Phone number or club card number"
+              hint="Club card number can be found on the front of your Safeway Card"
               single-line
             ></v-text-field>
           </v-flex>
           <v-flex xs12 sm3>
-            <v-select v-bind:items="[{ text: 'Mobile' }, { text: 'Home Phone' }]" label="Type"></v-select>
+            <v-select v-bind:items="[{ text: 'Club Card' }, { text: 'Phone Number' }]" label="Type"></v-select>
           </v-flex>
            <v-flex xs12>
           	<span class="title">Delivery Information</span>
