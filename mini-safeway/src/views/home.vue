@@ -18,7 +18,9 @@
           v-for="card in cards"
           :key="card.title"
         >
-          <v-card>
+          <v-card
+            @click=""
+            :to="'/aisles/' + card.title">
             <v-card-media
               :src="card.src"
               height="200px"
