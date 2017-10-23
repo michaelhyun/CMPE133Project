@@ -4,28 +4,23 @@
     <v-container grid-list-xl>
                 <v-layout row wrap align-center>
                   <v-flex xs12 md4>
+                    <img height="500px" v-bind:src="product.image">
                     <v-card>
-                      	<v-card-media src="https://www.riteaid.com/shop/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/0/2/028400147408.jpg"]] height="400px">
-        				</v-card-media>
-                         <v-card-title primary-title class="layout justify-center">
-                        <div class="headline text-xs-center">
-                        	<v-subheader class = "display-1 font-weight: 200" v-if="product.name">
-                			{{ product.name }}
-              				</v-subheader>
-                       </div>
-                      </v-card-title>
-                     
-                    </v-card>
-                  </v-flex>
-                  <v-card>
-                    	 <v-card-text>
+                       <v-card-title primary-title class="layout justify-center">
+                           <div class="headline text-xs-center">
+                          <v-subheader class = "display-1 font-weight: 200" v-if="product.name">
+                      {{ product.name }}
+                      </v-subheader>
+                           </div>
+                        </v-card-title>
+                        <v-card-text>
                         <v-subheader v-if="product.description">
-                			{{ product.description }}
-              			</v-subheader>
+                      {{ product.description }}
+                    </v-subheader>
                       </v-card-text>
-                    </v-card>
-
-                  <v-flex xs12 md4>
+                     </v-card>
+                   </v-flex>
+                 <v-flex xs12 md4>
                     <v-card class="elevation-0 transparent">
                       <v-card-text class="text-xs-left">
                         <v-icon x-large class="blue--text text--lighten-2">keyboard_arrow_left</v-icon>
@@ -46,7 +41,9 @@
                       <v-card-title primary-title class="layout justify-center">
                         <div class="headline">Quantity</div>
                       </v-card-title>
-
+                      <v-card-text>
+                        {{product.price}}
+                      </v-card-text>
                        <v-card-actions>
                   <v-btn flat color="red">Add To Cart</v-btn>
                       </v-card-actions>
@@ -76,7 +73,7 @@
       product: {
         name: 'Sunchips Garden Salsa Flavored Wholegrain Snacks - 7oz',
         price: '$4.00',
-        description: 'SUNCHIPS snacks are wavy, ripple-y squares full of whole-grain goodness. Grab a bag of SUNCHIPS multigrain snacks in your favorite flavor, and tell your taste buds to meet you at the corner of delicious and wholesome.',
+        description: '\nSUNCHIPS snacks are wavy, ripple-y squares full of whole-grain goodness. Grab a bag of SUNCHIPS multigrain snacks in your favorite flavor, and tell your taste buds to meet you at the corner of delicious and wholesome.',
         image: 'https://www.riteaid.com/shop/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/0/2/028400147408.jpg'
         // As of now, the current design for a product is:
         //
@@ -101,3 +98,4 @@
     // }
   }
 </script>
+
