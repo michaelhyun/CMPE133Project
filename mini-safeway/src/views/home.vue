@@ -42,13 +42,6 @@
   export default {
     data () {
       return {
-        cards: [
-          { title: 'Baby Care', src: 'https://www.skymetweather.com/themes/skymet/images/gallery/toplists/10-Must-Follow-Baby-Care-Tips-During-Monsoon/3.jpg', flex: 4, flex2: 12 },
-          { title: 'Beverages', src: 'http://www.huntrextrading.com/brands/38/products/11/soft-drinks4-1260x840.jpg', flex: 4, flex2: 12 },
-          { title: 'Bread & Bakery', src: 'https://www.panerabread.com/foundation/menu/details/all-natural-white-bread-loaf.jpg/_jcr_content/renditions/all-natural-white-bread-loaf.desktop.jpeg', flex: 4, flex2: 12 },
-          { title: 'Breakfast & Cereal', src: 'http://www.todayifoundout.com/wp-content/uploads/2016/05/breakfast-cereal.png', flex: 4, flex2: 12 },
-          { title: 'Canned Goods & Soups', src: 'http://solvehungertoday.org/wp-content/uploads/2016/02/canned-foods-pressrelease.jpg', flex: 4, flex2: 12 }
-        ],
         items: [
           {
             src: 'https://images-na.ssl-images-amazon.com/images/I/61Z2neTKPuL._SL1024_.jpg'
@@ -63,6 +56,11 @@
             src: 'https://www.shipt.com/wp-content/uploads/2016/03/IMG_8484-1024x720.jpg'
           }
         ]
+      }
+    },
+    computed: {
+      cards () {
+        return this.$store.getters.aisles
       }
     }
   }
