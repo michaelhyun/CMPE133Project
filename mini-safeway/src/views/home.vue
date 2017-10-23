@@ -1,11 +1,37 @@
 <template>
   <v-content>
-    <v-container fluid fill-height>
-      <v-layout justify-center align-center >
-        <v-flex xs12 sm8>
-          <v-carousel>
+    <v-container fluid >
+      <h2 class="red--text text--darken-2" style="text-align: center;">Welcome to MiniSafeway</h2>
+      <v-layout justify-center >
+        <v-flex xs12 lg10>
+          <v-carousel hide-controls>
             <v-carousel-item v-for="(item,i) in items" v-bind:src="item.src" :key="i"></v-carousel-item>
           </v-carousel>
+        </v-flex>
+      </v-layout>
+    </v-container>
+    <v-container fluid grid-list-md class="grey lighten-4">
+      <h4 class="red--text text--darken-2" style="text-align: center">EXPLORE OUR AISLES</h4>
+      <v-layout row wrap>
+        <v-flex
+          v-bind="{ [`lg${card.flex}`]: true, [`xs${card.flex2}`]: true }"
+          v-for="card in cards"
+          :key="card.title"
+        >
+          <v-card>
+            <v-card-media
+              :src="card.src"
+              height="200px"
+            >
+              <v-container fill-height fluid>
+                <v-layout fill-height>
+                  <v-flex xs12 align-end flexbox>
+                    <span class="headline white--text" style="text-shadow: 1px 1px 1px #000000;" v-text="card.title"></span>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-card-media>
+          </v-card>
         </v-flex>
       </v-layout>
     </v-container>
@@ -16,6 +42,13 @@
   export default {
     data () {
       return {
+        cards: [
+          { title: 'Baby Care', src: 'https://www.skymetweather.com/themes/skymet/images/gallery/toplists/10-Must-Follow-Baby-Care-Tips-During-Monsoon/3.jpg', flex: 4, flex2: 12 },
+          { title: 'Beverages', src: 'http://www.huntrextrading.com/brands/38/products/11/soft-drinks4-1260x840.jpg', flex: 4, flex2: 12 },
+          { title: 'Bread & Bakery', src: 'https://www.panerabread.com/foundation/menu/details/all-natural-white-bread-loaf.jpg/_jcr_content/renditions/all-natural-white-bread-loaf.desktop.jpeg', flex: 4, flex2: 12 },
+          { title: 'Breakfast & Cereal', src: 'http://www.todayifoundout.com/wp-content/uploads/2016/05/breakfast-cereal.png', flex: 4, flex2: 12 },
+          { title: 'Canned Goods & Soups', src: 'http://solvehungertoday.org/wp-content/uploads/2016/02/canned-foods-pressrelease.jpg', flex: 4, flex2: 12 }
+        ],
         items: [
           {
             src: 'https://images-na.ssl-images-amazon.com/images/I/61Z2neTKPuL._SL1024_.jpg'
