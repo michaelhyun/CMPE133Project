@@ -9,7 +9,7 @@
     	height="80px" class="layout justify-center">
     </v-card-media>	
     <v-card-title primary-title class="layout justify-center">
-    <div class="headline text-xl-center">Organic Section</div>
+    <div class="headline text-xl-center">{{ aisle.title }}</div>
     </v-card-title>
     </v-flex>
     
@@ -182,7 +182,13 @@
         { title: 'Onion' },
         { title: 'Garlic' }
       ]
-    })
+    }),
+    props: ['title'],
+    computed: {
+      aisle () {
+        return this.$store.getters.aisle(this.title)
+      }
+    }
   }
   // // import {db} from '../../../firebase'
   // export default {

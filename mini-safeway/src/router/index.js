@@ -39,7 +39,7 @@ export default new Router({
       component: Items
     },
     {
-      path: '/aisle',
+      path: '/aisles/:title',
       name: 'Aisle',
       component: Aisle,
       props: true

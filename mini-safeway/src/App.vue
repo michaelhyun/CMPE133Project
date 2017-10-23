@@ -40,6 +40,7 @@
               v-for="(aisle, i) in aisles"
               :key="i"
               @click=""
+              :to="'/aisles/' + aisle.title"
             >
               <v-list-tile-action v-if="aisle.icon">
                 <v-icon>{{ aisle.icon }}</v-icon>

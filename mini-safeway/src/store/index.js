@@ -125,6 +125,13 @@ export const store = new Vuex.Store({
     aisles (state) {
       return state.aisles
     },
+    aisle (state) {
+      return (aisleTitle) => {
+        return state.aisles.find((aisle) => {
+          return aisle.title === aisleTitle
+        })
+      }
+    },
     products (state) {
       return state.products.sort((prodA, prodB) => {
         return prodA.title > prodB.title
