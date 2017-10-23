@@ -25,6 +25,7 @@
     "stylus-loader": "^3.0.1",
     "vue": "^2.4.2",
     "vue-router": "^2.7.0",
+    "vue-slider-component": "^2.4.3",
     "vuefire": "^1.4.4",
     "vuetify": "^0.16.1"
   },
