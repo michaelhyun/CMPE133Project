@@ -14,7 +14,7 @@
       <h4 class="red--text text--darken-2" style="text-align: center">EXPLORE OUR AISLES</h4>
       <v-layout row wrap>
         <v-flex
-          v-bind="{ [`lg${card.flex}`]: true, [`xs${card.flex2}`]: true }"
+          v-bind="{ [`lg4`]: true, [`xs12`]: true }"
           v-for="card in cards"
           :key="card.title"
         >
@@ -42,27 +42,12 @@
 
 <script>
   export default {
-    data () {
-      return {
-        items: [
-          {
-            src: 'https://images-na.ssl-images-amazon.com/images/I/61Z2neTKPuL._SL1024_.jpg'
-          },
-          {
-            src: 'https://farm1.static.flickr.com/501/19632759782_4c84e1a742_b.jpg'
-          },
-          {
-            src: 'http://truenaturetravels.com/wp-content/uploads/42_explore-1024x720.jpg'
-          },
-          {
-            src: 'https://www.shipt.com/wp-content/uploads/2016/03/IMG_8484-1024x720.jpg'
-          }
-        ]
-      }
-    },
     computed: {
       cards () {
         return this.$store.getters.aisles
+      },
+      items () {
+        return this.$store.getters.promotions
       }
     }
   }
