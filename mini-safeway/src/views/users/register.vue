@@ -22,7 +22,7 @@
           	</v-flex>
           	<v-flex xs12 sm6>
             <v-text-field
-              color="purple darken-2"
+              color="red darken-2"
               label="First name"
               required
               v-model="form.first"
@@ -31,7 +31,7 @@
           </v-flex>
           <v-flex xs12 sm6>
             <v-text-field
-              color="purple darken-2"
+              color="red darken-2"
               label="Last name"
               v-model="form.last"
               required
@@ -40,7 +40,7 @@
           </v-flex>
           <v-flex xs12 >
             <v-text-field
-              color="purple darken-2"
+              color="red darken-2"
               label="Email Address"
               required
               v-model="form.email"
@@ -53,11 +53,9 @@
               label="Enter your password"
               hint="At least 8 characters"
               min="8"
-              :append-icon="pass ? 'visibility' : 'visibility_on'"
               :append-icon-cb="() => (e1 = !e1)"
               type="password"
               class="input-group--focused"
-              :type="e1 ? 'password' : 'text'"
             ></v-text-field>
           </v-flex>
            <v-flex xs12 sm6>
@@ -66,10 +64,8 @@
               label="Confirm your password"
               hint="At least 8 characters"
               min="8"
-              :append-icon="e2 ? 'visibility' : 'visibility_on'"
               :append-icon-cb="() => (e2 = !e2)"
               type="password"
-              :type="e2 ? 'password' : 'text'"
             ></v-text-field>
           </v-flex>
            <v-flex xs12 sm5>
@@ -89,7 +85,7 @@
           <v-flex xs12 sm6>
           <v-text-field
             label="Address Line"
-            placeholder="Snowy Rock Pl"
+            placeholder="1 Washington Square"
             hint="Address must be less than 25 characters"
             :rules="[
               () => !!address || 'This field is required',
@@ -104,7 +100,7 @@
            </v-flex>
           <v-text-field
             label="City"
-            placeholder="El Paso"
+            placeholder="San Jose"
             :rules="[() => !!city || 'This field is required', this.addressCheck]"
             v-model="city"
             ref="city"
@@ -116,7 +112,7 @@
             :rules="[() => !!state || 'This field is required']"
             required
             ref="state"
-            placeholder="TX"
+            placeholder="CA"
           ></v-text-field>
           <v-text-field
             label="ZIP / Postal Code"
@@ -124,22 +120,9 @@
             :rules="[() => !!zip || 'This field is required']"
             v-model="zip"
             ref="zip"
-            placeholder="79938"
+            placeholder="95192"
           ></v-text-field>
           
-          <v-flex xs12>
-            <v-checkbox
-              color="green"
-              v-model="form.terms"
-            >
-              <div slot="label" @click.stop="">
-                Do you accept the
-                <a href="javascript:;" @click.stop="terms = true">terms</a>
-                and
-                <a href="javascript:;" @click.stop="conditions = true">conditions?</a>
-              </div>
-            </v-checkbox>
-          </v-flex>
         </v-layout>
       </v-container>
       <v-card-actions>
