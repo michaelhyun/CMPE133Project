@@ -1,102 +1,136 @@
 <template>
   <v-content>
-
-    <v-container grid-list-xl>
-      <v-layout row wrap align-center>
-
-        <v-flex xs12 md4>
-          <v-card class="elevation-0 transparent">
-    
-            <v-card-media src="https://www.riteaid.com/shop/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/0/2/028400147408.jpg"
-            height="500px">
-            </v-card-media>
-      
-            <v-card-text class="text-xs-center">
-            </v-card-text>
-
-            <v-card-title primary-title class="layout justify-center">
-            <div class="headline text-xs-center">Product Name</div>
-            </v-card-title>
-          
-            <v-card-text>
-              Product Description blablalbablablalba blablalba blablalba blablalbablablalba blablalba blablalbablablalba  
-              blablalba blablalbablablalbablablalba blablalbablablalbablablalba blablalba
-              blablalba blablalba blablalba bla  bblablabla bla blabla
-            </v-card-text>
-
-          </v-card>
-        </v-flex>
-        
-        <v-flex xs12 md4>
-          
-          <v-card class="elevation-0 transparent">
-            
-            <v-card-text class="text-xs-left">
-            <v-icon x-large class="blue--text text--lighten-2">keyboard_arrow_left</v-icon>
-            </v-card-text>
-
-            <v-card-text class="text-xs-center">
-              <v-text-field name="Quantity" value="1" class="input-group--focused">
-              </v-text-field>
-            </v-card-text>
-
-            <v-card-text class="text-xs-right">
-              <v-icon x-large class="blue--text text--lighten-2">keyboard_arrow_right</v-icon>
-            </v-card-text>
-            
-            <v-card-title primary-title class="layout justify-center">
-            <div class="headline">Quantity</div>
-            </v-card-title>
-
-            <v-card-actions>
-            <v-btn flat color="red">Add To Cart</v-btn>
-            </v-card-actions>
-            
-            <v-card-text>
-              More blah bla blablabla bla bla  blablabla blabla bla  blabla blabla bla
-              blablabla blabla bla  bla blablabla bla
-            </v-card-text>
   
-          </v-card>
-        </v-flex>
-
-      </v-layout>
-    </v-container>
   <v-container align-center>
     <v-layout align-center>
-      <v-card-title primary-title class="layout justify-center">
-      <div class="headline text-xs-center">Recommended Items</div>
-      </v-card-title>
+     
+    <v-flex>
+    <v-card-media src="https://www.soilassociation.org/media/10124/creditablepluscole.jpg?anchor=center&mode=crop&width=1903&height=479&rnd=131318177090000000"
+    	height="80px" class="layout justify-center">
+    </v-card-media>	
+    <v-card-title primary-title class="layout justify-center">
+    <div class="headline text-xl-center">Organic Section</div>
+    </v-card-title>
+    </v-flex>
+    
     </v-layout>
   </v-container>
 
-  <v-container grid-list-xl>
+  <v-container grid-list-xl	>
     <v-layout row wrap align-center>
 
-      <v-flex xs12 md4>
+      <v-flex xs12 md3>
         <v-card class="elevation-0 transparent">
-          <v-card-media src="https://parkseed.com/images/xxl/52503-pk-p1.jpg"
-          height="300px">
+          <v-card-media src="https://images-na.ssl-images-amazon.com/images/I/51YfRk88c9L._AA360_QL70_.jpg"
+          height="200px">
           </v-card-media>
+          <v-card-title primary-title class="layout justify-center">
+          <div class="text-xl-center">Blackberries, 6oz, $1.49 ($2.99/lb)</div>
+          </v-card-title>
+          <v-card-actions>
+          <v-btn flat color="red" class="layout justify-center">Add To Cart</v-btn>
+          </v-card-actions>
         </v-card>
       </v-flex>
 
-      <v-flex xs12 md4>
+      <v-flex xs12 md3>
         <v-card class="elevation-0 transparent"
-          <v-card-media src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Patates.jpg/1200px-Patates.jpg"
-          height="300px">
+          <v-card-media src="https://images-na.ssl-images-amazon.com/images/I/51FbHJvaWVL._AA360_QL70_.jpg"
+          height="200px">
           </v-card-media>
+          <v-card-title primary-title class="layout justify-center">
+          <div class="text-xl-center">Tomatoes, 10oz, $1.49 ($1.99/lb)</div>
+          </v-card-title>
+          <v-card-actions>
+          <v-btn flat color="red" class="layout justify-center">Add To Cart</v-btn>
+          </v-card-actions>
         </v-card>
       </v-flex>
 
-      <v-flex xs12 md4>
+      <v-flex xs12 md3>
         <v-card class="elevation-0 transparent">
-          <v-card-media src="http://cdn.phillymag.com/wp-content/uploads/sites/3/2017/04/PRIMAL-SUPPLY_BEEF_3941-FINAL-Credit-Jason-Varney.jpg"
-          height="300px">
+          <v-card-media src="https://images-na.ssl-images-amazon.com/images/I/51NSeJbpKjL._AA360_QL70_.jpg"
+          height="200px">
           </v-card-media>
+          <v-card-title primary-title class="layout justify-center">
+          <div class="text-xl-center">Strawberries, 6oz, $.99 ($1.99/lb)</div>
+          </v-card-title>
+          <v-card-actions>
+          <v-btn flat color="red" class="layout justify-center">Add To Cart</v-btn>
+          </v-card-actions>
         </v-card>
       </v-flex>
 
+      <v-flex xs12 md3>
+        <v-card class="elevation-0 transparent">
+          <v-card-media src="https://images-na.ssl-images-amazon.com/images/I/41S1VsCBf7L._AA360_QL70_.jpg"
+          height="200px">
+          </v-card-media>
+          <v-card-title primary-title class="layout justify-center">
+          <div class="text-xl-center">Bananas, 12oz, $.75 ($0.99/lb)</div>
+          </v-card-title>
+          <v-card-actions>
+          <v-btn flat color="red" class="layout justify-center">Add To Cart</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-flex>
+
+      <v-flex xs12 md3>
+        <v-card class="elevation-0 transparent"
+          <v-card-media src="https://images-na.ssl-images-amazon.com/images/I/51Nu5fzUVxL._AA360_QL70_.jpg"
+          height="200px">
+          </v-card-media>
+          <v-card-title primary-title class="layout justify-center">
+          <div class="text-xl-center">Watermelons, 1lb, $0.99 ($0.99/lb)</div>
+          </v-card-title>	
+          <v-card-actions>
+          <v-btn flat color="red" class="layout justify-center">Add To Cart</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-flex>
+
+      <v-flex xs12 md3>
+        <v-card class="elevation-0 transparent">
+          <v-card-media src="https://images-na.ssl-images-amazon.com/images/I/31k5Ens2iKL._AA360_QL70_.jpg"
+          height="200px">
+          </v-card-media>
+          <v-card-title primary-title class="layout justify-center">
+          <div class="text-xl-center">Mushrooms, 9oz, $1.49 ($2.99/lb)</div>
+          </v-card-title>	
+          <v-card-actions>
+          <v-btn flat color="red" class="layout justify-center">Add To Cart</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-flex>
+
+      <v-flex xs12 md3>
+        <v-card class="elevation-0 transparent">
+          <v-card-media src="https://images-na.ssl-images-amazon.com/images/I/41UWXFMx9iL._AA360_QL70_.jpg"
+          height="200px">
+          </v-card-media>
+          <v-card-title primary-title class="layout justify-center">
+          <div class="text-xl-center">Potatoes, 10oz, $0.75 ($0.99/lb)</div>
+          </v-card-title>	
+          <v-card-actions>
+          <v-btn flat color="red" class="layout justify-center">Add To Cart</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-flex>
+
+      <v-flex xs12 md3>
+        <v-card class="elevation-0 transparent">
+          <v-card-media src="https://images-na.ssl-images-amazon.com/images/I/41CKZBcadnL._AA360_QL70_.jpg"
+          height="200px">
+          </v-card-media>
+          <v-card-title primary-title class="layout justify-center">
+          <div class="text-xl-center">Kale, 9oz, $1.49 ($2.99/lb)</div>
+          </v-card-title>	
+          <v-card-actions>
+          <v-btn flat color="red" class="layout justify-center">Add To Cart</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-flex>
+    
     </v-layout>
   </v-container>
 
