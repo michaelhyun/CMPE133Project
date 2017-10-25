@@ -1,13 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/views/home'
-import Profile from '@/views/users/profile'
-import Register from '@/views/users/register'
-import Cart from '@/views/items/cart'
-import Items from '@/views/items/items'
-import Product from '@/views/items/product'
-import Aisle from '@/views/items/aisle'
-import RecommendedItems from '@/views/items/recItems'
+import Home from '@/components/home'
+import Profile from '@/components/users/profile'
+import Register from '@/components/users/register'
+import Cart from '@/components/items/cart'
+import Product from '@/components/items/product'
+import Aisle from '@/components/items/aisle'
+import RecommendedItems from '@/components/items/recItems'
 
 Vue.use(Router)
 
@@ -34,18 +33,13 @@ export default new Router({
       component: Cart
     },
     {
-      path: '/items',
-      name: 'Items',
-      component: Items
-    },
-    {
-      path: '/aisle',
+      path: '/aisles/:aisle',
       name: 'Aisle',
       component: Aisle,
       props: true
     },
     {
-      path: '/product',
+      path: '/product/:product',
       name: 'Product',
       component: Product,
       props: true
