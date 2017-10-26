@@ -44,10 +44,10 @@
   export default {
     computed: {
       cards () {
-        return this.$store.getters.aisles
+        return this.$store.state.aisles
       },
       items () {
-        return this.$store.getters.promotions
+        return this.$store.state.promotions
       }
     }
   }

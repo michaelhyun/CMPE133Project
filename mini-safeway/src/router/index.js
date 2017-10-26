@@ -33,13 +33,13 @@ export default new Router({
       component: Cart
     },
     {
-      path: '/aisles/:aisle',
+      path: '/aisles/:aisleName',
       name: 'Aisle',
       component: Aisle,
       props: true
     },
     {
-      path: '/product/:product',
+      path: '/product/:productName',
       name: 'Product',
       component: Product,
       props: true

@@ -72,21 +72,21 @@
   </v-navigation-drawer>
 </template>
 <script>
-import { store } from '../../store'
+  import { store } from '../../store'
 
-export default {
-  props: {
-    visible: Boolean,
-    drawerItemsName: String
-  //  links: Array
-  },
-  computed: {
-    drawerItems () {
-      return store.state[this.drawerItemsName]
+  export default {
+    props: {
+      visible: Boolean,
+      drawerItemsName: String
+    //  links: Array
     },
-    aisles () {
-      return store.state['aisles']
+    computed: {
+      drawerItems () {
+        return store.state[this.drawerItemsName]
+      },
+      aisles () {
+        return store.state['aisles']
+      }
     }
   }
-}
 </script>

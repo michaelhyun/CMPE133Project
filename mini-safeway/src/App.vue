@@ -1,8 +1,5 @@
 <template>
-  <v-app light>
-<!--     <sidebar v-bind:visible="showSidebar">
-    </sidebar> -->
-    
+  <v-app light>   
     <sidebar v-bind:visible="showSidebar"
              v-bind:drawerItemsName="drawerItemsName">
     </sidebar>
