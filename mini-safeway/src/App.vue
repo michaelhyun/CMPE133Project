@@ -1,9 +1,8 @@
 <template>
   <v-app light>   
-    <sidebar v-bind:visible="showSidebar"
-             v-bind:drawerItemsName="drawerItemsName">
+    <sidebar v-bind:drawerItemsName="drawerItemsName">
     </sidebar>
-    
+    <!-- TODO: Refactor sidebar back here -->
     <!-- Top navigation bar -->
     <v-toolbar
       class="primary"
@@ -13,13 +12,14 @@
       fixed
     >
       <v-toolbar-title style="width: 300px">
-        <v-toolbar-side-icon @click.stop="showSidebar = !showSidebar"></v-toolbar-side-icon>
+        <v-toolbar-side-icon @click.stop="toggleSidebar"></v-toolbar-side-icon>
         <router-link to="/" tag="span" style="cursor: pointer">MiniSafeway</router-link>
       </v-toolbar-title>
       <v-text-field
         solo
+        v-model="searchResults"
+        label="Search products..."
         prepend-icon="search"
-        placeholder="Search"
       ></v-text-field>
       <v-spacer></v-spacer>
       <v-btn icon to="/productpage">
@@ -67,15 +67,23 @@
 <script>
   export default {
     data: () => ({
-      showSidebar: false,
       drawerItemsName: 'shopItems'
     }),
-    // When the Vue application is created, we want it to load some data.
-    // Of special note: Don't use an arrow function here. 'this' is
-    // intended to refer to the Vue instance being created.
-    // See: https://vuejs.org/v2/guide/instance.html#Instance-Lifecycle-Hooks
-    created: function () {
-
+    computed: {
+      showSidebar () {
+        return this.$store.state.showSidebar
+      },
+      productNames () {
+        return this.$store.state.productNames
+      }
+    },
+    methods: {
+      toggleSidebar: function (context) {
+        this.$store.commit('toggleSidebar')
+      }
+    },
+    mounted () {
+      this.$store.dispatch('populateProductNames')
     }
   }
 </script>

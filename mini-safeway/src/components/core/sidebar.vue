@@ -14,6 +14,7 @@
     persistent
     clipped
     app
+    disable-route-watcher
     v-model="visible"
   >
     <v-list dense>
@@ -76,7 +77,6 @@
 
   export default {
     props: {
-      visible: Boolean,
       drawerItemsName: String
     //  links: Array
     },
@@ -86,6 +86,9 @@
       },
       aisles () {
         return store.state['aisles']
+      },
+      visible () {
+        return store.state.showSidebar
       }
     }
   }

@@ -5,6 +5,7 @@ import { firebase } from '../../firebase'
 Vue.use(Vuex)
 
 // TODO: Modularize store to make it more readable
+// TODO: Refactor sidebar back into app.vue
 export const store = new Vuex.Store({
   state: {
     // Used in sidebar when sidebar needs to display shopping options
@@ -21,6 +22,7 @@ export const store = new Vuex.Store({
       { icon: 'help', text: 'Help' },
       { icon: 'chat_bubble', text: 'Contact Us' }
     ],
+    showSidebar: false,
     // Promotions
     promotions: [
       {
@@ -38,6 +40,8 @@ export const store = new Vuex.Store({
     ],
     // Aisles
     aisles: [ ],
+    // All product names
+    productNames: [ ],
     // Products found in a specific aisle
     aisleProducts: [ ],
     user: {
@@ -46,22 +50,31 @@ export const store = new Vuex.Store({
   },
   // Synchronous
   mutations: {
+    // state.aisles mutations
     setAisles (state, aisles) {
       state.aisles = aisles
     },
+    addAisle (state, aisle) {
+      state.aisles.push(aisle)
+    },
+    // state.productNames mutations
+    setProductNames (state, productNames) {
+      state.productNames = productNames
+    },
+    // state.aisleProducts mutations
     setAisleProducts (state, products) {
       state.aisleProducts = products
     },
     addAisleProduct (state, product) {
       state.aisleProducts.push(product)
     },
-    addToAisles (state, aisle) {
-      state.aisles.push(aisle)
+    toggleSidebar (state) {
+      state.showSidebar = !state.showSidebar
     }
   },
   // Asynchrounous
   actions: {
-    // This action set's the store's aisles to the data in the database
+    // This action set's the store's aisles and productNames to the data in Firebase
     // Elements in aisles will have the following definition:
     //
     // {
@@ -69,7 +82,7 @@ export const store = new Vuex.Store({
     //   products: Array
     // }
     //
-    populateAisles ({ commit, state }) {
+    initializeStoreData ({ commit, state }) {
       // Read the data at 'aisles' once (asynchronous)
       firebase.database().ref('aisles').once('value')
         .then((data) => {
@@ -95,6 +108,15 @@ export const store = new Vuex.Store({
               if (Object.keys(aisles).length !== Object.keys(obj).length) {
                 waitUntilPopulated()
               } else {
+                const productNames = []
+                for (let aislesKey in aisles) {
+                  for (let productsKey in aisles[aislesKey].products) {
+                    if (!(productNames.includes(aisles[aislesKey].products[productsKey]))) {
+                      productNames.push(aisles[aislesKey].products[productsKey])
+                    }
+                  }
+                }
+                commit('setProductNames', productNames)
                 // Local variable aisles has been populated. Set store's aisle to local variable aisle.
                 commit('setAisles', aisles)
               }
@@ -102,7 +124,20 @@ export const store = new Vuex.Store({
           })()
         })
     },
-    // This action set's the store's aisleProducts to the data in the database
+    // This action sets the store's productNames to all products found in state.aisles.
+    // Precondition: state.aisles has been populated.
+    // Elements in productNames are Strings.
+    populateProductNames ({ commit, state }, aisleName) {
+      const productNames = []
+      for (let aisle in state.aisles) {
+        for (let key in aisle.products) {
+          if (!(productNames.hasOwnProperty(aisle.products[key]))) {
+            productNames.push(aisle.products[key])
+          }
+        }
+      }
+    },
+    // This action sets the store's aisleProducts to the data in the database
     // Elements in aisleProducts will have the following definition:
     //
     // {
@@ -146,12 +181,14 @@ export const store = new Vuex.Store({
           if (Object.keys(products).length !== Object.keys(productNames).length) {
             waitUntilPopulated()
           } else {
+            store.dispatch('populateProductNames')
             commit('setAisleProducts', products)
           }
         }, 200)
       })()
     }
   },
+  // Used for synchronous computations
   getters: {
     shopItems (state) {
       return state.shopItems

@@ -43,6 +43,6 @@ new Vue({
   template: '<App/>',
   components: { App },
   created () {
-    this.$store.dispatch('populateAisles')
+    this.$store.dispatch('initializeStoreData')
   }
 })
