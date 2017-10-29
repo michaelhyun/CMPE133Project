@@ -38,16 +38,39 @@
           >
           </v-card-media>
           <v-card-title primary-title class="layout justify-center">
-            <div class="text-xl-center">{{ product.name }}, ${{ product.price }}</div>
+            
           </v-card-title>
           <v-card-actions>
-            <v-btn flat color="red" class="layout justify-center">Add To Cart</v-btn>
+            <v-btn flat color="dark grey" class="layout justify-center">{{ product.name }}, ${{ product.price }}</v-btn>
           </v-card-actions>
         </v-card>
-      </v-flex>
-    
-    </v-layout>
-  </v-container>
+         
+ 
+    <v-card-text>
+      <v-container class="pa-0">
+        <v-layout row wrap align-center>
+          <v-flex xs10 sm3 >
+          </v-flex>
+          <v-flex xs10 sm3 >
+            <v-text-field
+              name="Quantity"
+              label="1" 
+              hint="Quantity"
+              single-line
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs10 sm4 >
+           <v-card-actions>
+           <v-btn flat color="red darken-2">Add To Cart</v-btn>
+           </v-card-actions>
+          </v-flex>                
+        </v-layout>
+      </v-container>
+    </v-card-text>
+   </v-card>
+   </v-flex>
+  </v-layout>
+ </v-container>
 
   <!-- Recipes -->
   <v-container align-center>
