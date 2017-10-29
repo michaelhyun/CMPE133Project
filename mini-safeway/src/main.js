@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 // Import Firebase to use Firebase Auth and Firebase Database
 import firebase from 'firebase'
+import { store } from './store'
 
 // Initialize Firebase
 // **Not the recommended way of initializing Firebase. Initialize in an
@@ -44,6 +45,7 @@ Vue.use(Vuetify)
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

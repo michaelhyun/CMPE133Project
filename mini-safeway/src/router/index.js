@@ -5,6 +5,9 @@ import Profile from '@/views/users/profile'
 import Register from '@/views/users/register'
 import Cart from '@/views/items/cart'
 import Items from '@/views/items/items'
+import Product from '@/views/items/product'
+import Aisle from '@/views/items/aisle'
+import RecommendedItems from '@/views/items/recItems'
 
 Vue.use(Router)
 
@@ -34,6 +37,23 @@ export default new Router({
       path: '/items',
       name: 'Items',
       component: Items
+    },
+    {
+      path: '/aisles/:title',
+      name: 'Aisle',
+      component: Aisle,
+      props: true
+    },
+    {
+      path: '/product',
+      name: 'Product',
+      component: Product,
+      props: true
+    },
+    {
+      path: '/recItems',
+      name: 'recItems',
+      component: RecommendedItems
     }
   ],
   mode: 'history'

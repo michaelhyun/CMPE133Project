@@ -1,7 +1,0 @@
-# Ignore node_modules. To install project dependencies, run the command:
-#
-# npm install
-mini-safeway/node_modules/
-
-# Ignore .Vi,.ViM files
-*.~

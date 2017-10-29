@@ -25,7 +25,7 @@
               <a href="#!" class="body-2 black--text">EDIT</a>
             </v-flex>
           </v-layout>
-          <v-list-group v-else-if="item.children" v-model="item.model" no-action>
+          <v-list-group v-else-if="item.expandable" v-model="item.model" no-action>
             <v-list-tile slot="item" @click="">
               <v-list-tile-action>
                 <v-icon>{{ item.model ? item.icon : item['icon-alt'] }}</v-icon>
@@ -37,16 +37,17 @@
               </v-list-tile-content>
             </v-list-tile>
             <v-list-tile
-              v-for="(child, i) in item.children"
+              v-for="(aisle, i) in aisles"
               :key="i"
               @click=""
+              :to="'/aisles/' + aisle.title"
             >
-              <v-list-tile-action v-if="child.icon">
-                <v-icon>{{ child.icon }}</v-icon>
+              <v-list-tile-action v-if="aisle.icon">
+                <v-icon>{{ aisle.icon }}</v-icon>
               </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-title>
-                  {{ child.text }}
+                  {{ aisle.title }}
                 </v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
@@ -82,7 +83,7 @@
         placeholder="Search"
       ></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn icon to="/cart">
+      <v-btn icon to="/productpage">
         <v-icon>shopping_cart</v-icon>
       </v-btn>
       <v-btn icon to="/register">
@@ -135,28 +136,7 @@
           'icon-alt': 'keyboard_arrow_down',
           text: 'Explore Aisles',
           model: false,
-          children: [
-            { text: 'Baby Care' },
-            { text: 'Beverages' },
-            { text: 'Bread & Bakery' },
-            { text: 'Breakfast & Cereal' },
-            { text: 'Canned Goods & Soups' },
-            { text: 'Condiments, Spice & Bake' },
-            { text: 'Cookies, Snacks & Candy' },
-            { text: 'Dairy, Eggs & Cheese' },
-            { text: 'Deli' },
-            { text: 'Flowers' },
-            { text: 'Frozen Foods' },
-            { text: 'Fruits & Vegetables' },
-            { text: 'Grains, Pasta & Sides' },
-            { text: 'International Cuisine' },
-            { text: 'Meat & Seafood' },
-            { text: 'Paper, Cleaning & Home' },
-            { text: 'Personal Care & Health' },
-            { text: 'Pet Care' },
-            { text: 'Tobacco' },
-            { text: 'Wine, Beer & Spirits' }
-          ]
+          expandable: true
         },
         { icon: 'history', text: 'Explore History' },
         { icon: 'local_atm', text: 'Explore Savings' },
@@ -166,6 +146,11 @@
     }),
     props: {
       source: String
+    },
+    computed: {
+      aisles () {
+        return this.$store.getters.aisles
+      }
     }
   }
 </script>
