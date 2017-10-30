@@ -134,6 +134,18 @@ export const store = new Vuex.Store({
               zip: payload.zip
               // code to commit to database
             }
+            const firebaseUser = {
+              history: [],
+              first: payload.first,
+              last: payload.last,
+              phone: payload.phone,
+              type: payload.type,
+              address: payload.address,
+              city: payload.city,
+              state: payload.state,
+              zip: payload.zip
+            }
+            firebase.database().ref('users/' + user.uid).set(firebaseUser)
             commit('setUser', newUser)
           }
         )
