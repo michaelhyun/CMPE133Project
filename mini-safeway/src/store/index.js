@@ -102,7 +102,6 @@ export const store = new Vuex.Store({
   },
   // Asynchrounous
   actions: {
-
     // This action toggles live search.
     toggleLiveSearch ({ commit, state }) {
       commit('setLiveSearch', !state.liveSearch)
@@ -345,9 +344,6 @@ export const store = new Vuex.Store({
   },
   // Used for synchronous computations
   getters: {
-    shopItems (state) {
-      return state.shopItems
-    },
     promotions (state) {
       return state.promotions
     },
