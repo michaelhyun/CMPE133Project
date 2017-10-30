@@ -3,173 +3,136 @@
     <v-container fluid fill-height>
       <v-layout justify-center align-center >
         <v-flex xs12 sm10>
-		  <v-card flat>
-    <v-snackbar
-      v-model="snackbar"
-      absolute
-      top
-      right
-      color="success"
-    >
-      <span>Registration successful!</span>
-      <v-icon dark>check_circle</v-icon>
-    </v-snackbar>
-    <v-form @submit.prevent="submit" ref="form">
-      <v-container grid-list-xl fluid>
-        <v-layout wrap>
-          <v-flex xs12>
-          	<span class="title">Personal Information</span>
-          	</v-flex>
-          	<v-flex xs12 sm6>
-            <v-text-field
-              color="red darken-2"
-              label="First name"
-              required
-              v-model="form.first"
-              :rules="rules.name"
-            ></v-text-field>
-          </v-flex>
-          <v-flex xs12 sm6>
-            <v-text-field
-              color="red darken-2"
-              label="Last name"
-              v-model="form.last"
-              required
-              :rules="rules.name"
-            ></v-text-field>
-          </v-flex>
-          <v-flex xs12 >
-            <v-text-field
-              color="red darken-2"
-              label="Email Address"
-              required
-              v-model="form.email"
-              :rules="rules.email"
-            ></v-text-field>
-          </v-flex>
-          <v-flex xs12 sm6>
-            <v-text-field
-              name="input-10-2"
-              label="Enter your password"
-              hint="At least 8 characters"
-              min="8"
-              :append-icon-cb="() => (e1 = !e1)"
-              type="password"
-              class="input-group--focused"
-            ></v-text-field>
-          </v-flex>
-           <v-flex xs12 sm6>
-            <v-text-field
-              name="input-10-2"
-              label="Confirm your password"
-              hint="At least 8 characters"
-              min="8"
-              :append-icon-cb="() => (e2 = !e2)"
-              type="password"
-            ></v-text-field>
-          </v-flex>
-           <v-flex xs12 sm5>
-            <v-text-field
-              name="input-3-3"
-              label="Phone number or club card number"
-              hint="Club card number can be found on the front of your Safeway Card"
-              single-line
-            ></v-text-field>
-          </v-flex>
-          <v-flex xs12 sm3>
-            <v-select v-bind:items="[{ text: 'Club Card' }, { text: 'Phone Number' }]" label="Type"></v-select>
-          </v-flex>
-           <v-flex xs12>
-          	<span class="title">Delivery Information</span>
-          	</v-flex>
-          <v-flex xs12 sm6>
-          <v-text-field
-            label="Address Line"
-            placeholder="1 Washington Square"
-            hint="Address must be less than 25 characters"
-            :rules="[
-              () => !!address || 'This field is required',
-         
-              this.addressCheck
-            ]"
-            v-model="address"
-            ref="address"
-            counter="25"
-            required
-          ></v-text-field>
-           </v-flex>
-          <v-text-field
-            label="City"
-            placeholder="San Jose"
-            :rules="[() => !!city || 'This field is required', this.addressCheck]"
-            v-model="city"
-            ref="city"
-            required
-          ></v-text-field>
-          <v-text-field
-            label="State/Province/Region"
-            v-model="state"
-            :rules="[() => !!state || 'This field is required']"
-            required
-            ref="state"
-            placeholder="CA"
-          ></v-text-field>
-          <v-text-field
-            label="ZIP / Postal Code"
-            required
-            :rules="[() => !!zip || 'This field is required']"
-            v-model="zip"
-            ref="zip"
-            placeholder="95192"
-          ></v-text-field>
-          
-        </v-layout>
-      </v-container>
-      <v-card-actions>
-        <v-btn flat @click="resetForm">Cancel</v-btn>
-        <v-spacer></v-spacer>
-        <v-btn
-          flat
-          color="primary"
-          type="submit"
-          :disabled="!formIsValid"
-        >Register</v-btn>
-      </v-card-actions>
-    </v-form>
-    <v-dialog v-model="terms" width="70%">
-      <v-card>
-        <v-card-title class="title">Terms</v-card-title>
-        <v-card-text v-for="n in 5" :key="n">
-          {{ content }}
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            flat
-            color="purple"
-            @click="terms = false"
-          >Ok</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <v-dialog v-model="conditions" width="70%">
-      <v-card>
-        <v-card-title class="title">Conditions</v-card-title>
-        <v-card-text v-for="n in 5" :key="n">
-          {{ content }}
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            flat
-            color="purple"
-            @click="conditions = false"
-          >Ok</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-card>
-
+		      <v-card flat>
+            <v-snackbar
+              v-model="snackbar"
+              absolute
+              top
+              right
+              color="success"
+            >
+              <span>Registration successful!</span>
+              <v-icon dark>check_circle</v-icon>
+            </v-snackbar>
+            <v-form @submit.prevent="submit" ref="form">
+              <v-container grid-list-xl fluid>
+                <v-layout wrap>
+                  <v-flex xs12>
+                  	<span class="title">Personal Information</span>
+                  	</v-flex>
+                  	<v-flex xs12 sm6>
+                    <v-text-field
+                      color="red darken-2"
+                      label="First name"
+                      required
+                      v-model="form.first"
+                      :rules="rules.name"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6>
+                    <v-text-field
+                      color="red darken-2"
+                      label="Last name"
+                      v-model="form.last"
+                      required
+                      :rules="rules.name"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 >
+                    <v-text-field
+                      color="red darken-2"
+                      label="Email Address"
+                      required
+                      v-model="form.email"
+                      type="email"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6>
+                    <v-text-field
+                      label="Enter your password"
+                      v-model="form.password"
+                      :rules="rules.password"
+                      required
+                      type="password"
+                    ></v-text-field>
+                  </v-flex>
+                   <v-flex xs12 sm6>
+                    <v-text-field
+                      label="Confirm your password"
+                      v-model="form.confirmPassword"
+                      required
+                      type="password"
+                      :rules="[comparePasswords]"
+                    ></v-text-field>
+                  </v-flex>
+                   <v-flex xs12 sm5>
+                    <v-text-field
+                      label="Phone/Club card number"
+                      v-model="form.phone"
+                      :rules="rules.phone"
+                      required
+                      hint="Club card number can be found on the front of your Safeway Card"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm3>
+                    <v-select v-bind:items="types"
+                      label="Type"
+                      v-model="form.type"></v-select>
+                  </v-flex>
+                   <v-flex xs12>
+                  	<span class="title">Delivery Information</span>
+                  	</v-flex>
+                  <v-flex xs12 sm6>
+                  <v-text-field
+                    label="Address Line"
+                    placeholder="1 Washington Square"
+                    hint="Address must be less than 25 characters"
+                    :rules="rules.name"
+                    v-model="form.address"
+                    ref="address"
+                    counter="25"
+                    required
+                  ></v-text-field>
+                   </v-flex>
+                  <v-text-field
+                    label="City"
+                    placeholder="San Jose"
+                    :rules="rules.name"
+                    v-model="form.city"
+                    ref="city"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    label="State/Province/Region"
+                    v-model="form.state"
+                    :rules="rules.name"
+                    required
+                    ref="form.state"
+                    placeholder="CA"
+                  ></v-text-field>
+                  <v-text-field
+                    label="ZIP / Postal Code"
+                    required
+                    :rules="rules.name"
+                    v-model="form.zip"
+                    ref="zip"
+                    placeholder="95192"
+                  ></v-text-field>
+                  
+                </v-layout>
+              </v-container>
+              <v-card-actions>
+                <v-btn flat @click="resetForm">Cancel</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn
+                  flat
+                  color="primary"
+                  type="submit"
+                  :disabled="!formIsValid"
+                >Register</v-btn>
+              </v-card-actions>
+            </v-form>
+          </v-card>
         </v-flex>
       </v-layout>
     </v-container>
@@ -182,26 +145,57 @@
     first: '',
     last: '',
     email: '',
-    age: null,
-    terms: false
+    password: '',
+    confirmPassword: '',
+    phone: '',
+    type: 'Club Card',
+    address: '',
+    city: '',
+    zip: ''
   }
 
   export default {
     data: () => ({
       form: Object.assign({}, defaultForm),
       rules: {
-        name: [val => (val || '').length > 0 || 'This field is required']
+        name: [val => (val || '').length > 0 || 'This field is required'],
+        password: [val => (val || '').length > 7 || 'Password requires at least 8 characters'],
+        phone: [val => (val || '').length > 9 || 'Phone/Club card number is too short']
       },
-      terms: false
+      types: [{ text: 'Club Card' }, { text: 'Phone Number' }],
+      snackbar: false
     }),
 
     computed: {
+      comparePasswords () {
+        return this.form.password !== this.form.confirmPassword ? 'Passwords do not match' : true
+      },
+      user () {
+        return this.$store.getters.user
+      },
       formIsValid () {
         return (
           this.form.first &&
           this.form.last &&
-          this.form.terms
+          this.form.email &&
+          this.form.password &&
+          this.form.confirmPassword &&
+          this.form.phone &&
+          this.form.type &&
+          this.form.address &&
+          this.form.city &&
+          this.form.state &&
+          this.form.zip &&
+          this.comparePasswords === true
         )
+      }
+    },
+
+    watch: {
+      user (value) {
+        if (value !== null && value !== undefined) {
+          this.$router.push('/')
+        }
       }
     },
 
@@ -212,6 +206,18 @@
       },
       submit () {
         this.snackbar = true
+        this.$store.dispatch('registerUser', {
+          first: this.form.first,
+          last: this.form.last,
+          email: this.form.email,
+          password: this.form.password,
+          phone: this.form.phone,
+          type: this.form.type,
+          address: this.form.address,
+          city: this.form.city,
+          state: this.form.state,
+          zip: this.form.zip
+        })
         this.resetForm()
       }
     }

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import * as firebase from 'firebase'
 
 Vue.use(Vuex)
 
@@ -85,15 +86,89 @@ export const store = new Vuex.Store({
         src: 'https://www.skymetweather.com/themes/skymet/images/gallery/toplists/10-Must-Follow-Baby-Care-Tips-During-Monsoon/3.jpg'
       }
     ],
-    user: {
-      id: 'dvnsljbfn'
-    }
+    user: null,
+    loading: false,
+    error: null
   },
   mutations: {
-
+    setUser (state, payload) {
+      state.user = payload
+    },
+    setLoading (state, payload) {
+      state.loading = payload
+    },
+    setError (state, payload) {
+      state.error = payload
+    },
+    clearError (state) {
+      state.error = null
+    }
   },
   actions: {
-
+    registerUser ({commit}, payload) {
+      commit('setLoading', true)
+      commit('clearError')
+      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+        .then(
+          user => {
+            commit('setLoading', false)
+            const newUser = {
+              id: user.uid,
+              history: [],
+              first: payload.first,
+              last: payload.last,
+              phone: payload.phone,
+              type: payload.type,
+              address: payload.address,
+              city: payload.city,
+              state: payload.state,
+              zip: payload.zip
+              // code to commit to database
+            }
+            commit('setUser', newUser)
+          }
+        )
+        .catch(
+          error => {
+            commit('setLoading', false)
+            commit('setError', error)
+            console.log(error)
+          }
+        )
+    },
+    loginUser ({commit}, payload) {
+      commit('setLoading', true)
+      commit('clearError')
+      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+        .then(
+          user => {
+            commit('setLoading', false)
+            const newUser = {
+              id: user.uid,
+              registeredMeetups: []
+            }
+            commit('setUser', newUser)
+            console.log('Welcome, user ' + newUser.id)
+          }
+        )
+        .catch(
+          error => {
+            commit('setLoading', false)
+            commit('setError', error)
+            console.log(error)
+          }
+        )
+    },
+    autoSignIn ({commit}, payload) {
+      commit('setUser', {id: payload.uid, registeredMeetups: []})
+    },
+    logout ({commit}) {
+      firebase.auth().signOut()
+      commit('setUser', null)
+    },
+    clearError ({commit}) {
+      commit('clearError')
+    }
   },
   getters: {
     promotions (state) {
@@ -120,6 +195,15 @@ export const store = new Vuex.Store({
           return product.title === productTitle
         })
       }
+    },
+    user (state) {
+      return state.user
+    },
+    loading (state) {
+      return state.loading
+    },
+    error (state) {
+      return state.error
     }
   }
 })

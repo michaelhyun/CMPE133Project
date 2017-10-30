@@ -86,11 +86,17 @@
       <v-btn icon to="/productpage">
         <v-icon>shopping_cart</v-icon>
       </v-btn>
-      <v-btn icon to="/register">
+      <v-btn v-if="!userSignedIn" icon to="/register">
         <v-icon>person_add</v-icon>
       </v-btn>
-      <v-btn icon @click.stop="login = !login">
+      <v-btn v-if="!userSignedIn" icon @click.stop="login = !login">
         <v-icon>lock_open</v-icon>
+      </v-btn>
+      <v-btn v-if="userSignedIn" icon to="/profile">
+        <v-icon>person</v-icon>
+      </v-btn>
+      <v-btn v-if="userSignedIn" icon @click="onLogout">
+        <v-icon>exit_to_app</v-icon>
       </v-btn>
     </v-toolbar>
     <!-- Views Template -->
@@ -104,22 +110,47 @@
         >
           Log In
         </v-card-title>
-        <v-container grid-list-sm class="pa-4">
-          <v-layout row wrap>
-            <v-flex xs12>
-              <v-text-field placeholder="Username"></v-text-field>
-            </v-flex>
-            <v-flex xs12>
-              <v-text-field placeholder="Password"></v-text-field>
-            </v-flex>
-          </v-layout>
-        </v-container>
-        <v-card-actions>
-          <v-btn flat color="primary">Forgot Password?</v-btn>
-          <v-spacer></v-spacer>
-          <v-btn flat color="primary" @click="login = false">Cancel</v-btn>
-          <v-btn flat @click="login = false">Log In</v-btn>
-        </v-card-actions>
+        <v-card-text>
+          <v-container grid-list-sm class="pa-4">
+            <form @submit.prevent="onSignin">
+              <v-layout row wrap>
+                <v-flex xs12>
+                  <v-text-field
+                    name="email"
+                    label="E-mail"
+                    id="email"
+                    v-model="email"
+                    type="email"
+                    required></v-text-field>
+                </v-flex>
+              </v-layout>
+              <v-layout row wrap>
+                <v-flex xs12>
+                  <v-text-field
+                    name="password"
+                    label="Password"
+                    id="password"
+                    v-model="password"
+                    type="password"
+                    required></v-text-field>
+                </v-flex>
+              </v-layout>
+              <v-layout row>
+                <v-flex xs12>
+                  <v-btn flat color="primary">Forgot Password?</v-btn>
+                  <v-spacer></v-spacer>
+                  <v-btn flat color="primary" @click="login = false">Cancel</v-btn>
+                  <v-btn type="submit" :disabled="loading" :loading="loading">
+                    Sign in
+                     <span slot="loader" class="custom-loader">
+                      <v-icon light>cached</v-icon>
+                     </span>
+                  </v-btn>
+                </v-flex>
+              </v-layout>
+            </form>
+          </v-container>
+        </v-card-text>
       </v-card>
     </v-dialog>
   </v-app>
@@ -130,6 +161,8 @@
     data: () => ({
       login: false,
       drawer: true,
+      email: '',
+      password: '',
       items: [
         {
           icon: 'keyboard_arrow_up',
@@ -150,6 +183,32 @@
     computed: {
       aisles () {
         return this.$store.getters.aisles
+      },
+      userSignedIn () {
+        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      },
+      error () {
+        return this.$store.getters.error
+      },
+      loading () {
+        return this.$store.getters.loading
+      }
+    },
+    methods: {
+      onSignin () {
+        this.$store.dispatch('loginUser', {
+          email: this.email,
+          password: this.password
+        })
+        this.login = false
+        console.log(this.userSignedIn)
+      },
+      onDismissed () {
+        this.$store.dispatch('clearError')
+      },
+      onLogout () {
+        this.$store.dispatch('logout')
+        this.$router.push('/')
       }
     }
   }
