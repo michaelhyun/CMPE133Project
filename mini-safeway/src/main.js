@@ -4,7 +4,7 @@ import Vue from 'vue'
 
 // Import Components used by App
 import App from './App'
-// import Sidebar from './components/core/sidebar'
+import Sidebar from './components/core/sidebar'
 
 // Import VueX store and Vue-Router
 import router from './router'
@@ -34,7 +34,7 @@ Vue.use(VueFire)
 Vue.use(Vuetify)
 
 // Register components
-// Vue.component('sidebar', Sidebar)
+Vue.component('sidebar', Sidebar)
 
 /* eslint-disable no-new */
 new Vue({

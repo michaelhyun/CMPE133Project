@@ -12,7 +12,7 @@
       fixed
     >
       <v-toolbar-title style="width: 300px">
-        <v-toolbar-side-icon @click.stop="showSidebar = !showSidebar"></v-toolbar-side-icon>
+        <v-toolbar-side-icon @click.stop="toggleSidebar"></v-toolbar-side-icon>
         <router-link to="/" tag="span" style="cursor: pointer">MiniSafeway</router-link>
       </v-toolbar-title>
       <v-text-field
