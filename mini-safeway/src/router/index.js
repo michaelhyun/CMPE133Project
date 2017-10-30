@@ -7,6 +7,7 @@ import Cart from '@/components/items/cart'
 import Product from '@/components/items/product'
 import Aisle from '@/components/items/aisle'
 import RecommendedItems from '@/components/items/recItems'
+import SearchPage from '@/components/items/searchPage'
 
 Vue.use(Router)
 
@@ -43,6 +44,11 @@ export default new Router({
       name: 'Product',
       component: Product,
       props: true
+    },
+    {
+      path: '/search/',
+      name: 'SearchPage',
+      component: SearchPage
     },
     {
       path: '/recItems',

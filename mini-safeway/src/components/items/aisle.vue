@@ -134,6 +134,13 @@
         this.$store.dispatch('populateAisleProducts', this.aisleName)
       }
     },
+    beforeCreate () {
+      if (Object.keys(this.$store.state.productNames).length === 0) {
+        this.$store.dispatch('initializeStoreData').then(() => {
+          this.$store.dispatch('populateAisleProducts', this.aisleName)
+        })
+      }
+    },
     // The earliest a prop can be accessed in a Vue component's lifecycle is when it is mounted.
     // So, when the component is mounted, populate the products in the aisle.
     mounted () {
