@@ -8,6 +8,7 @@ import Sidebar from './components/core/sidebar'
 
 // Import VueX store and Vue-Router
 import router from './router'
+// Import Firebase to use Firebase Auth and Firebase Database
 import { store } from './store'
 
 // Import plugins used for mini-safeway

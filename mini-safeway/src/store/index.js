@@ -24,6 +24,7 @@ export const store = new Vuex.Store({
     ],
     showSidebar: false,
     // Promotions
+
     promotions: [
       {
         src: 'https://images-na.ssl-images-amazon.com/images/I/61Z2neTKPuL._SL1024_.jpg'
@@ -44,9 +45,9 @@ export const store = new Vuex.Store({
     productNames: [ ],
     // Products found in a specific aisle
     aisleProducts: [ ],
-    user: {
-      id: 'dvnsljbfn'
-    }
+    user: null,
+    loading: false,
+    error: null
   },
   // Synchronous
   mutations: {
@@ -70,6 +71,18 @@ export const store = new Vuex.Store({
     },
     toggleSidebar (state) {
       state.showSidebar = !state.showSidebar
+    },
+    setUser (state, payload) {
+      state.user = payload
+    },
+    setLoading (state, payload) {
+      state.loading = payload
+    },
+    setError (state, payload) {
+      state.error = payload
+    },
+    clearError (state) {
+      state.error = null
     }
   },
   // Asynchrounous
@@ -82,6 +95,71 @@ export const store = new Vuex.Store({
     //   products: Array
     // }
     //
+    registerUser ({commit}, payload) {
+      commit('setLoading', true)
+      commit('clearError')
+      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+        .then(
+          user => {
+            commit('setLoading', false)
+            const newUser = {
+              id: user.uid,
+              history: [],
+              first: payload.first,
+              last: payload.last,
+              phone: payload.phone,
+              type: payload.type,
+              address: payload.address,
+              city: payload.city,
+              state: payload.state,
+              zip: payload.zip
+              // code to commit to database
+            }
+            commit('setUser', newUser)
+          }
+        )
+        .catch(
+          error => {
+            commit('setLoading', false)
+            commit('setError', error)
+            console.log(error)
+          }
+        )
+    },
+    loginUser ({commit}, payload) {
+      commit('setLoading', true)
+      commit('clearError')
+      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+        .then(
+          user => {
+            commit('setLoading', false)
+            const newUser = {
+              id: user.uid,
+              registeredMeetups: []
+            }
+            commit('setUser', newUser)
+            console.log('Welcome, user ' + newUser.id)
+          }
+        )
+        .catch(
+          error => {
+            commit('setLoading', false)
+            commit('setError', error)
+            console.log(error)
+          }
+        )
+    },
+    autoSignIn ({commit}, payload) {
+      commit('setUser', {id: payload.uid, registeredMeetups: []})
+    },
+    logout ({commit}) {
+      firebase.auth().signOut()
+      commit('setUser', null)
+    },
+    clearError ({commit}) {
+      commit('clearError')
+    },
+
     initializeStoreData ({ commit, state }) {
       // Read the data at 'aisles' once (asynchronous)
       firebase.database().ref('aisles').once('value')
@@ -201,6 +279,15 @@ export const store = new Vuex.Store({
     },
     getAisleProducts (state) {
       return state.aisleProducts
+    },
+    user (state) {
+      return state.user
+    },
+    loading (state) {
+      return state.loading
+    },
+    error (state) {
+      return state.error
     }
   }
 })
