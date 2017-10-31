@@ -7,6 +7,7 @@ import Cart from '@/components/items/cart'
 import Product from '@/components/items/product'
 import Aisle from '@/components/items/aisle'
 import RecommendedItems from '@/components/items/recItems'
+import Help from '@/components/items/help'
 
 Vue.use(Router)
 
@@ -48,6 +49,11 @@ export default new Router({
       path: '/recItems',
       name: 'recItems',
       component: RecommendedItems
+    },
+    {
+      path: '/help',
+      name: 'help',
+      component: Help
     }
   ],
   mode: 'history'
