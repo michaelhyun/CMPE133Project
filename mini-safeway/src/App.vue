@@ -1,9 +1,7 @@
 <template>
-
   <v-app light>   
     <sidebar v-bind:drawerItemsName="drawerItemsName">
     </sidebar>
-    <!-- TODO: Refactor sidebar back here -->
 
     <!-- Top navigation bar -->
     <v-toolbar
@@ -19,12 +17,16 @@
       </v-toolbar-title>
       <v-text-field
         solo
-        v-model="searchResults"
+        v-model="searchQuery"
         label="Search products..."
-        prepend-icon="search"
+        @keyup="updateLiveSearchQuery"
+        @keyup.enter="searchProducts"
       ></v-text-field>
+      <v-btn icon @click="searchProducts">
+        <v-icon>search</v-icon>
+      </v-btn>
       <v-spacer></v-spacer>
-      <v-btn icon to="/productpage">
+      <v-btn icon to="/cart">
         <v-icon>shopping_cart</v-icon>
       </v-btn>
       <v-btn v-if="!userSignedIn" icon to="/register">
@@ -100,7 +102,7 @@
 <script>
   export default {
     data: () => ({
-
+      searchQuery: '',
       drawerItemsName: 'shopItems',
       email: '',
       password: '',
@@ -124,6 +126,14 @@
       }
     },
     methods: {
+      searchProducts () {
+        this.$store.commit('setLiveSearchQuery', this.searchQuery)
+        this.$store.dispatch('populateSearchQueryProducts', this.searchQuery)
+        this.$router.replace('/search/')
+      },
+      updateLiveSearchQuery () {
+        this.$store.commit('setLiveSearchQuery', this.searchQuery)
+      },
       toggleSidebar: function (context) {
         this.$store.commit('toggleSidebar')
       },

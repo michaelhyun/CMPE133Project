@@ -73,8 +73,6 @@
   </v-navigation-drawer>
 </template>
 <script>
-  import { store } from '../../store'
-
   export default {
     props: {
       drawerItemsName: String
@@ -82,13 +80,13 @@
     },
     computed: {
       drawerItems () {
-        return store.state[this.drawerItemsName]
+        return this.$store.state[this.drawerItemsName]
       },
       aisles () {
-        return store.state['aisles']
+        return this.$store.state['aisles']
       },
       visible () {
-        return store.state.showSidebar
+        return this.$store.state.showSidebar
       }
     }
   }

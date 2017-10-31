@@ -43,7 +43,7 @@ new Vue({
   store,
   template: '<App/>',
   components: { App },
-  created () {
+  beforeCreate () {
     this.$store.dispatch('initializeStoreData')
   }
 })
