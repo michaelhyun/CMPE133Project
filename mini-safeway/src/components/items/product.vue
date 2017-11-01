@@ -39,14 +39,15 @@
             </v-card> 
           </v-flex>
           <!-- Remove Icon -->
-          <v-flex d-flex>
+          <v-layout row justify-center>
+          <v-flex d-flex xs2>
             <v-btn @click="subtract" class="elevation-0 transparent">
               <v-icon x-large class="blue--text text--lighten-2" @click="add">remove
               </v-icon>
             </v-btn>
           </v-flex>
           <!-- QUANTITY -->
-          <v-flex d-flex>  
+          <v-flex d-flex xs2>  
             <v-card-text class="text-xs-center" position: relative>
               <v-text-field
                 v-model="quantity"
@@ -57,11 +58,12 @@
             </v-card-text>
           </v-flex>
           <!-- Add Icon -->
-          <v-flex d-flex>
+          <v-flex d-flex xs2>
             <v-btn @click="add" class="elevation-0 transparent">
               <v-icon x-large class="blue--text text--lighten-2">add</v-icon>
             </v-btn>
           </v-flex>
+        </v-layout>
           <!-- PRICE (doesn't show up for some reason), CART, DESCRIP -->
           <v-flex d-flex xs12>
             <v-card class="elevation-0 transparent">
@@ -144,15 +146,17 @@
       quantity: function (context) {
         // If value entered is not a number, set validQuantity to false.
         // Otherwise, check if quantity is in range and set validQuantity accordingly.
-        if (isNaN(this.quantity)) {
-          console.log('false')
-          this.validQuantity = false
-        } else {
-          this.quantity = parseInt(this.quantity)
-          if (this.quantity > 0 && this.quantity < 100) {
-            this.validQuantity = true
-          } else {
+        if (this.quantity !== '') {
+          if (isNaN(this.quantity)) {
+            console.log('false')
             this.validQuantity = false
+          } else {
+            this.quantity = parseInt(this.quantity)
+            if (this.quantity > 0 && this.quantity < 100) {
+              this.validQuantity = true
+            } else {
+              this.validQuantity = false
+            }
           }
         }
       }

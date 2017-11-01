@@ -47,19 +47,30 @@
          
  
     <v-card-text>
-      <v-container class="pa-0">
-        <v-layout row wrap align-center>
-          <v-flex xs10 sm3 >
+      <v-container>
+        <v-layout row align-center justify-center>
+          <!-- breakpoint -->
+          <v-flex d-flex xs2>  
+            <v-card-text class="text-xs-center" position: relative>
+              <v-text-field
+                v-model="quantity"
+                class="input-group--focused"
+                :rules="[rules.isNumber, rules.max]"
+              >
+              </v-text-field>
+            </v-card-text>
           </v-flex>
-          <v-flex xs10 sm3 >
-            <v-text-field
+          <!-- <v-flex xs4 class="pr-3">
+            <v-text-field 
               name="Quantity"
-              label="1" 
+              label="1"
+              class="pl-0" 
               hint="Quantity"
               single-line
             ></v-text-field>
-          </v-flex>
-          <v-flex xs10 sm4 >
+          </v-flex> -->
+          <!-- Breakpoint -->
+          <v-flex xs5 class="pl-4">
            <v-card-actions>
            <v-btn flat color="red darken-2">Add To Cart</v-btn>
            </v-card-actions>
@@ -108,6 +119,14 @@
   // Refreshing the aisle page resets the store's state, meaning aisleProducts resets to empty so all products disappear.
   export default {
     data: () => ({
+      // Number of products to add to cart (also exists in product.vue, may need to merge later)
+      quantity: 1,
+      // Rules for textfield input
+      validQuantity: true,
+      rules: {
+        isNumber: (value) => !isNaN(value) || 'Quantity must be a number',
+        max: (value) => (isNaN(value) || value < 100) || 'Maximum value is 99'
+      },
       showMenu: false,
       items: [
         { title: 'Go To Recipe Page' },
@@ -132,6 +151,34 @@
     watch: {
       aisleName: function (context) {
         this.$store.dispatch('populateAisleProducts', this.aisleName)
+      },
+      quantity: function (context) {
+        if (this.quantity !== '') {
+          if (isNaN(this.quantity)) {
+            console.log('false')
+            this.validQuantity = false
+          } else {
+            this.quantity = parseInt(this.quantity)
+            if (this.quantity > 0 && this.quantity < 100) {
+              this.validQuantity = true
+            } else {
+              this.validQuantity = false
+            }
+          }
+        }
+      },
+      // The earliest a prop can be accessed in a Vue component's lifecycle is when it is mounted.
+      // So, when the component is mounted, populate the products in the aisle.
+      mounted () {
+        this.$store.dispatch('populateAisleProducts', this.aisleName)
+      }
+
+    },
+    beforeCreate () {
+      if (Object.keys(this.$store.state.productNames).length === 0) {
+        this.$store.dispatch('initializeStoreData').then(() => {
+          this.$store.dispatch('populateAisleProducts', this.aisleName)
+        })
       }
     },
     // The earliest a prop can be accessed in a Vue component's lifecycle is when it is mounted.

@@ -8,6 +8,8 @@ import Product from '@/components/items/product'
 import Aisle from '@/components/items/aisle'
 import RecommendedItems from '@/components/items/recItems'
 import Help from '@/components/items/help'
+import ContactUs from '@/components/items/contactUs'
+import SearchPage from '@/components/items/searchPage'
 
 Vue.use(Router)
 
@@ -46,6 +48,11 @@ export default new Router({
       props: true
     },
     {
+      path: '/search/',
+      name: 'SearchPage',
+      component: SearchPage
+    },
+    {
       path: '/recItems',
       name: 'recItems',
       component: RecommendedItems
@@ -54,6 +61,10 @@ export default new Router({
       path: '/help',
       name: 'help',
       component: Help
+    },
+      path: '/contactUs',
+      name: 'contactUs',
+      component: ContactUs
     }
   ],
   mode: 'history'
