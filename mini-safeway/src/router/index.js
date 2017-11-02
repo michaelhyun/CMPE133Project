@@ -62,6 +62,7 @@ export default new Router({
       name: 'help',
       component: Help
     },
+    {
       path: '/contactUs',
       name: 'contactUs',
       component: ContactUs
