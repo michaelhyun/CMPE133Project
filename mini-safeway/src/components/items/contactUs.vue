@@ -10,9 +10,7 @@
 						</v-layout>
 						<v-card-title primary-title class = "layout justify-center">
 							<div class = "headline text-xs-center">
-								<!-- <v-subheader class = "display-1 font-weight: 200">
-									{{"Visit Our HQ"}}
-								</v-subheader> -->
+							
 								<div>
 									<h2>
 										Visit Our HQ
