@@ -8,7 +8,6 @@ Vue.use(Vuex)
 // TODO: Refactor sidebar back into app.vue
 export const store = new Vuex.Store({
   state: {
-    shoppingCart: [ ],
     // Used for live search
     liveSearchQuery: '',
     liveSearch: false,
@@ -24,7 +23,7 @@ export const store = new Vuex.Store({
       { icon: 'history', text: 'Explore History', link: '/exploreHistory' },
       { icon: 'local_atm', text: 'Explore Savings', link: '/exploreSavings' },
       { icon: 'help', text: 'Help', link: '/help' },
-      { icon: 'chat_bubble', text: 'Contact Us', link: '/contactUs' }
+      { icon: 'chat_bubble', text: 'Contact Us', contactUs: true, link: '/contactUs' }
     ],
     showSidebar: false,
     // Promotions
@@ -56,17 +55,6 @@ export const store = new Vuex.Store({
   },
   // Synchronous
   mutations: {
-    addToCart (state, product) {
-      // const found = state.shoppingCart.find(p => p.itemName === product.name)
-      state.shoppingCart.push({
-        itemName: product,
-        quantity: product.quantity
-      })
-    },
-    removeFromCart (state, product) {
-      const index = state.shoppingCart.findIndex(shoppingCart => shoppingCart.itemName === product.name)
-      state.shoppingCart.splice(index, 1)
-    },
     // state.aisles mutations
     setAisles (state, aisles) {
       state.aisles = aisles
@@ -368,9 +356,6 @@ export const store = new Vuex.Store({
   },
   // Used for synchronous computations
   getters: {
-    getShoppingCart (state) {
-      return state.shoppingCart
-    },
     promotions (state) {
       return state.promotions
     },
