@@ -7,6 +7,7 @@ import Cart from '@/components/items/cart'
 import Checkout from '@/components/items/Checkout'
 import Product from '@/components/items/product'
 import Aisle from '@/components/items/aisle'
+import Help from '@/components/items/help'
 import RecommendedItems from '@/components/items/recItems'
 import ContactUs from '@/components/items/contactUs'
 import SearchPage from '@/components/items/searchPage'
@@ -56,6 +57,11 @@ export default new Router({
       path: '/search/',
       name: 'SearchPage',
       component: SearchPage
+    },
+    {
+      path: '/help',
+      name: 'help',
+      component: Help
     },
     {
       path: '/recItems',
