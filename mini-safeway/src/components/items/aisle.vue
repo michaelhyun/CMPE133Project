@@ -175,36 +175,6 @@
    </v-flex>
   </v-layout>
  </v-container>
-
-  <!-- Recipes -->
-  <v-container align-center>
-    <v-layout align-center>
-      <v-card-title primary-title class="layout justify-center">
-      <div class="headline text-xl-center">Recommended Recipes</div>
-      </v-card-title>
-    </v-layout>
-  </v-container>
-  
-  <!-- Right-click menu for Recipes -->
-  <template>
-    <v-layout d-flex justify-center>
-      <v-menu offset-y v-model="showMenu" absolute full-width>
-        <v-card class="portrait" img="https://d3cizcpymoenau.cloudfront.net/images/34864/SFS_Best_Beef_Stew-4.jpg" height="500px" slot="activator"></v-card>
-        <v-list>
-          <v-list-tile v-for="item in items" :key="item.title" @click="">
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
-    </v-layout>
-  </template>
-
-  <!-- Pagination -->
-  <template>
-    <div class="text-xs-center">
-      <v-pagination :length="4" v-model="page"></v-pagination>
-    </div>
-  </template>
   </v-content>
 </template>
 <script>
