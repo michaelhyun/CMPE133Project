@@ -10,6 +10,7 @@ import Aisle from '@/components/items/aisle'
 import RecommendedItems from '@/components/items/recItems'
 import ContactUs from '@/components/items/contactUs'
 import SearchPage from '@/components/items/searchPage'
+import Checkout from '@/components/items/checkout'
 
 Vue.use(Router)
 
@@ -66,6 +67,11 @@ export default new Router({
       path: '/contactUs',
       name: 'contactUs',
       component: ContactUs
+    },
+    {
+      path: '/checkout',
+      name: 'contactUs',
+      component: CheckOut
     }
   ],
   mode: 'history'

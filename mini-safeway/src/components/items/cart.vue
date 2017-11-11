@@ -142,6 +142,7 @@
               :loading="loading2"
               @click.native="loader = 'loading2'"
               :disabled="loading2"
+              :to="'/checkout'"
               >
                 Proceed to Checkout <br>
                 <v-icon>
