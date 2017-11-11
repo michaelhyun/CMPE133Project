@@ -23,9 +23,9 @@
 
       <!-- Product Cards (repeated for every product in the aisle) -->
       <v-flex
-        xs12 md3
-        v-for="product in products"
-        :key="product.name"
+        xs12 md4
+        v-for="(product,i) in products"
+        :key="i"
       >
         <v-card>
           <v-card
@@ -41,141 +41,52 @@
             <v-card-title class = "justify-center">
               {{product.name}}, ${{product.price}}
             </v-card-title>
-          </div>
-          <v-btn class = "justify-center" flat color="red darken-2">Add To Cart
-              </v-btn>
+          </div> 
         </v-card>
-          <v-card>
-
-            <v-layout row align-center justify-center>
-          <v-flex d-flex xs2>
-           <v-card-text class="text-xs-center" position: relative>
-
+        <v-card>
+          <v-layout row wrap justify-center align-center>
+            <!-- <v-flex xs6> -->
+            <v-flex xs3>
+              <v-btn
+                @click="subtract(i)"
+                class="elevation-0 transparent"
+                >
+                <v-icon>
+                  remove
+                </v-icon>
+              </v-btn>
+            </v-flex>
+            <v-flex xs3 ml-5>
               <v-text-field
-                v-model="quantity"
-                class="input-group--focused"
-                :rules="[rules.isNumber, rules.max]"
-              >
-              </v-text-field>
-            </v-card-text>
-          </v-flex>
-          <v-flex d-flex xs5 class = "pl-4">
-            <v-card-actions>
-              <v-btn flat color="red darken-2">Add To Cart
-              </v-btn>
-            </v-card-actions>
-          </v-flex>
-        </v-layout>
-        </v-card>
-          </v-card>
-          <!-- <v-text-field
-                v-model="quantity"
-                class="input-group--focused"
-                :rules="[rules.isNumber, rules.max]"
-              >
-              </v-text-field>
-          <v-card-actions>
-              <v-btn flat color="red darken-2">Add To Cart
-              </v-btn>
-            </v-card-actions> -->
-        </v-card>
-
-        <!-- <v-card>
-            <div>
-            <v-card-title class = "justify-center mb-">
-              {{product.name}}, ${{product.price}}
-            </v-card-title>
-          </div>
-          <v-flex d-flex xs2>
-          <v-text-field
-                v-model="quantity"
-                class="input-group--focused"
+                v-model="product.quantity"
                 :rules="[rules.isNumber, rules.max]"
               >
               </v-text-field>
             </v-flex>
-            <v-flex d-flex xs5 = "pl-4">
-              <v-card-actions>
-              <v-btn flat color="red darken-2">Add To Cart
-              </v-btn>
-            </v-card-actions>
-            </v-flex> 
-        </v-card> -->
-
-
-<!-- delete later -->
-        <!-- <v-card class = "elevation-0 transparent">
-          <div>
-            <v-card-title class = "justify-center">
-              {{product.name}}, ${{product.price}}
-            </v-card-title>
-          </div>
-        </v-card> -->
-          <!-- <v-card-title primary-title class="layout align- center justify-center mt-2">
-            
-          </v-card-title>
-          <v-card-actions>
-            <v-btn flat color="dark grey" class="layout justify-center">{{ product.name }}, ${{ product.price }}</v-btn>
-          </v-card-actions> -->
-        <!-- <v-layout row align-center justify-center>
-          <v-flex d-flex xs2>
-           <v-card-text class="text-xs-center" position: relative>
-              <v-text-field
-                v-model="quantity"
-                class="input-group--focused"
-                :rules="[rules.isNumber, rules.max]"
+            <!-- BUG: plus button sometimes adds "1" to the end of the quantity string instead of adding to the actual integer -->
+            <v-flex xs3 mr-4>
+              <v-btn
+              @click="add(i)"
+              class="elevation-0 transparent"
               >
-              </v-text-field>
-            </v-card-text>
-          </v-flex>
-          <v-flex d-flex xs5 class = "pl-4">
-            <v-card-actions>
-              <v-btn flat color="red darken-2">Add To Cart
+                <v-icon>
+                  radd
+                </v-icon>
               </v-btn>
-            </v-card-actions>
-          </v-flex>
-        </v-layout>
+            </v-flex>
+            <v-flex xs5>
+              <!-- BUG: addToCart method still not functional -->
+              <v-btn @click="addToCart(i)" class = "justify-center" flat color="red darken-2">Add To Cart
+              </v-btn>
+            </v-flex>
+          
+          </v-layout>
         </v-card>
-
-      </v-flex> -->
- 
-    <v-card-text>
-      <v-container>
-        <v-layout row align-center justify-center>
-          <!-- breakpoint -->
-          <v-flex d-flex xs2>  
-           <!--  <v-card-text class="text-xs-center" position: relative>
-              <v-text-field
-                v-model="quantity"
-                class="input-group--focused"
-                :rules="[rules.isNumber, rules.max]"
-              >
-              </v-text-field>
-            </v-card-text> -->
-          </v-flex>
-          <!-- <v-flex xs4 class="pr-3">
-            <v-text-field 
-              name="Quantity"
-              label="1"
-              class="pl-0" 
-              hint="Quantity"
-              single-line
-            ></v-text-field>
-          </v-flex> -->
-          <!-- Breakpoint -->
-          <v-flex xs5 class="pl-4">
-           <!-- <v-card-actions>
-           <v-btn flat color="red darken-2">Add To Cart</v-btn>
-           </v-card-actions> -->
-          </v-flex>                
-        </v-layout>
-      </v-container>
-    </v-card-text>
+        <!-- Recommended stuff at the bottom -->
    </v-card>
    </v-flex>
   </v-layout>
  </v-container>
-
   <!-- Recipes -->
   <v-container align-center>
     <v-layout align-center>
@@ -213,7 +124,7 @@
   export default {
     data: () => ({
       // Number of products to add to cart (also exists in product.vue, may need to merge later)
-      quantity: 1,
+      // quantity: 1,
       // Rules for textfield input
       validQuantity: true,
       rules: {
@@ -232,6 +143,28 @@
       ]
     }),
     props: ['aisleName'],
+    methods: {
+      addToCart (i) {
+        const p = {
+          name: this.products[i].name,
+          quantity: this.product[i].quantity,
+          imageSrc: this.product[i].imageSrc,
+          price: this.product[i].price
+        }
+        this.$store.commit('addToCart', p)
+      },
+      add (index) {
+        if (this.products[index].quantity < 100) {
+          this.products[index].quantity += 1
+        }
+      },
+      // method for - icon in Quantity
+      subtract (index) {
+        if (this.products[index].quantity > 1) {
+          this.products[index].quantity -= 1
+        }
+      }
+    },
     computed: {
       aisle () {
         return this.$store.getters.getAisle(this.aisleName)
@@ -240,7 +173,6 @@
         return this.$store.getters.getAisleProducts
       }
     },
-    // Whenever the user navigates to a different aisle, repopulate the products in the aisle.
     watch: {
       aisleName: function (context) {
         this.$store.dispatch('populateAisleProducts', this.aisleName)
@@ -265,7 +197,6 @@
       mounted () {
         this.$store.dispatch('populateAisleProducts', this.aisleName)
       }
-
     },
     beforeCreate () {
       if (Object.keys(this.$store.state.productNames).length === 0) {
@@ -281,3 +212,4 @@
     }
   }
 </script>
+
