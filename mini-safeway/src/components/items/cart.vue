@@ -203,7 +203,7 @@
       // *****Need to figure out how to keep state of quantity of products to add to cart (also exists in product.vue and aisle.vue)
       // Rules for textfield input
       promotionCode: '',
-      quantity: 1,
+      // quantity: 1,
       validQuantity: true,
       rules: {
         isNumber: (value) => !isNaN(value) || 'Quantity must be a number',
@@ -243,24 +243,5 @@
         this.products.splice(index, 1)
       }
     }
-    // constantly monitor textfield for incorrect inputs
-    // ****need to figure out how to modify product.quantity
-    // watch: {
-    //   quantity: function (context) {
-    //     if (this.product.quantity !== '') {
-    //       if (isNaN(this.product.quantity)) {
-    //         console.log('false')
-    //         this.validQuantity = false
-    //       } else {
-    //         this.product.quantity = parseInt(this.product.quantity)
-    //         if (this.product.quantity > 0 && this.product.quantity < 100) {
-    //           this.validQuantity = true
-    //         } else {
-    //           this.validQuantity = false
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
   }
 </script>

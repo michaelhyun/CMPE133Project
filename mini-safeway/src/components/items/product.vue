@@ -126,6 +126,11 @@
           })
       })
     },
+    computed: {
+      products () {
+        return this.$store.getters.getShoppingCart
+      }
+    },
     methods: {
       // Methods for quantity picker.
       add () {
