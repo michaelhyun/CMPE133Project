@@ -173,6 +173,31 @@
         return this.$store.getters.getAisleProducts
       }
     },
+    watch: {
+      aisleName: function (context) {
+        this.$store.dispatch('populateAisleProducts', this.aisleName)
+      },
+      quantity: function (context) {
+        if (this.quantity !== '') {
+          if (isNaN(this.quantity)) {
+            console.log('false')
+            this.validQuantity = false
+          } else {
+            this.quantity = parseInt(this.quantity)
+            if (this.quantity > 0 && this.quantity < 100) {
+              this.validQuantity = true
+            } else {
+              this.validQuantity = false
+            }
+          }
+        }
+      },
+      // The earliest a prop can be accessed in a Vue component's lifecycle is when it is mounted.
+      // So, when the component is mounted, populate the products in the aisle.
+      mounted () {
+        this.$store.dispatch('populateAisleProducts', this.aisleName)
+      }
+    },
     beforeCreate () {
       if (Object.keys(this.$store.state.productNames).length === 0) {
         this.$store.dispatch('initializeStoreData').then(() => {
@@ -187,3 +212,4 @@
     }
   }
 </script>
+
