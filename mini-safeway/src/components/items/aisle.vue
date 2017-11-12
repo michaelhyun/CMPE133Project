@@ -18,163 +18,18 @@
     </v-layout>
   </v-container>
 
-  <v-container grid-list-xl>
+  <v-container grid-list-xl fluid>
     <v-layout row wrap align-center>
-
       <!-- Product Cards (repeated for every product in the aisle) -->
       <v-flex
         xs12 md3
         v-for="product in products"
         :key="product.name"
       >
-        <v-card>
-          <v-card
-            @click=""
-            :to="'/product/' + product.name"
-          >
-          <v-card-media
-            :src="product.imageSrc"
-            height="200px"
-          >
-          </v-card-media>
-           <div>
-            <v-card-title class = "justify-center">
-              {{product.name}}, ${{product.price}}
-            </v-card-title>
-          </div>
-          <v-btn class = "justify-center" flat color="red darken-2">Add To Cart
-              </v-btn>
-        </v-card>
-          <v-card>
-
-            <v-layout row align-center justify-center>
-          <v-flex d-flex xs2>
-           <v-card-text class="text-xs-center" position: relative>
-
-              <v-text-field
-                v-model="quantity"
-                class="input-group--focused"
-                :rules="[rules.isNumber, rules.max]"
-              >
-              </v-text-field>
-            </v-card-text>
-          </v-flex>
-          <v-flex d-flex xs5 class = "pl-4">
-            <v-card-actions>
-              <v-btn flat color="red darken-2">Add To Cart
-              </v-btn>
-            </v-card-actions>
-          </v-flex>
-        </v-layout>
-        </v-card>
-          </v-card>
-          <!-- <v-text-field
-                v-model="quantity"
-                class="input-group--focused"
-                :rules="[rules.isNumber, rules.max]"
-              >
-              </v-text-field>
-          <v-card-actions>
-              <v-btn flat color="red darken-2">Add To Cart
-              </v-btn>
-            </v-card-actions> -->
-        </v-card>
-
-        <!-- <v-card>
-            <div>
-            <v-card-title class = "justify-center mb-">
-              {{product.name}}, ${{product.price}}
-            </v-card-title>
-          </div>
-          <v-flex d-flex xs2>
-          <v-text-field
-                v-model="quantity"
-                class="input-group--focused"
-                :rules="[rules.isNumber, rules.max]"
-              >
-              </v-text-field>
-            </v-flex>
-            <v-flex d-flex xs5 = "pl-4">
-              <v-card-actions>
-              <v-btn flat color="red darken-2">Add To Cart
-              </v-btn>
-            </v-card-actions>
-            </v-flex> 
-        </v-card> -->
-
-
-<!-- delete later -->
-        <!-- <v-card class = "elevation-0 transparent">
-          <div>
-            <v-card-title class = "justify-center">
-              {{product.name}}, ${{product.price}}
-            </v-card-title>
-          </div>
-        </v-card> -->
-          <!-- <v-card-title primary-title class="layout align- center justify-center mt-2">
-            
-          </v-card-title>
-          <v-card-actions>
-            <v-btn flat color="dark grey" class="layout justify-center">{{ product.name }}, ${{ product.price }}</v-btn>
-          </v-card-actions> -->
-        <!-- <v-layout row align-center justify-center>
-          <v-flex d-flex xs2>
-           <v-card-text class="text-xs-center" position: relative>
-              <v-text-field
-                v-model="quantity"
-                class="input-group--focused"
-                :rules="[rules.isNumber, rules.max]"
-              >
-              </v-text-field>
-            </v-card-text>
-          </v-flex>
-          <v-flex d-flex xs5 class = "pl-4">
-            <v-card-actions>
-              <v-btn flat color="red darken-2">Add To Cart
-              </v-btn>
-            </v-card-actions>
-          </v-flex>
-        </v-layout>
-        </v-card>
-
-      </v-flex> -->
- 
-    <v-card-text>
-      <v-container>
-        <v-layout row align-center justify-center>
-          <!-- breakpoint -->
-          <v-flex d-flex xs2>  
-           <!--  <v-card-text class="text-xs-center" position: relative>
-              <v-text-field
-                v-model="quantity"
-                class="input-group--focused"
-                :rules="[rules.isNumber, rules.max]"
-              >
-              </v-text-field>
-            </v-card-text> -->
-          </v-flex>
-          <!-- <v-flex xs4 class="pr-3">
-            <v-text-field 
-              name="Quantity"
-              label="1"
-              class="pl-0" 
-              hint="Quantity"
-              single-line
-            ></v-text-field>
-          </v-flex> -->
-          <!-- Breakpoint -->
-          <v-flex xs5 class="pl-4">
-           <!-- <v-card-actions>
-           <v-btn flat color="red darken-2">Add To Cart</v-btn>
-           </v-card-actions> -->
-          </v-flex>                
-        </v-layout>
-      </v-container>
-    </v-card-text>
-   </v-card>
-   </v-flex>
-  </v-layout>
- </v-container>
+        <productCard :productName="product.name"></productCard>
+      </v-flex>
+    </v-layout>
+  </v-container>
 
   <!-- Recipes -->
   <v-container align-center>
@@ -259,13 +114,7 @@
             }
           }
         }
-      },
-      // The earliest a prop can be accessed in a Vue component's lifecycle is when it is mounted.
-      // So, when the component is mounted, populate the products in the aisle.
-      mounted () {
-        this.$store.dispatch('populateAisleProducts', this.aisleName)
       }
-
     },
     beforeCreate () {
       if (Object.keys(this.$store.state.productNames).length === 0) {
