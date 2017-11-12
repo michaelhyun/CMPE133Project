@@ -20,7 +20,6 @@
 
   <v-container grid-list-xl>
     <v-layout row wrap align-center>
-
       <!-- Product Cards (repeated for every product in the aisle) -->
       <v-flex
         xs12 md4
@@ -163,11 +162,6 @@
             }
           }
         }
-      },
-      // The earliest a prop can be accessed in a Vue component's lifecycle is when it is mounted.
-      // So, when the component is mounted, populate the products in the aisle.
-      mounted () {
-        this.$store.dispatch('populateAisleProducts', this.aisleName)
       }
     },
     beforeCreate () {

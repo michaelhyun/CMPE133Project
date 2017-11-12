@@ -10,23 +10,7 @@
         v-for="product in products"
         :key="product.name"
       >
-        <v-card 
-          @click=""
-          :to="'/product/' + product.name"
-          class="elevation-0 transparent"
-        >
-          <v-card-media
-            :src="product.imageSrc"
-            height="200px"
-          >
-          </v-card-media>
-          <v-card-title primary-title class="layout justify-center">
-            <div class="text-xl-center">{{ product.name }}, ${{ product.price }}</div>
-          </v-card-title>
-          <v-card-actions>
-            <v-btn flat color="red" class="layout justify-center">Add To Cart</v-btn>
-          </v-card-actions>
-        </v-card>
+        <productCard :productName="product.name"></productCard>
       </v-flex>
     
     </v-layout>

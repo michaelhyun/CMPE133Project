@@ -5,6 +5,7 @@ import Vue from 'vue'
 // Import Components used by App
 import App from './App'
 import Sidebar from './components/core/sidebar'
+import ProductCard from './components/core/productCard'
 
 // Import VueX store and Vue-Router
 import router from './router'
@@ -35,6 +36,7 @@ Vue.use(Vuetify)
 
 // Register components
 Vue.component('sidebar', Sidebar)
+Vue.component('productCard', ProductCard)
 
 /* eslint-disable no-new */
 new Vue({

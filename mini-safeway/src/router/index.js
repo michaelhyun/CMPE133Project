@@ -11,6 +11,7 @@ import Help from '@/components/items/help'
 import RecommendedItems from '@/components/items/recItems'
 import ContactUs from '@/components/items/contactUs'
 import SearchPage from '@/components/items/searchPage'
+import Savings from '@/components/items/savings'
 
 Vue.use(Router)
 
@@ -72,6 +73,11 @@ export default new Router({
       path: '/contactUs',
       name: 'contactUs',
       component: ContactUs
+    },
+    {
+      path: '/savings',
+      name: 'savings',
+      component: Savings
     }
   ],
   mode: 'history'
