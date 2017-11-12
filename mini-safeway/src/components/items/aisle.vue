@@ -58,12 +58,11 @@
             </v-flex>
             <v-flex xs3 ml-5>
               <v-text-field
-                v-model="product.quantity"
+                v-model="quantities[i]"
                 :rules="[rules.isNumber, rules.max]"
               >
               </v-text-field>
             </v-flex>
-            <!-- BUG: plus button sometimes adds "1" to the end of the quantity string instead of adding to the actual integer -->
             <v-flex xs3 mr-4>
               <v-btn
               @click="add(i)"
@@ -75,8 +74,7 @@
               </v-btn>
             </v-flex>
             <v-flex xs5>
-              <!-- BUG: addToCart method still not functional -->
-              <v-btn @click="addToCart(i)" class = "justify-center" flat color="red darken-2">Add To Cart
+              <v-btn @click="addToCart(i)" class="justify-center" flat color="red darken-2">Add To Cart
               </v-btn>
             </v-flex>
           
@@ -140,28 +138,30 @@
         { title: 'Green Bean' },
         { title: 'Onion' },
         { title: 'Garlic' }
-      ]
+      ],
+      amounts: [ ]
     }),
     props: ['aisleName'],
     methods: {
       addToCart (i) {
         const p = {
           name: this.products[i].name,
-          quantity: this.product[i].quantity,
-          imageSrc: this.product[i].imageSrc,
-          price: this.product[i].price
+          quantity: this.quantities[i],
+          imageSrc: this.products[i].imageSrc,
+          price: this.products[i].price
         }
         this.$store.commit('addToCart', p)
       },
       add (index) {
-        if (this.products[index].quantity < 100) {
-          this.products[index].quantity += 1
+        if (this.quantities[index] < 99) {
+          this.quantities[index] += 1
         }
+        console.log(this.amounts)
       },
       // method for - icon in Quantity
       subtract (index) {
-        if (this.products[index].quantity > 1) {
-          this.products[index].quantity -= 1
+        if (this.quantities[index] > 1) {
+          this.quantities[index] -= 1
         }
       }
     },
@@ -171,23 +171,33 @@
       },
       products () {
         return this.$store.getters.getAisleProducts
+      },
+      quantities () {
+        if (this.amounts.length === 0 && this.products !== null && this.products !== undefined && this.products.length > 0) {
+          for (var i = 0; i < this.products.length; i++) {
+            this.amounts.push(1)
+          }
+        }
+        return this.amounts
       }
     },
     watch: {
       aisleName: function (context) {
         this.$store.dispatch('populateAisleProducts', this.aisleName)
       },
-      quantity: function (context) {
-        if (this.quantity !== '') {
-          if (isNaN(this.quantity)) {
-            console.log('false')
-            this.validQuantity = false
-          } else {
-            this.quantity = parseInt(this.quantity)
-            if (this.quantity > 0 && this.quantity < 100) {
-              this.validQuantity = true
-            } else {
+      quantities: function (context) {
+        for (var i = 0; i < this.quantities.length; i++) {
+          if (this.quantities[i] !== '') {
+            if (isNaN(this.quantities[i])) {
+              console.log('false')
               this.validQuantity = false
+            } else {
+              this.quantities[i] = parseInt(this.quantities[i])
+              if (this.quantities[i] > 0 && this.quantities[i] < 100) {
+                this.validQuantity = true
+              } else {
+                this.validQuantity = false
+              }
             }
           }
         }

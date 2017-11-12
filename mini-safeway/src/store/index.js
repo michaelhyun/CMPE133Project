@@ -57,9 +57,10 @@ export const store = new Vuex.Store({
   // Synchronous
   mutations: {
     addToCart (state, product) {
-      const index = state.shoppingCart.findIndex(shoppingCart => shoppingCart.itemName === product.name)
+      const index = state.shoppingCart.findIndex(shoppingCart => shoppingCart.name === product.name)
+      console.log(index)
       if (index > -1) {
-        state.shoppingCart[index] = product
+        state.shoppingCart[index].quantity += product.quantity
       } else {
         state.shoppingCart.push(product)
       }
