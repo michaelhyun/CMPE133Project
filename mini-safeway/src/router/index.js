@@ -4,12 +4,14 @@ import Home from '@/components/home'
 import Profile from '@/components/users/profile'
 import Register from '@/components/users/register'
 import Cart from '@/components/items/cart'
+import Checkout from '@/components/items/Checkout'
 import Product from '@/components/items/product'
 import Aisle from '@/components/items/aisle'
-import RecommendedItems from '@/components/items/recItems'
 import Help from '@/components/items/help'
+import RecommendedItems from '@/components/items/recItems'
 import ContactUs from '@/components/items/contactUs'
 import SearchPage from '@/components/items/searchPage'
+import Savings from '@/components/items/savings'
 
 Vue.use(Router)
 
@@ -36,6 +38,11 @@ export default new Router({
       component: Cart
     },
     {
+      path: '/checkout',
+      name: 'checkout',
+      component: Checkout
+    },
+    {
       path: '/aisles/:aisleName',
       name: 'Aisle',
       component: Aisle,
@@ -53,19 +60,24 @@ export default new Router({
       component: SearchPage
     },
     {
-      path: '/recItems',
-      name: 'recItems',
-      component: RecommendedItems
-    },
-    {
       path: '/help',
       name: 'help',
       component: Help
     },
     {
+      path: '/recItems',
+      name: 'recItems',
+      component: RecommendedItems
+    },
+    {
       path: '/contactUs',
       name: 'contactUs',
       component: ContactUs
+    },
+    {
+      path: '/savings',
+      name: 'savings',
+      component: Savings
     }
   ],
   mode: 'history'

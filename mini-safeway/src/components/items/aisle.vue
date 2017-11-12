@@ -18,7 +18,7 @@
     </v-layout>
   </v-container>
 
-  <v-container grid-list-xl fluid>
+  <v-container grid-list-xl>
     <v-layout row wrap align-center>
       <!-- Product Cards (repeated for every product in the aisle) -->
       <v-flex
