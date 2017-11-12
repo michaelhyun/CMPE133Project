@@ -71,7 +71,7 @@
                 ${{product.price}}
               </v-card-text>
               <v-card-actions>
-                <v-btn flat color="red" class="layout justify-center" :disabled="!validQuantity">Add To Cart</v-btn>
+                <v-btn flat @click="addToCart" color="red" class="layout justify-center" :disabled="!validQuantity">Add To Cart</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -126,6 +126,11 @@
           })
       })
     },
+    computed: {
+      products () {
+        return this.$store.getters.getShoppingCart
+      }
+    },
     methods: {
       // Methods for quantity picker.
       add () {
@@ -139,6 +144,16 @@
             this.quantity -= 1
           }
         }
+      },
+      // Adds an object with name, quantity, image, and price to the cart
+      addToCart () {
+        const p = {
+          name: this.product.name,
+          quantity: this.quantity,
+          imageSrc: this.product.imageSrc,
+          price: this.product.price
+        }
+        this.$store.commit('addToCart', p)
       }
     },
     watch: {

@@ -10,85 +10,84 @@
         			</div>
         		</v-card-title>
 	        	<v-list two-line>
-	        		<!-- <template 
-	        		v-for="product in products"
-	        		:key = "product.name"
-	        		> -->
-	        			<v-subheader>
-	        				<v-flex xs7> 
-	        				Items
-		        			</v-flex>
-		        			<v-flex xs4> 
-	        				Quantity
-		        			</v-flex>
-		        			<v-flex> 
-	        				Delete
-		        			</v-flex>
-	        			</v-subheader>
-	        			<spacer>
-	        			</spacer>
-	        			<v-flex
-	        			v-for="product in products"
-	        			:key="product.name"
-	        			pa-2 pl-3
-	        			>
-	        			<v-divider>
-	        			</v-divider>
-	        			<v-list-tile>
-	        				<!-- <v-flex pl-2 pr-2> -->
-	        				<v-list-tile-avatar>
-	        					<img v-bind:src="product.imageSrc">
-	        				</v-list-tile-avatar>
-	        				<v-list-tile-content>
-	        					<v-flex pt-3 pl-4>
-	        					<v-list-tile-title>
-	        				
-	    							{{ product.name }}
-	        					
-	        					<!-- <a href = '/product/'> -->
-	        						
-	        					<!-- </a> -->
-	        					</v-list-tile-title>
-	        					<v-list-tile-sub-title>
-	        							{{ product.price }}
-	        						</v-list-tile-sub-title>
-	        					</v-flex>
-	        				</v-list-tile-content>
-		        			<!-- </v-flex> -->
-		        		<v-btn
-		        		@click="subtract(product.quantity)"
-		        		class="elevation-0 transparent"
-		        		>
-			        		<v-icon>
-				        		remove
-				        	</v-icon>
-			        	</v-btn>
-			        	<v-text-field
-			        		v-model="product.quantity"
-			        		:rules="[rules.isNumber, rules.max]"
-		        		>
-			        	</v-text-field>
-			        	<v-btn
-		        		@click="add(product.quantity)"
-		        		class="elevation-0 transparent"
-		        		>
-			        		<v-icon>
-				        		radd
-				        	</v-icon>
-			        	</v-btn>
-	        			</v-btn>
-	        				<v-list-tile-action>
-	        					<v-btn xs-2 class="elevation-0 transparent">
-		        					<v-icon>
-		        						delete
-		        					</v-icon>
-		        				</v-btn>
-	        				</v-list-tile-action>
-	        			</v-list-tile>
+        			<v-subheader>
+        				<v-flex xs7> 
+        				  Items
+	        			</v-flex>
+	        			<v-flex xs4> 
+        				  Quantity
+	        			</v-flex>
+	        			<v-flex> 
+        				  Delete
+	        			</v-flex>
+        			</v-subheader>
+        			<spacer>
+        			</spacer>
+              <template v-for="(product, i) in products">
+        			<v-flex
+        			  :key="i"
+        			  pa-2 pl-3
+        			>
+        			  <v-divider>
+        			  </v-divider>
+        			  <v-list-tile>
+        				<!-- <v-flex pl-2 pr-2> -->
+        				 <v-list-tile-avatar>
+        					  <img v-bind:src="product.imageSrc">
+        				 </v-list-tile-avatar>
+        				 <v-list-tile-content>
+        					<v-flex pt-3 pl-4>
+        					<v-list-tile-title>
+        				
+    							  {{ product.name }}
+        					
+        					<!-- <a href = '/product/'> -->
+        						
+        					<!-- </a> -->
+        					</v-list-tile-title>
+        					<v-list-tile-sub-title>
+        							{{ product.price }}
+        						</v-list-tile-sub-title>
+        					</v-flex>
+        				</v-list-tile-content>
+	        			<!-- </v-flex> -->
+	        		<v-btn
+	        		@click="subtract(i)"
+	        		class="elevation-0 transparent"
+	        		>
+		        		<v-icon>
+			        		remove
+			        	</v-icon>
+		        	</v-btn>
+		        	<v-text-field
+		        		v-model="product.quantity"
+		        		:rules="[rules.isNumber, rules.max]"
+	        		>
+		        	</v-text-field>
+		        	<v-btn
+	        		@click="add(i)"
+	        		class="elevation-0 transparent"
+	        		>
+		        		<v-icon>
+			        		radd
+			        	</v-icon>
+		        	</v-btn>
+        				<v-list-tile-action>
+        					<v-btn
+                    xs-2
+                    class="elevation-0 transparent"
+                    @click="remove(i)"
+                  >
+	        					<v-icon>
+	        						delete
+	        					</v-icon>
+	        				</v-btn>
+        				</v-list-tile-action>
+        			</v-list-tile>
 	        		<!-- 	<v-divider>
 	        			</v-divider> -->
         		</v-flex>
-        		<!-- </template> -->
+          </template>
         	</v-list>
         	<template>
         		<v-footer>
@@ -143,6 +142,7 @@
               :loading="loading2"
               @click.native="loader = 'loading2'"
               :disabled="loading2"
+              :to="'/checkout'"
               >
                 Proceed to Checkout <br>
                 <v-icon>
@@ -204,64 +204,45 @@
       // *****Need to figure out how to keep state of quantity of products to add to cart (also exists in product.vue and aisle.vue)
       // Rules for textfield input
       promotionCode: '',
-      quantity: 1,
-      subTotal: 0,
+      // quantity: 1,
       validQuantity: true,
       rules: {
         isNumber: (value) => !isNaN(value) || 'Quantity must be a number',
         max: (value) => (isNaN(value) || value < 100) || 'Maximum value is 99'
       },
-      showMenu: false,
-      products: [
-        { name: 'Banana', imageSrc: 'https://www.organicfacts.net/wp-content/uploads/2013/05/Banana3-1020x765.jpg', price: '0.99', quantity: 3 },
-        { name: 'Banana', imageSrc: 'https://www.organicfacts.net/wp-content/uploads/2013/05/Banana3-1020x765.jpg', price: '0.99', quantity: 0 },
-        { name: 'Banana', imageSrc: 'https://www.organicfacts.net/wp-content/uploads/2013/05/Banana3-1020x765.jpg', price: '0.99', quantity: 12 },
-        { name: 'Banana', imageSrc: 'https://www.organicfacts.net/wp-content/uploads/2013/05/Banana3-1020x765.jpg', price: '0.99', quantity: 4 },
-        { name: 'Banana', imageSrc: 'https://www.organicfacts.net/wp-content/uploads/2013/05/Banana3-1020x765.jpg', price: '0.99', quantity: 'j' }
-      ]
+      showMenu: false
     }),
     computed: {
-      cart () {
+      // Products should be retrieved from the vuex store
+      products () {
         return this.$store.getters.getShoppingCart
+      },
+      // Subtotal calculated as the sum of each product's price times its quantity
+      subTotal () {
+        var total = 0
+        for (var i = this.products.length - 1; i >= 0; i--) {
+          total += this.products[i].price * this.products[i].quantity
+        }
+        // Round to two decimal places
+        return total.toFixed(2)
       }
     },
     methods: {
       // method for + icon in Quantity
-      add () {
-        if (this.validQuantity) {
-          // var p = product
-          this.p += 1
-          this.subTotal += this.p
+      add (index) {
+        if (this.products[index].quantity < 100) {
+          this.products[index].quantity += 1
         }
       },
       // method for - icon in Quantity
-      subtract () {
-        if (this.validQauntity) {
-          if (this.product.quantity !== 0) {
-            this.product.quantity -= 1
-            this.subTotal -= this.product.price
-          }
+      subtract (index) {
+        if (this.products[index].quantity > 1) {
+          this.products[index].quantity -= 1
         }
+      },
+      remove (index) {
+        this.products.splice(index, 1)
       }
     }
-    // constantly monitor textfield for incorrect inputs
-    // ****need to figure out how to modify product.quantity
-    // watch: {
-    //   quantity: function (context) {
-    //     if (this.product.quantity !== '') {
-    //       if (isNaN(this.product.quantity)) {
-    //         console.log('false')
-    //         this.validQuantity = false
-    //       } else {
-    //         this.product.quantity = parseInt(this.product.quantity)
-    //         if (this.product.quantity > 0 && this.product.quantity < 100) {
-    //           this.validQuantity = true
-    //         } else {
-    //           this.validQuantity = false
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
   }
 </script>
