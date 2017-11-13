@@ -10,6 +10,7 @@
           flat
           hover
           class="ma-0 pa-0"
+          height="300px"
         >
           <v-card-media
             contain
@@ -20,7 +21,7 @@
           </v-card-media>
           <v-card-title>
             <div class="text-xs-left">
-              <h6 class="my-0 pa-0 text-xs-left"> {{product.name}} <br></h6>
+              <h6 class="my-0 pa-0 text-xs-left"> {{name}} <br></h6>
               <p class="my-0 pa-0 text-xs-left"> Price per unit: ${{product.price}} </p>
             </div>
           </v-card-title>
@@ -77,6 +78,17 @@
       // Product card data retrieved from firebase
       product: { }
     }),
+    computed: {
+      name () {
+        var name = this.product.name
+        if (name === undefined || name === null || name.length < 25) {
+          return name
+        } else if (name.length <= 25) {
+          return name
+        }
+        return name.slice(0, 32) + '...'
+      }
+    },
     // Key for database (productName)
     props: ['productName'],
     methods: {
@@ -84,7 +96,7 @@
       addToCart () {
         const payload = {
           name: this.product.name,
-          quantity: this.quantity,
+          quantity: parseInt(this.quantity),
           imageSrc: this.product.imageSrc,
           price: this.product.price
         }

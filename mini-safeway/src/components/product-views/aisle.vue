@@ -18,6 +18,19 @@
     </v-layout>
   </v-container>
 
+  <!-- Sort -->
+  <v-container>
+    <v-flex xs7 offset-xs5 sm4 offset-sm8 lg2 offset-lg10>
+      <v-select
+        v-bind:items="sortOptions"
+        v-model="sort"
+        label="Sort by"
+        single-line
+        bottom
+      ></v-select>
+    </v-flex>
+  </v-container>
+
   <v-container grid-list-xl>
     <v-layout row wrap align-center>
       <!-- Product Cards (repeated for every product in the aisle) -->
@@ -84,7 +97,9 @@
         { title: 'Green Bean' },
         { title: 'Onion' },
         { title: 'Garlic' }
-      ]
+      ],
+      sortOptions: ['Sort by name', 'Sort by price'],
+      sort: 'Sort by name'
     }),
     props: ['aisleName'],
     computed: {
@@ -92,7 +107,13 @@
         return this.$store.getters.getAisle(this.aisleName)
       },
       products () {
-        return this.$store.getters.getAisleProducts
+        var products = this.$store.getters.getAisleProducts
+        if (this.sort === this.sortOptions[1]) {
+          products.sort((a, b) => a.price.localeCompare(b.price))
+        } else {
+          products.sort((a, b) => a.name.localeCompare(b.name))
+        }
+        return products
       }
     },
     // Whenever the user navigates to a different aisle, repopulate the products in the aisle.
