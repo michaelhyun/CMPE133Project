@@ -20,7 +20,7 @@ const getters = {
     return state.showSidebar
   },
   getSideBarListItems (state) {
-    return state.sideBarListObjects
+    return state.sideBarListItems
   }
 }
 
