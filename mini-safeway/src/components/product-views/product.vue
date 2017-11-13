@@ -1,35 +1,37 @@
 <template>
   <v-content>
-    <v-container fluid>
+    <v-container fluid grid-list-xl>
+      <h2 class="red--text text--darken-2 text-xs-center">{{ product.name }}</h2>
       <v-layout row wrap>
-
-      <!-- Product Image, Name, and Description -->
-        <v-flex xs12 md4>
+        <!-- Product Image, Name, and Description -->
+        <v-flex xs12 md8>
           <v-card>
-            <v-card-media :src="product.imageSrc" height="400" width="400"></v-card-media>
+            <v-card-media contain :src="product.imageSrc" height="300" width="300"></v-card-media>
           </v-card>
+
           <v-card>
-            <v-card-title primary-title class="layout justify-center">
-              <div class="headline text-xs-center">
-                <v-subheader class = "display-1 font-weight: 200" v-if="product.name">
-                {{ product.name }}
-                </v-subheader>
-              </div>
+            <v-card-title primary-title>
+              <div>
+                <h6
+                  v-if="product.description"
+                  class="ma-0 pa-0 text-xs-left"
+                >
+                Description <br>
+                </h6>
+                <p
+                  v-if="product.description"
+                  class="ma-0 pa-0 text-xs-left"
+                >
+                {{ product.description }}
+                </p>
+              </div> 
             </v-card-title>
-            <v-card-text>
-              <v-subheader
-                v-if="product.description"
-                class="justify-center"
-              >
-              {{ product.description }}
-              </v-subheader>
-            </v-card-text>
           </v-card>
         </v-flex>
 
       <!-- QUANTITY, PRICE, ADD TO CART -->
       <!-- TITLE -->
-      <v-flex d-flex xs12 md8>
+      <v-flex d-flex xs12 md4>
         <v-layout row wrap>
           <v-flex d-flex xs12>
             <v-card class="elevation-0 transparent layout justify-center">
@@ -38,32 +40,20 @@
               </v-card-title>
             </v-card> 
           </v-flex>
-          <!-- Remove Icon -->
           <v-layout row justify-center>
-          <v-flex d-flex xs2>
-            <v-btn @click="subtract" class="elevation-0 transparent">
-              <v-icon x-large class="blue--text text--lighten-2" @click="add">remove
-              </v-icon>
-            </v-btn>
-          </v-flex>
-          <!-- QUANTITY -->
-          <v-flex d-flex xs2>  
-            <v-card-text class="text-xs-center" position: relative>
-              <v-text-field
-                v-model="quantity"
-                class="input-group--focused"
-                :rules="[rules.isNumber, rules.max]"
-              >
-              </v-text-field>
-            </v-card-text>
-          </v-flex>
-          <!-- Add Icon -->
-          <v-flex d-flex xs2>
-            <v-btn @click="add" class="elevation-0 transparent">
-              <v-icon x-large class="blue--text text--lighten-2">add</v-icon>
-            </v-btn>
-          </v-flex>
-        </v-layout>
+            <!-- QUANTITY -->
+            <v-flex d-flex xs2>  
+              <v-card-text class="text-xs-center" position: relative>
+                <v-text-field
+                  v-model="quantity"
+                  type="number"
+                  class="input-group--focused"
+                  :rules="[rules.isNumber, rules.max]"
+                >
+                </v-text-field>
+              </v-card-text>
+            </v-flex>
+          </v-layout>
           <!-- PRICE (doesn't show up for some reason), CART, DESCRIP -->
           <v-flex d-flex xs12>
             <v-card class="elevation-0 transparent">
@@ -71,7 +61,15 @@
                 ${{product.price}}
               </v-card-text>
               <v-card-actions>
-                <v-btn flat @click="addToCart" color="red" class="layout justify-center" :disabled="!validQuantity">Add To Cart</v-btn>
+                <v-btn
+                  @click="addToCart"
+                  flat
+                  color="red"
+                  class="layout justify-center"
+                  :disabled="!validQuantity"
+                >
+                  Add To Cart
+                </v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -87,10 +85,10 @@
   export default {
     // As of now, the current design for a product is:
     //
-    // product: {
-    //   name: String
+    // productName: {
     //   price: String
     //   description: String
+    //   imageURL: String
     // }
     //
     // The final version of this should be empty because firebase will handle the values for this model.
@@ -126,34 +124,15 @@
           })
       })
     },
-    computed: {
-      products () {
-        return this.$store.getters.getShoppingCart
-      }
-    },
     methods: {
-      // Methods for quantity picker.
-      add () {
-        if (this.validQuantity) {
-          this.quantity += 1
-        }
-      },
-      subtract () {
-        if (this.validQuantity) {
-          if (this.quantity > 1) {
-            this.quantity -= 1
-          }
-        }
-      },
-      // Adds an object with name, quantity, image, and price to the cart
       addToCart () {
-        const p = {
+        const payload = {
           name: this.product.name,
           quantity: this.quantity,
           imageSrc: this.product.imageSrc,
           price: this.product.price
         }
-        this.$store.commit('addToCart', p)
+        this.$store.commit('addToCart', payload)
       }
     },
     watch: {
@@ -173,6 +152,8 @@
               this.validQuantity = false
             }
           }
+        } else {
+          this.validQuantity = false
         }
       }
     }

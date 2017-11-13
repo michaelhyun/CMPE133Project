@@ -5,7 +5,7 @@
       <v-layout justify-center >
         <v-flex xs12 lg10>
           <v-carousel hide-controls>
-            <v-carousel-item v-for="(item,i) in items" v-bind:src="item.src" :key="i"></v-carousel-item>
+            <v-carousel-item v-for="(promotion, i) in promotions" v-bind:src="promotion.src" :key="i"></v-carousel-item>
           </v-carousel>
         </v-flex>
       </v-layout>
@@ -15,20 +15,20 @@
       <v-layout row wrap>
         <v-flex
           v-bind="{ [`lg4`]: true, [`xs12`]: true }"
-          v-for="card in cards"
-          :key="card.name"
+          v-for="aisle in aisles"
+          :key="aisle.name"
         >
           <v-card
             @click=""
-            :to="'/aisles/' + card.name">
+            :to="'/aisles/' + aisle.name">
             <v-card-media
-              :src="card.imageSrc"
+              :src="aisle.imageSrc"
               height="200px"
             >
               <v-container fill-height fluid>
                 <v-layout fill-height>
                   <v-flex xs12 align-end flexbox>
-                    <span class="headline white--text" style="text-shadow: 1px 1px 1px #000000;" v-text="card.name"></span>
+                    <span class="headline white--text" style="text-shadow: 1px 1px 1px #000000;" v-text="aisle.name"></span>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -43,11 +43,11 @@
 <script>
   export default {
     computed: {
-      cards () {
-        return this.$store.state.aisles
+      aisles () {
+        return this.$store.getters.getAisles
       },
-      items () {
-        return this.$store.state.promotions
+      promotions () {
+        return this.$store.getters.promotions
       }
     }
   }
