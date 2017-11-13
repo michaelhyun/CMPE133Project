@@ -61,7 +61,15 @@
                 ${{product.price}}
               </v-card-text>
               <v-card-actions>
-                <v-btn flat color="red" class="layout justify-center" :disabled="!validQuantity">Add To Cart</v-btn>
+                <v-btn
+                  @click="addToCart"
+                  flat
+                  color="red"
+                  class="layout justify-center"
+                  :disabled="!validQuantity"
+                >
+                  Add To Cart
+                </v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -118,6 +126,13 @@
     },
     methods: {
       addToCart () {
+        const payload = {
+          name: this.product.name,
+          quantity: this.quantity,
+          imageSrc: this.product.imageSrc,
+          price: this.product.price
+        }
+        this.$store.commit('addToCart', payload)
       }
     },
     watch: {

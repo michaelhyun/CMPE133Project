@@ -44,7 +44,7 @@
                   ></v-text-field>
               </v-flex>
               <v-flex xs8>
-                <v-btn :disabled="!validQuantity" class="my-0 py-0 justify-center" color="white--text red darken-2" small>Add To Cart</v-btn>
+                <v-btn @click="addToCart" :disabled="!validQuantity" class="my-0 py-0 justify-center" color="white--text red darken-2" small>Add To Cart</v-btn>
               </v-flex>
             </v-layout>
           </v-card-text>
@@ -82,6 +82,13 @@
     methods: {
       // Methods for quantity picker.
       addToCart () {
+        const payload = {
+          name: this.product.name,
+          quantity: this.quantity,
+          imageSrc: this.product.imageSrc,
+          price: this.product.price
+        }
+        this.$store.commit('addToCart', payload)
       }
     },
     watch: {
