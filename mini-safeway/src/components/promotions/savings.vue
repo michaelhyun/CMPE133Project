@@ -1,4 +1,6 @@
 <template>
+  <v-content>
+  <v-container fluid>
 
   <v-tabs fluid dark fixed centered>
     <!--  Top bar -->
@@ -6,7 +8,7 @@
         height="200px" class="layout justify-center">
       </v-card-media>
       <v-tabs-bar class="red darken-1">
-      <v-tabs-slider color="yellow"></v-tabs-slider>
+      <v-tabs-slider color="red accent-1"></v-tabs-slider>
       <v-tabs-item
         v-for="(tabmenu, i) in tabmenus"
         :key="i"
@@ -184,6 +186,8 @@
 
     </v-tabs-items>
   </v-tabs>
+</v-container>
+</v-content>
 </template>
 
 <script>
