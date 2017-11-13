@@ -1,12 +1,20 @@
 import { firebase } from '../../../firebase'
 
 const state = {
-  user: null
+  user: null,
+  loading: false,
+  error: null,
 }
 
 const getters = {
   user (state) {
     return state.user
+  },
+  loading (state) {
+    return state.loading
+  },
+  error (state) {
+    return state.error
   }
 }
 
@@ -83,12 +91,24 @@ const actions = {
   logout ({commit}) {
     firebase.auth().signOut()
     commit('setUser', null)
+  },
+  clearError ({commit}) {
+    commit('clearError')
   }
 }
 
 const mutations = {
   setUser (state, payload) {
     state.user = payload
+  },
+  setLoading (state, payload) {
+    state.loading = payload
+  },
+  setError (state, payload) {
+    state.error = payload
+  },
+  clearError (state) {
+    state.error = null
   }
 }
 

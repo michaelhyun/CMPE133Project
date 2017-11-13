@@ -1,5 +1,5 @@
 const state = {
-  sideBarListObjects: [
+  sideBarListItems: [
     {
       icon: 'keyboard_arrow_up',
       'icon-alt': 'keyboard_arrow_down',
@@ -19,7 +19,7 @@ const getters = {
   getShowSidebar (state) {
     return state.showSidebar
   },
-  getSideBarListObjects (state) {
+  getSideBarListItems (state) {
     return state.sideBarListObjects
   }
 }
