@@ -1,5 +1,3 @@
-
-
 <template>
 
   <v-tabs fluid dark fixed centered>
