@@ -13,16 +13,17 @@ const actions = {
 
 const mutations = {
   addToCart (state, product) {
-    // const found = state.shoppingCart.find(p => p.itemName === product.name)
-    state.shoppingCart.push({
-      itemName: product,
-      quantity: product.quantity
-    })
+    const index = state.shoppingCart.findIndex(shoppingCart => shoppingCart.name === product.name)
+    console.log(index)
+    if (index > -1) {
+      state.shoppingCart[index].quantity += product.quantity
+    } else {
+      state.shoppingCart.push(product)
+    }
   },
-  removeFromCart (state, product) {
-    const index = state.shoppingCart.findIndex(shoppingCart => shoppingCart.itemName === product.name)
+  removeFromCart (state, index) {
     state.shoppingCart.splice(index, 1)
-  }
+  },
 }
 
 export default {
