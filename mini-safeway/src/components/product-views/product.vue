@@ -128,7 +128,7 @@
       addToCart () {
         const payload = {
           name: this.product.name,
-          quantity: this.quantity,
+          quantity: parseInt(this.quantity),
           imageSrc: this.product.imageSrc,
           price: this.product.price
         }

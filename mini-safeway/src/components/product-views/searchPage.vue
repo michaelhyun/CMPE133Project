@@ -1,6 +1,16 @@
 <template>
   <v-content>
-
+  <v-container>
+    <v-flex xs7 offset-xs5 sm4 offset-sm8 lg2 offset-lg10>
+      <v-select
+        v-bind:items="sortOptions"
+        v-model="sort"
+        label="Sort by"
+        single-line
+        bottom
+      ></v-select>
+    </v-flex>
+  </v-container>
   <v-container grid-list-xl>
     <v-layout row wrap align-center>
 
@@ -26,9 +36,21 @@
   // Known issues:
   // Refreshing the aisle page resets the store's state, meaning aisleProducts resets to empty so all products disappear.
   export default {
+    data () {
+      return {
+        sortOptions: ['Sort by name', 'Sort by price'],
+        sort: 'Sort by name'
+      }
+    },
     computed: {
       products () {
-        return this.$store.getters.getSearchQueryProducts
+        var products = this.$store.getters.getSearchQueryProducts
+        if (this.sort === this.sortOptions[1]) {
+          products.sort((a, b) => a.price.localeCompare(b.price))
+        } else {
+          products.sort((a, b) => a.name.localeCompare(b.name))
+        }
+        return products
       },
       liveSearchQuery () {
         return this.$store.getters.getLiveSearchQuery

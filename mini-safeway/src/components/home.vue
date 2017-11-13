@@ -44,7 +44,9 @@
   export default {
     computed: {
       aisles () {
-        return this.$store.getters.getAisles
+        var aisles = this.$store.getters.getAisles
+        aisles.sort((a, b) => a.name.localeCompare(b.name))
+        return aisles
       },
       promotions () {
         return this.$store.getters.promotions

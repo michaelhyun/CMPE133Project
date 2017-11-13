@@ -10,7 +10,6 @@
           flat
           hover
           class="ma-0 pa-0"
-          height="300px"
         >
           <v-card-media
             contain
@@ -21,7 +20,7 @@
           </v-card-media>
           <v-card-title>
             <div class="text-xs-left">
-              <h6 class="my-0 pa-0 text-xs-left"> {{name}} <br></h6>
+              <h6 class="my-0 pa-0 text-xs-left"> {{product.name}} <br></h6>
               <p class="my-0 pa-0 text-xs-left"> Price per unit: ${{product.price}} </p>
               <p v-if="product.clubSavings"> Club Savings: ${{product.clubSavings}} </p>
             </div>
@@ -39,7 +38,7 @@
               <v-flex xs4>
                 <v-text-field
                   auto-grow
-                  v-model="quantity"
+                  v-model="product.quantity"
                   type="number"
                   class="my-0 py-0 mx-4 px-2 input-group--focused"
                   :rules="[rules.isNumber, rules.max, rules.min]"
@@ -66,7 +65,6 @@
     data: () => ({
       // text-field view-model
       // Rules for text-field input
-      quantity: 1,
       validQuantity: true,
       rules: {
         isNumber: (value) => !isNaN(value) || 'Value must be a number',
@@ -74,31 +72,24 @@
         max: (value) => (isNaN(value) || value < 100) || 'Must be less than 99'
       },
       // Product card data retrieved from firebase
-      product: { }
+      product: { quantity: 1 }
     }),
-    computed: {
-      name () {
-        var name = this.product.name
-        if (name === undefined || name === null || name.length < 25) {
-          return name
-        } else if (name.length <= 25) {
-          return name
-        }
-        return name.slice(0, 32) + '...'
-      }
-    },
     // Key for database (productName)
     props: ['productName'],
     methods: {
       // Methods for quantity picker.
       addToCart () {
+<<<<<<< HEAD
+        this.$store.commit('addToCart', this.product)
+=======
         const payload = {
           name: this.product.name,
-          quantity: parseInt(this.quantity),
+          quantity: this.quantity,
           imageSrc: this.product.imageSrc,
           price: this.product.price
         }
         this.$store.commit('addToCart', payload)
+>>>>>>> b4a7e237200955d5df6473abea1daa0b506f8c74
       }
     },
     watch: {
