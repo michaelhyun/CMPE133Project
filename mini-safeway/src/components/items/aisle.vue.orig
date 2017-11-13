@@ -1,0 +1,283 @@
+<template>
+  <v-content>
+  
+  <v-container align-center>
+    <v-layout align-center>
+      <!-- Header image -->
+      <v-flex>
+      <v-card-media src="https://www.soilassociation.org/media/10124/creditablepluscole.jpg?anchor=center&mode=crop&width=1903&height=479&rnd=131318177090000000"
+      	height="80px" class="layout justify-center">
+      </v-card-media>	
+
+      <!-- Aisle Title -->
+      <v-card-title primary-title class="layout justify-center">
+      <div class="headline text-xl-center">{{ aisle.name }}</div>
+      </v-card-title>
+      </v-flex>
+    
+    </v-layout>
+  </v-container>
+
+  <v-container grid-list-xl fluid>
+    <v-layout row wrap align-center>
+      <!-- Product Cards (repeated for every product in the aisle) -->
+      <v-flex
+        xs12 md3
+        v-for="product in products"
+        :key="product.name"
+      >
+<<<<<<< HEAD
+        <productCard :productName="product.name"></productCard>
+      </v-flex>
+    </v-layout>
+  </v-container>
+
+  <!-- Recipes -->
+  <v-container align-center>
+    <v-layout align-center>
+      <v-card-title primary-title class="layout justify-center">
+      <div class="headline text-xl-center">Recommended Recipes</div>
+      </v-card-title>
+    </v-layout>
+  </v-container>
+  
+  <!-- Right-click menu for Recipes -->
+  <template>
+    <v-layout d-flex justify-center>
+      <v-menu offset-y v-model="showMenu" absolute full-width>
+        <v-card class="portrait" img="https://d3cizcpymoenau.cloudfront.net/images/34864/SFS_Best_Beef_Stew-4.jpg" height="500px" slot="activator"></v-card>
+        <v-list>
+          <v-list-tile v-for="item in items" :key="item.title" @click="">
+            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+    </v-layout>
+  </template>
+
+  <!-- Pagination -->
+  <template>
+    <div class="text-xs-center">
+      <v-pagination :length="4" v-model="page"></v-pagination>
+    </div>
+  </template>
+=======
+        <v-card>
+          <v-card
+            @click=""
+            :to="'/product/' + product.name"
+          >
+          <v-card-media
+            :src="product.imageSrc"
+            height="200px"
+          >
+          </v-card-media>
+           <div>
+            <v-card-title class = "justify-center">
+              {{product.name}}, ${{product.price}}
+            </v-card-title>
+          </div>
+          <v-btn class = "justify-center" flat color="red darken-2">Add To Cart
+              </v-btn>
+        </v-card>
+          <v-card>
+
+            <v-layout row align-center justify-center>
+          <v-flex d-flex xs2>
+           <v-card-text class="text-xs-center" position: relative>
+
+              <v-text-field
+                v-model="quantity"
+                class="input-group--focused"
+                :rules="[rules.isNumber, rules.max]"
+              >
+              </v-text-field>
+            </v-card-text>
+          </v-flex>
+          <v-flex d-flex xs5 class = "pl-4">
+            <v-card-actions>
+              <v-btn flat color="red darken-2">Add To Cart
+              </v-btn>
+            </v-card-actions>
+          </v-flex>
+        </v-layout>
+        </v-card>
+          </v-card>
+          <!-- <v-text-field
+                v-model="quantity"
+                class="input-group--focused"
+                :rules="[rules.isNumber, rules.max]"
+              >
+              </v-text-field>
+          <v-card-actions>
+              <v-btn flat color="red darken-2">Add To Cart
+              </v-btn>
+            </v-card-actions> -->
+        </v-card>
+
+        <!-- <v-card>
+            <div>
+            <v-card-title class = "justify-center mb-">
+              {{product.name}}, ${{product.price}}
+            </v-card-title>
+          </div>
+          <v-flex d-flex xs2>
+          <v-text-field
+                v-model="quantity"
+                class="input-group--focused"
+                :rules="[rules.isNumber, rules.max]"
+              >
+              </v-text-field>
+            </v-flex>
+            <v-flex d-flex xs5 = "pl-4">
+              <v-card-actions>
+              <v-btn flat color="red darken-2">Add To Cart
+              </v-btn>
+            </v-card-actions>
+            </v-flex> 
+        </v-card> -->
+
+
+<!-- delete later -->
+        <!-- <v-card class = "elevation-0 transparent">
+          <div>
+            <v-card-title class = "justify-center">
+              {{product.name}}, ${{product.price}}
+            </v-card-title>
+          </div>
+        </v-card> -->
+          <!-- <v-card-title primary-title class="layout align- center justify-center mt-2">
+            
+          </v-card-title>
+          <v-card-actions>
+            <v-btn flat color="dark grey" class="layout justify-center">{{ product.name }}, ${{ product.price }}</v-btn>
+          </v-card-actions> -->
+        <!-- <v-layout row align-center justify-center>
+          <v-flex d-flex xs2>
+           <v-card-text class="text-xs-center" position: relative>
+              <v-text-field
+                v-model="quantity"
+                class="input-group--focused"
+                :rules="[rules.isNumber, rules.max]"
+              >
+              </v-text-field>
+            </v-card-text>
+          </v-flex>
+          <v-flex d-flex xs5 class = "pl-4">
+            <v-card-actions>
+              <v-btn flat color="red darken-2">Add To Cart
+              </v-btn>
+            </v-card-actions>
+          </v-flex>
+        </v-layout>
+        </v-card>
+
+      </v-flex> -->
+ 
+    <v-card-text>
+      <v-container>
+        <v-layout row align-center justify-center>
+          <!-- breakpoint -->
+          <v-flex d-flex xs2>  
+           <!--  <v-card-text class="text-xs-center" position: relative>
+              <v-text-field
+                v-model="quantity"
+                class="input-group--focused"
+                :rules="[rules.isNumber, rules.max]"
+              >
+              </v-text-field>
+            </v-card-text> -->
+          </v-flex>
+          <!-- <v-flex xs4 class="pr-3">
+            <v-text-field 
+              name="Quantity"
+              label="1"
+              class="pl-0" 
+              hint="Quantity"
+              single-line
+            ></v-text-field>
+          </v-flex> -->
+          <!-- Breakpoint -->
+          <v-flex xs5 class="pl-4">
+           <!-- <v-card-actions>
+           <v-btn flat color="red darken-2">Add To Cart</v-btn>
+           </v-card-actions> -->
+          </v-flex>                
+        </v-layout>
+      </v-container>
+    </v-card-text>
+   </v-card>
+   </v-flex>
+  </v-layout>
+ </v-container>
+>>>>>>> b1be04627197b74109740781714b3c139f0abcc9
+  </v-content>
+</template>
+<script>
+  // Known issues:
+  // Refreshing the aisle page resets the store's state, meaning aisleProducts resets to empty so all products disappear.
+  export default {
+    data: () => ({
+      // Number of products to add to cart (also exists in product.vue, may need to merge later)
+      quantity: 1,
+      // Rules for textfield input
+      validQuantity: true,
+      rules: {
+        isNumber: (value) => !isNaN(value) || 'Quantity must be a number',
+        max: (value) => (isNaN(value) || value < 100) || 'Maximum value is 99'
+      },
+      showMenu: false,
+      items: [
+        { title: 'Go To Recipe Page' },
+        { title: 'Potato' },
+        { title: 'Beef' },
+        { title: 'Carrot' },
+        { title: 'Green Bean' },
+        { title: 'Onion' },
+        { title: 'Garlic' }
+      ]
+    }),
+    props: ['aisleName'],
+    computed: {
+      aisle () {
+        return this.$store.getters.getAisle(this.aisleName)
+      },
+      products () {
+        return this.$store.getters.getAisleProducts
+      }
+    },
+    // Whenever the user navigates to a different aisle, repopulate the products in the aisle.
+    watch: {
+      aisleName: function (context) {
+        this.$store.dispatch('populateAisleProducts', this.aisleName)
+      },
+      quantity: function (context) {
+        if (this.quantity !== '') {
+          if (isNaN(this.quantity)) {
+            console.log('false')
+            this.validQuantity = false
+          } else {
+            this.quantity = parseInt(this.quantity)
+            if (this.quantity > 0 && this.quantity < 100) {
+              this.validQuantity = true
+            } else {
+              this.validQuantity = false
+            }
+          }
+        }
+      }
+    },
+    beforeCreate () {
+      if (Object.keys(this.$store.state.productNames).length === 0) {
+        this.$store.dispatch('initializeStoreData').then(() => {
+          this.$store.dispatch('populateAisleProducts', this.aisleName)
+        })
+      }
+    },
+    // The earliest a prop can be accessed in a Vue component's lifecycle is when it is mounted.
+    // So, when the component is mounted, populate the products in the aisle.
+    mounted () {
+      this.$store.dispatch('populateAisleProducts', this.aisleName)
+    }
+  }
+</script>
