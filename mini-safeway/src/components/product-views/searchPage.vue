@@ -6,11 +6,15 @@
 
       <!-- Product Cards (repeated for every product in the search) -->
       <v-flex
-        xs12 md3
+        xs12 md4 lg3
         v-for="product in products"
         :key="product.name"
       >
         <productCard :productName="product.name"></productCard>
+      </v-flex>
+
+      <v-flex xs12 v-if="products.length==0">
+        <h2> Search returned 0 results </h2>
       </v-flex>
     
     </v-layout>
@@ -42,7 +46,7 @@
     // (maybe it's because the refresh includes the route prop?).
     beforeCreate () {
       this.$store.dispatch('toggleLiveSearch')
-      if (Object.keys(this.$store.state.productNames).length === 0) {
+      if (Object.keys(this.$store.getters.getProductNames).length === 0) {
         this.$store.dispatch('initializeStoreData').then(() => {
           this.$store.dispatch('populateSearchQueryProducts', this.liveSearchQuery)
         })
