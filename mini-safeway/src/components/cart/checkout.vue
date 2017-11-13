@@ -3,12 +3,7 @@
     <v-container fluid fill-height>
       <v-layout justify-center align-top >
         <v-flex xs12 sm10>
-<<<<<<< HEAD:mini-safeway/src/components/items/checkout.vue
           <v-card flat class= "mb-2">
-=======
-          <v-card flat>
-            <!-- Snackbar for "Registration Success" -->
->>>>>>> d825d717a778bdb3ad38611504f4c8a0c5fb63e9:mini-safeway/src/components/cart/checkout.vue
             <v-snackbar
               v-model="snackbar"
               absolute
@@ -19,179 +14,12 @@
               <span>Registration successful!</span>
               <v-icon dark>check_circle</v-icon>
             </v-snackbar>
-
-            <!-- Form -->
             <v-form @submit.prevent="submit" ref="form">
               <v-container grid-list-xl fluid>
-<<<<<<< HEAD:mini-safeway/src/components/items/checkout.vue
                 <v-layout wrap class="mb-2">
-=======
-                <v-layout wrap>
-                  <!-- Shipping Information Form -->
-                  <v-expansion-panel expand popout>
-                    <v-expansion-panel-content>
-                      <div slot="header">1. Shipping Information</div>
-                        <!-- Shipping Information Text-Fields -->
-                        <v-flex xs12 sm6>
-                          <v-text-field
-                            color="red darken-2"
-                            label="First name"
-                            required
-                            v-model="form.first"
-                            :rules="rules.name"
-                          ></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6>
-                          <v-text-field
-                            color="red darken-2"
-                            label="Last name"
-                            v-model="form.last"
-                            required
-                            :rules="rules.name"
-                          ></v-text-field>
-                        </v-flex>
-                        <v-flex xs12>
-                          <v-text-field
-                            label="Address Line"
-                            hint="Address must be less than 25 characters"
-                            :rules="rules.name"
-                            v-model="form.address"
-                            ref="address"
-                            counter="25"
-                            required
-                          ></v-text-field>
-                        </v-flex>
-                        <v-flex>
-                          <v-text-field
-                            label="City"
-                            :rules="rules.name"
-                            v-model="form.city"
-                            ref="city"
-                            required
-                          ></v-text-field>
-                        </v-flex>
-                        <v-flex>
-                          <v-text-field
-                            label="State/Province/Region"
-                            v-model="form.state"
-                            :rules="rules.name"
-                            required
-                            ref="form.state"
-                          ></v-text-field>
-                        </v-flex>
-                        <v-flex>
-                          <v-text-field
-                            label="ZIP / Postal Code"
-                            required
-                            :rules="rules.name"
-                            v-model="form.zip"
-                            ref="zip"
-                          ></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 >
-                          <v-text-field
-                            color="red darken-2"
-                            label="Email Address"
-                            required
-                            v-model="form.email"
-                            type="email"
-                          ></v-text-field>
-                        </v-flex>
-                        <v-flex xs12>
-                          <v-text-field
-                            label="Phone Number"
-                            v-model="form.phone"
-                            :rules="rules.phone"
-                            required
-                          ></v-text-field>
-                        </v-flex>
-                        <!-- Shipping Information Submit Button -->
-                        <v-flex xs12>
-                          <v-btn
-                          color="error">
-                            Proceed to Payment Information
-                          </v-btn>
-                        </v-flex>
-                      </v-expansion-panel-content>
 
-                      <!-- Payment Information Form -->
-                      <v-expansion-panel-content>
-                        <div slot="header">2. Payment Information</div>
-                          <!-- Payment Information Text-Fields -->
-                          <v-flex xs12 sm6>
-                            <v-text-field
-                              color="red darken-2"
-                              label="First Name On Card"
-                              required
-                              v-model="form.cardFirst"
-                              :rules="rules.name"
-                            ></v-text-field>
-                          </v-flex>
-                          <v-flex xs12 sm6>
-                            <v-text-field
-                              color="red darken-2"
-                              label="Last Name On Card"
-                              v-model="form.cardLast"
-                              required
-                              :rules="rules.name"
-                            ></v-text-field>
-                          </v-flex>
-                          <v-flex xs12>
-                            <v-text-field
-                              label="Credit Card Number"
-                              :rules="rules.name"
-                              v-model="form.creditCardNumber"
-                              ref="creditCardNumber"
-                              counter="16"
-                              required
-                            ></v-text-field>
-                          </v-flex>
-                          <v-flex xs12 sm5>
-                            <v-text-field
-                              label="Expiration Date"
-                              placeholder = 'MM/YY'
-                              :rules="rules.name"
-                              v-model="form.expiration"
-                              ref="expiration"
-                              required
-                            ></v-text-field>
-                          </v-flex>
-                          <v-flex xs12 sm3>
-                            <v-text-field
-                              label="CVV"
-                              v-model="form.cvv"
-                              :rules="rules.name"
-                              required
-                             ></v-text-field>
-                          </v-flex>
-                          <v-flex xs12 sm4>
-                            <v-text-field
-                              label="ZIP / Postal Code"
-                              required
-                              :rules="rules.name"
-                              v-model="form.zip"
-                              ref="zip"
-                            ></v-text-field>
-                          </v-flex>
-                          <!-- Payment Information Submit Button -->
-                          <v-flex xs12>
-                            <v-btn
-                            color="error">
-                              Proceed to Order Summary
-                            </v-btn>
-                          </v-flex>
-                        </v-expansion-panel-content>
 
-                        <!-- Order Summary -->
-                        <v-expansion-panel-content>
-                          <div slot="header">3. Order Summary</div>
-                        </v-expansion-panel-content>
-                      </v-expansion-panel>
->>>>>>> d825d717a778bdb3ad38611504f4c8a0c5fb63e9:mini-safeway/src/components/cart/checkout.vue
-
-                      Alternative
-
-                      <v-flex xs12>
+<v-flex xs12>
                     <span class="title">1. Shipping Information</span>
                     </v-flex>
                <v-expansion-panel expand popout>
