@@ -109,6 +109,12 @@ const mutations = {
   },
   clearError (state) {
     state.error = null
+  },
+  // vivian
+  updateEmail (state, payload) {
+    state.user.updateEmail('payload').then(function () { console.log('update successful') }).catch(function () {
+      console.log('update failed')
+    })
   }
 }
 

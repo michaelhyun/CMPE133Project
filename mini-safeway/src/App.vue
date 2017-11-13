@@ -32,7 +32,7 @@
       <v-btn v-if="!userSignedIn" icon to="/register">
         <v-icon>person_add</v-icon>
       </v-btn>
-      <v-btn v-if="!userSignedIn" icon @click.stop="login = !login">
+      <v-btn v-if="!userSignedIn" icon @click.stop="loginDialog = true">
         <v-icon>lock_open</v-icon>
       </v-btn>
       <v-btn v-if="userSignedIn" icon to="/profile">
@@ -41,12 +41,23 @@
       <v-btn v-if="userSignedIn" icon @click="onLogout">
         <v-icon>exit_to_app</v-icon>
       </v-btn>
+      <v-snackbar
+        :timeout="3000"
+        :top="y===top"
+        :right="x===right"
+        v-model="userSignedIn"
+      >
+      Successful Login
+      <v-btn flat color = "red" @click.native="loginSuccessMessage">
+        Close
+      </v-btn>
+    </v-snackbar>
     </v-toolbar>
     <!-- Views Template -->
     <main>
       <router-view></router-view>
     </main>
-    <v-dialog v-model="login" width="400px">
+    <v-dialog v-model="loginDialog" width="400px">
       <v-card>
         <v-card-title
           class="secondary py-4 title"
@@ -80,10 +91,18 @@
               </v-layout>
               <v-layout row>
                 <v-flex xs12>
-                  <v-btn flat color="primary">Forgot Password?</v-btn>
-                  <v-spacer></v-spacer>
-                  <v-btn flat color="primary" @click="login = false">Cancel</v-btn>
-                  <v-btn type="submit" :disabled="loading" :loading="loading">
+                  <v-btn flat color="primary">Forgot Password?
+                  </v-btn>
+                  <v-spacer>
+                  </v-spacer>
+                  <v-btn flat color="primary" 
+                  @click="loginDialog = false">
+                  Cancel
+                  </v-btn>
+                  <v-btn flat color="green"
+                  type="submit" 
+                  :disabled="loading" 
+                  :loading="loading">
                     Sign in
                      <span slot="loader" class="custom-loader">
                       <v-icon light>cached</v-icon>
@@ -106,7 +125,8 @@
       drawerItemsName: 'shopItems',
       email: '',
       password: '',
-      login: false
+      loginDialog: false,
+      loginSuccessMessage: false
     }),
     computed: {
       showSidebar () {
@@ -142,8 +162,11 @@
           email: this.email,
           password: this.password
         })
-        this.login = false
+        this.loginDialog = false
         console.log(this.userSignedIn)
+        if (this.userSignedIn) {
+          this.loginSuccessMessage = true
+        }
       },
       onDismissed () {
         this.$store.dispatch('clearError')
