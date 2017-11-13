@@ -3,7 +3,7 @@ import { firebase } from '../../../firebase'
 const state = {
   user: null,
   loading: false,
-  error: null,
+  error: null
 }
 
 const getters = {

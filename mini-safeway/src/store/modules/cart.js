@@ -23,7 +23,7 @@ const mutations = {
   },
   removeFromCart (state, index) {
     state.shoppingCart.splice(index, 1)
-  },
+  }
 }
 
 export default {
