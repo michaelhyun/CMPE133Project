@@ -18,9 +18,7 @@ import Savings from '@/components/promotions/savings'
 import Help from '@/components/info/help'
 import ContactUs from '@/components/info/contactUs'
 import OrderConfirmation from '@/components/cart/orderConfirmation'
-
 Vue.use(Router)
-
 export default new Router({
   routes: [
     {
