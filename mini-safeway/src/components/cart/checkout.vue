@@ -188,7 +188,81 @@
     <v-expansion-panel-content v-bind:
        </div>
 
-products here
+
+
+            <!-- Column Headers -->
+            <v-flex xs12>
+            <v-list two-line>
+              <v-subheader>
+                <v-flex xs12> 
+                  Items
+                </v-flex>
+                <v-flex> 
+                  Quantity
+                </v-flex>
+                
+              </v-subheader>
+              <v-spacer>
+              </v-spacer>
+
+              <!-- Product List -->
+              <template v-for="(product, i) in products">
+                <v-flex
+                  :key="i"
+                  pa-2 pl-3
+                >
+                  <v-divider>
+                  </v-divider>
+                  <!-- Product Row -->
+                  <v-list-tile>
+                    <!-- Product Image, Name, and Price -->
+                    <v-list-tile-avatar>
+                      <img v-bind:src="product.imageSrc">
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                      <v-flex pt-3 pl-4>
+                        <v-list-tile-title>
+                          {{ product.name }}
+                        </v-list-tile-title>
+                        <v-list-tile-sub-title>
+                          {{ product.price }}
+                        </v-list-tile-sub-title>
+                      </v-flex>
+                    </v-list-tile-content>
+
+                    <!-- Quantity Picker -->
+                    
+                    <div align="justify-right">
+                      {{product.quantity}}
+                    </div>
+                   
+                        
+                      </v-btn>
+                    </v-list-tile-action>
+                  </v-list-tile>
+                </v-flex>
+              </template>
+            </v-list>
+</v-flex>
+
+            <!-- Subtotal Row -->
+            <template>
+              <v-footer>
+                <v-flex class="text-xs-left" pa-3>
+                  <div>
+                    Subtotal: 
+                  </div>
+                </v-flex>
+                <v-flex class="text-xs-right" pa-3>
+                  <div>
+                     $ {{ subTotal }}
+                  </div>
+                </v-flex>
+              </v-footer>
+            </template>
+          
+
+          
       
                        
     </v-expansion-panel-content>
@@ -203,24 +277,9 @@ products here
     </v-container>
    
             </v-list-tile-content>
-              </v-flex>     
-             
-             <v-container fluid fill-height>
-      <v-layout justify-right align-bottom>
-              <v-flex xs12 >
+              
                 <div>
-              <v-btn
-              color="success"
-              :loading="loading2"
-              @click.native="loader = 'loading2'"
-              :disabled="loading2"
-              >
-                Place Order <br>
-                <v-icon>
-                  send
-                </v-icon>
-                <span slot="loader">Please Wait...</span>
-              </v-btn>
+             
             </div>
             </v-flex>
           </v-layout>
@@ -229,6 +288,24 @@ products here
         </v-container>
           <!-- </v-container> -->
         <!-- </v-flex> -->
+
+        <v-flex xs4 class="layout justify-center">
+                  <div>
+                    <v-btn
+                    color="success"
+                    :loading="loading2"
+                    @click.native="loader = 'loading2'"
+                    :disabled="loading2"
+                    :to="'/orderConfirmation'"
+                    >
+                      Place Order <br>
+                      <v-icon>
+                        send
+                      </v-icon>
+                      <span slot="loader">Please Wait...</span>
+                    </v-btn>
+                  </div>
+                </v-flex>
             </v-list-tile>
 
             
@@ -267,8 +344,20 @@ products here
       days: [{ text: 'Day 1' }, { text: 'Day 2' }, { text: 'Day 3' }, { text: 'Day 4' }],
       snackbar: false
     }),
-
     computed: {
+      // Products should be retrieved from the vuex store
+      products () {
+        return this.$store.getters.getShoppingCart
+      },
+      // Subtotal calculated as the sum of each product's price times its quantity
+      subTotal () {
+        var total = 0
+        for (var i = this.products.length - 1; i >= 0; i--) {
+          total += this.products[i].price * this.products[i].quantity
+        }
+        // Round to two decimal places
+        return total.toFixed(2)
+      },
       user () {
         return this.$store.getters.user
       },
