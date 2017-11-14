@@ -41,14 +41,28 @@
       <v-btn v-if="userSignedIn" icon @click="onLogout">
         <v-icon>exit_to_app</v-icon>
       </v-btn>
+      <!-- Snackbar Popup to indicate Successful Login -->
       <v-snackbar
         :timeout="3000"
         :top="y===top"
         :right="x===right"
         v-model="userSignedIn"
+        v-if="loginSuccessMessage"
       >
-      Successful Login
-      <v-btn flat color = "red" @click.native="loginSuccessMessage">
+      User Login Successful
+      <v-btn flat color = "red" @click.native="loginSuccessMessage = false">
+        Close
+      </v-btn>
+    </v-snackbar>
+    <!-- Snackbar Popup to indicate User Logged Out -->
+    <v-snackbar
+        :timeout="3000"
+        :top="y===top"
+        :right="x===right"
+        v-model="logoutMessage"
+      >
+      User Logged Out
+      <v-btn flat color = "red" @click.native="logoutMessage = false">
         Close
       </v-btn>
     </v-snackbar>
@@ -126,7 +140,8 @@
       email: '',
       password: '',
       loginDialog: false,
-      loginSuccessMessage: false
+      loginSuccessMessage: false,
+      logoutMessage: false
     }),
     computed: {
       showSidebar () {
@@ -164,9 +179,10 @@
         })
         this.loginDialog = false
         console.log(this.userSignedIn)
-        if (this.userSignedIn) {
-          this.loginSuccessMessage = true
-        }
+        this.loginSuccessMessage = true
+        // if (this.userSignedIn) {
+        //   this.loginSuccessMessage = true
+        // }
       },
       onDismissed () {
         this.$store.dispatch('clearError')
@@ -174,6 +190,7 @@
       onLogout () {
         this.$store.dispatch('logout')
         this.$router.push('/')
+        this.logoutMessage = true
       }
     },
     mounted () {

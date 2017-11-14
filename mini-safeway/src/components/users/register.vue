@@ -5,7 +5,7 @@
         <v-flex xs12 sm10>
 		      <v-card flat>
             <v-snackbar
-              v-model="sucessMessage"
+              v-model="successMessage"
               absolute
               top
               right
@@ -163,7 +163,7 @@
         phone: [val => (val || '').length > 9 || 'Phone/Club card number is too short']
       },
       types: [{ text: 'Club Card' }, { text: 'Phone Number' }],
-      sucessMessage: false
+      successMessage: false
     }),
 
     computed: {
@@ -205,7 +205,7 @@
         this.$refs.form.reset()
       },
       submit () {
-        this.sucessMessage = true
+        this.successMessage = true
         this.$store.dispatch('registerUser', {
           first: this.form.first,
           last: this.form.last,
