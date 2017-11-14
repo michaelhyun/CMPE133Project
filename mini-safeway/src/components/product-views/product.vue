@@ -13,7 +13,8 @@
               <div class="red--text text--darken-2">
                 <b>
               Aisles >> 
-              <a href="'/aisles/ {{product.aisle}}">
+              <!-- Fix This Link Binding -->
+              <a href="'/aisles/">
               {{ product.aisle }}
               </a>
                 </b>
