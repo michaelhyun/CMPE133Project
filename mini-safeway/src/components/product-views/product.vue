@@ -1,82 +1,115 @@
 <template>
   <v-content>
-    <v-container fluid grid-list-xl>
-      <h2 class="red--text text--darken-2 text-xs-center">{{ product.name }}</h2>
-      <v-layout row wrap>
-        <!-- Product Image, Name, and Description -->
-        <v-flex xs12 md8>
-          <v-card>
-            <v-card-media contain :src="product.imageSrc" height="300" width="300"></v-card-media>
-          </v-card>
-
-          <v-card>
-            <v-card-title primary-title>
-              <div>
-                <h6
-                  v-if="product.description"
-                  class="ma-0 pa-0 text-xs-left"
-                >
-                Description <br>
-                </h6>
-                <p
-                  v-if="product.description"
-                  class="ma-0 pa-0 text-xs-left"
-                >
-                {{ product.description }}
-                </p>
-              </div> 
-            </v-card-title>
-          </v-card>
-        </v-flex>
-
-      <!-- QUANTITY, PRICE, ADD TO CART -->
-      <!-- TITLE -->
-      <v-flex d-flex xs12 md4>
-        <v-layout row wrap>
-          <v-flex d-flex xs12>
-            <v-card class="elevation-0 transparent layout justify-center">
-              <v-card-title primary-title>
-                <div class="headline">Quantity</div>
-              </v-card-title>
-            </v-card> 
-          </v-flex>
-          <v-layout row justify-center>
-            <!-- QUANTITY -->
-            <v-flex d-flex xs2>  
-              <v-card-text class="text-xs-center" position: relative>
-                <v-text-field
-                  v-model="quantity"
-                  type="number"
-                  class="input-group--focused"
-                  :rules="[rules.isNumber, rules.max]"
-                >
-                </v-text-field>
-              </v-card-text>
-            </v-flex>
-          </v-layout>
-          <!-- PRICE (doesn't show up for some reason), CART, DESCRIP -->
-          <v-flex d-flex xs12>
+    <v-container fluid grid-list-sm pa-5>
+      <v-card pt-5>
+      <v-layout row wrap pt-5>
+        <v-flex d-flex xs12 order-xs5 pt-5>
+          <v-layout column>
+            <v-card xs12 class="elevation-0 transparent">
+              <h4 class="red--text text--darken-2 text-xs-center">{{ product.name }}</h4>
+            </v-card>
+            <v-layout row>
+            <v-flex xs6>
             <v-card class="elevation-0 transparent">
-              <v-card-text class="text-xs-center">
-                ${{product.price}}
+            <v-card-media contain :src="product.imageSrc" height="300" width="300"></v-card-media>
+            </v-card>
+            <v-divider>
+            </v-divider>
+            <v-layout row>
+              <v-flex>
+                <v-card class="elevation-0 transparent">
+                  <v-card-title primary-title>
+                    <div>
+                      <h6
+                        v-if="product.description"
+                        class="ma-0 pa-0 text-xs-left"
+                      >
+                      Description <br>
+                      </h6>
+                      <p
+                        v-if="product.description"
+                        class="ma-0 pa-0 text-xs-left"
+                      >
+                      {{ product.description }}
+                      </p>
+                    </div> 
+                  </v-card-title>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-flex>
+          <v-flex xs6>
+            <v-card class="elevation-0 transparent">
+              <v-card-text class="text-xs-center" position: relative>
+                <v-card-title primary-title class = "text-xs-center">
+                  <v-card-text class="text-xs-center" position: relative>
+                    <div class = "headline">
+                    <v-card-text class="text-xs-center">
+                    ${{product.price}}
+                    </v-card-text>
+                  </div>
+                  per unit {{ product.unit }}
+                    <!-- <div class="headline"> -->
+                  
+                  
+                  <!-- </div> -->
+                  </v-card-text>
+                </v-card-title>
+                <v-divider>
+                  </v-divider>
+                <v-layout justify-center>
+
+                <v-flex xs2>
+                  <!-- Quantity: -->
+                  <br>
+                  <br>
+                  Quantity:
+                  <v-text-field
+                    v-model="quantity"
+                    type="number"
+                    class="input-group--focused"
+                    :rules="[rules.isNumber, rules.max]"
+                  >
+                  </v-text-field>
+                </v-flex>
+              </v-layout>
               </v-card-text>
-              <v-card-actions>
-                <v-btn
-                  @click="addToCart"
-                  flat
-                  color="red"
-                  class="layout justify-center"
-                  :disabled="!validQuantity"
-                >
-                  Add To Cart
-                </v-btn>
-              </v-card-actions>
+              <v-divider>
+                  </v-divider>
+              <!-- </v-card-text> -->
+              <v-layout row>
+              <v-flex>
+                <!-- <v-flex d-flex> -->
+
+                <v-card class="elevation-0 transparent">
+                  <v-card-actions>
+                    <v-btn
+                      @click="addToCart"
+                      flat
+                      color="red"
+                      class="layout justify-center"
+                      :disabled="!validQuantity"
+                    >
+                      Add To Cart
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+          <!-- </v-flex> -->
+              </v-flex>
+            </v-layout>
             </v-card>
           </v-flex>
-        </v-layout>
-      </v-flex>
-
+          </v-layout>
+          </v-layout>
+        </v-flex>
+        <v-flex d-flex xs12 sm7>
+          <v-layout row wrap>
+            <v-flex d-flex>
+            </v-flex>
+          </v-layout>
+        </v-flex>
       </v-layout>
+  </v-card>
     </v-container>
   </v-content>
 </template>
