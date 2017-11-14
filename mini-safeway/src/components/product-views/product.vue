@@ -1,23 +1,38 @@
 <template>
   <v-content>
     <v-container fluid grid-list-sm pa-5>
+      <v-layout justify-center>
+      <v-flex xs12>
       <v-card pt-5>
       <v-layout row wrap pt-5>
-        <v-flex d-flex xs12 order-xs5 pt-5>
-          <v-layout column>
-            <v-card xs12 class="elevation-0 transparent">
-              <h4 class="red--text text--darken-2 text-xs-center">{{ product.name }}</h4>
-            </v-card>
-            <v-layout row>
-            <v-flex xs6>
-            <v-card class="elevation-0 transparent">
+        <v-flex d-flex>
+          <v-layout column pa-3>
+            <v-flex pb-3>
+              <!-- Header -->
+              <v-flex pb-3>
+              <div class="red--text text--darken-2">
+                <b>
+              Aisles >> 
+              <a href="'/aisles/ {{product.aisle}}">
+              {{ product.aisle }}
+              </a>
+                </b>
+              </div>
+              </v-flex>
+              <v-card>
+                <h4 class="red--text text--darken-2 text-xs-center">{{ product.name }}</h4>
+              </v-card>
+            </v-flex>
+            <!-- Stuff Under Header -->
+            <v-layout align-center justify-space-around row>
+            <v-flex pa-3 xs6>
+            <!-- Left Side Under Header -->
+            <v-card>
             <v-card-media contain :src="product.imageSrc" height="300" width="300"></v-card-media>
-            </v-card>
             <v-divider>
             </v-divider>
             <v-layout row>
               <v-flex>
-                <v-card class="elevation-0 transparent">
                   <v-card-title primary-title>
                     <div>
                       <h6
@@ -34,13 +49,15 @@
                       </p>
                     </div> 
                   </v-card-title>
-                </v-card>
               </v-flex>
             </v-layout>
+          </v-card>
           </v-flex>
-          <v-flex xs6>
-            <v-card class="elevation-0 transparent">
+          <!-- Right Side Under Header -->
+          <v-flex xs5>
+            <v-card>
               <v-card-text class="text-xs-center" position: relative>
+                <!-- Product Price -->
                 <v-card-title primary-title class = "text-xs-center">
                   <v-card-text class="text-xs-center" position: relative>
                     <div class = "headline">
@@ -48,13 +65,11 @@
                     ${{product.price}}
                     </v-card-text>
                   </div>
-                  per unit {{ product.unit }}
-                    <!-- <div class="headline"> -->
-                  
-                  
-                  <!-- </div> -->
+                  per unit
+                  <!-- {{ product.unit }} -->
                   </v-card-text>
                 </v-card-title>
+                <!-- Quantity -->
                 <v-divider>
                   </v-divider>
                 <v-layout justify-center>
@@ -74,13 +89,11 @@
                 </v-flex>
               </v-layout>
               </v-card-text>
+              <!-- Add To Cart Button -->
               <v-divider>
-                  </v-divider>
-              <!-- </v-card-text> -->
+              </v-divider>
               <v-layout row>
               <v-flex>
-                <!-- <v-flex d-flex> -->
-
                 <v-card class="elevation-0 transparent">
                   <v-card-actions>
                     <v-btn
@@ -94,7 +107,6 @@
                     </v-btn>
                   </v-card-actions>
                 </v-card>
-          <!-- </v-flex> -->
               </v-flex>
             </v-layout>
             </v-card>
@@ -102,14 +114,10 @@
           </v-layout>
           </v-layout>
         </v-flex>
-        <v-flex d-flex xs12 sm7>
-          <v-layout row wrap>
-            <v-flex d-flex>
-            </v-flex>
-          </v-layout>
-        </v-flex>
       </v-layout>
   </v-card>
+</v-flex>
+</v-layout>
     </v-container>
   </v-content>
 </template>
@@ -152,7 +160,8 @@
               name: self.productName, // Not necessary (can just use the prop productName), but adding just to be safe
               price: productDetails.price,
               description: productDetails.description,
-              imageSrc: url
+              imageSrc: url,
+              aisle: productDetails.aisles[0]
             }
           })
       })
