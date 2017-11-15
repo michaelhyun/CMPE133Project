@@ -46,7 +46,13 @@
     computed: {
       products () {
         console.log(this.$store.getters.loadedOrders)
-        return this.$store.getters.loadedOrders
+        var products = this.$store.getters.loadedOrders
+        if (this.sort === this.sortOptions[1]) {
+          products.sort((a, b) => a.price.localeCompare(b.price))
+        } else {
+          products.sort((a, b) => a.name.localeCompare(b.name))
+        }
+        return products
       }
     },
     // Watchers for when a new search is entered.
