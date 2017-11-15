@@ -389,6 +389,7 @@
       },
       addToOrderHistory () {
         this.$store.dispatch('addToOrderHistory', this.$store.getters.getShoppingCart)
+        this.$store.dispatch('retrieveOrderHistory')
       },
       submit () {
         this.snackbar = true

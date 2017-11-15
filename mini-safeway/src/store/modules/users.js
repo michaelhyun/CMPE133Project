@@ -75,6 +75,7 @@ const actions = {
           }
           commit('setUser', newUser)
           console.log('Welcome, user ' + newUser.id)
+          this.$store.dispatch('retrieveOrderHistory')
         }
       )
       .catch(

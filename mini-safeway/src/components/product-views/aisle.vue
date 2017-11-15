@@ -11,7 +11,7 @@
 
       <!-- Aisle Title -->
       <v-card-title primary-title class="layout justify-center">
-      <div class="headline text-xl-center">{{ aisle.name }}</div>
+      <h2>{{ aisle.name }}</h2>
       </v-card-title>
       </v-flex>
     
