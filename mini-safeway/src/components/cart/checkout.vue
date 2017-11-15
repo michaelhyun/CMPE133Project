@@ -291,27 +291,18 @@
 
         <v-flex xs4 class="layout justify-center">
                   <div>
-                    <v-btn
-                    color="success"
-                    :loading="loading2"
-                    @click.native="loader = 'loading2'"
-                    :disabled="loading2"
-                    :to="'/orderConfirmation'"
-                    >
+                    <v-btn @click='addToOrderHistory'
+                    color="success">
                       Place Order <br>
                       <v-icon>
                         send
                       </v-icon>
-                      <span slot="loader">Please Wait...</span>
                     </v-btn>
                   </div>
                 </v-flex>
             </v-list-tile>
-
-            
           </v-flex>
         </v-card>
-     
         </v-flex>
       </v-layout>
     </v-container>
@@ -395,6 +386,9 @@
       resetForm () {
         this.form = Object.assign({}, defaultForm)
         this.$refs.form.reset()
+      },
+      addToOrderHistory () {
+        this.$store.dispatch('addToOrderHistory', this.$store.getters.getShoppingCart)
       },
       submit () {
         this.snackbar = true
