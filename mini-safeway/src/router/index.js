@@ -12,14 +12,14 @@ import Checkout from '@/components/cart/checkout'
 import Product from '@/components/product-views/product'
 import Aisle from '@/components/product-views/aisle'
 import SearchPage from '@/components/product-views/searchPage'
+import exploreHistory from '@/components/product-views/exploreHistory'
 // Promotions Components
 import Savings from '@/components/promotions/savings'
 // Info Components
 import Help from '@/components/info/help'
 import ContactUs from '@/components/info/contactUs'
-
+import OrderConfirmation from '@/components/cart/orderConfirmation'
 Vue.use(Router)
-
 export default new Router({
   routes: [
     {
@@ -70,6 +70,11 @@ export default new Router({
       component: Help
     },
     {
+      path: '/exploreHistory',
+      name: 'exploreHistory',
+      component: exploreHistory
+    },
+    {
       path: '/contactUs',
       name: 'contactUs',
       component: ContactUs
@@ -78,6 +83,11 @@ export default new Router({
       path: '/savings',
       name: 'savings',
       component: Savings
+    },
+    {
+      path: '/orderConfirmation',
+      name: 'orderConfirmation',
+      component: OrderConfirmation
     }
   ],
   mode: 'history'

@@ -1,5 +1,11 @@
 <template>
   <v-content>
+      <v-flex xs12 v-if="products.length!=0">
+        <h2 primary-title class="layout justify-center"> Order History </h2>
+      </v-flex>
+      <v-flex xs12 v-if="products.length==0">
+        <h2> Must have a Purchase History to use this feature </h2>
+      </v-flex>
   <v-container>
     <v-flex xs7 offset-xs5 sm4 offset-sm8 lg2 offset-lg10>
       <v-select
@@ -11,9 +17,9 @@
       ></v-select>
     </v-flex>
   </v-container>
+
   <v-container grid-list-xl>
     <v-layout row wrap align-center>
-
       <!-- Product Cards (repeated for every product in the search) -->
       <v-flex
         xs12 md4 lg3
@@ -22,14 +28,9 @@
       >
         <productCard :productName="product.name"></productCard>
       </v-flex>
-
-      <v-flex xs12 v-if="products.length==0">
-        <h2> Search returned 0 results </h2>
-      </v-flex>
     
     </v-layout>
   </v-container>
-
   </v-content>
 </template>
 <script>
@@ -44,16 +45,14 @@
     },
     computed: {
       products () {
-        var products = this.$store.getters.getSearchQueryProducts
+        console.log(this.$store.getters.loadedOrders)
+        var products = this.$store.getters.loadedOrders
         if (this.sort === this.sortOptions[1]) {
           products.sort((a, b) => a.price.localeCompare(b.price))
         } else {
           products.sort((a, b) => a.name.localeCompare(b.name))
         }
         return products
-      },
-      liveSearchQuery () {
-        return this.$store.getters.getLiveSearchQuery
       }
     },
     // Watchers for when a new search is entered.
