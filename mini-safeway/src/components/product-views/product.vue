@@ -1,33 +1,87 @@
+<!-- Shortcut for transparent cards here:
+class="elevation-0 transparent" -->
 <template>
   <v-content>
     <v-container fluid grid-list-sm pa-5>
       <v-layout justify-center>
       <v-flex xs12>
       <v-card pt-5>
-      <v-layout row wrap pt-5>
+      <v-layout row wrap pt-5 pb-5>
         <v-flex d-flex>
           <v-layout column pa-3>
             <v-flex pb-3>
               <!-- Header -->
               <v-flex pb-3>
-              <div class="red--text text--darken-2">
-                <b>
-              Aisles >> 
-              <!-- Fix This Link Binding -->
-              <a href="'/aisles/">
-              {{ product.aisle }}
-              </a>
-                </b>
+                <div>
+                <v-breadcrumbs divider =">>">
+                  <!-- Need to find a way to navigate to router w/o refreshing the page (prefer not to use href) -->
+                  <v-breadcrumbs-item
+                  :href="'/aisles/' + product.aisle"
+                  >
+                    {{ product.aisle }}
+                  </v-breadcrumbs-item>
+                  <v-breadcrumbs-item
+                  href="/aisles/"
+                  :disabled="false"
+                  >
+                    {{ product.name }}
+                  </v-breadcrumbs-item>
+                </v-breadcrumbs>
               </div>
               </v-flex>
-              <v-card>
-                <h4 class="red--text text--darken-2 text-xs-center">{{ product.name }}</h4>
+              <!-- Star & Item Title -->
+              <!-- Star -->
+              <v-layout justify-center>
+                <!-- Title -->
+              <v-flex>
+              <v-card class="elevation-0 transparent">
+                <!-- <v-flex d-flex> -->
+              <!-- </v-flex> -->
+                <h4 class="red--text text--darken-2 text-xs-center">
+                <v-btn 
+                :ripple="false"
+                flat icon
+                @click = "star"
+                v-if="!starred">
+                <v-icon
+
+                @click="star"
+                  color="grey lighten-1"
+                  v-if="!starred"
+                >star_border</v-icon></v-btn>
+                <v-btn 
+                :ripple="false"
+                flat icon
+                @click = "star"
+                v-else>
+                  <v-icon
+                  large
+                    color="yellow darken-2"
+                    @click="star"
+                  >star</v-icon>
+                </v-btn>
+              {{ product.name }}</h4>
               </v-card>
             </v-flex>
-            <!-- Stuff Under Header -->
-            <v-layout align-center justify-space-around row>
-            <v-flex pa-3 xs6>
-            <!-- Left Side Under Header -->
+          </v-layout>
+            </v-flex>
+            <!-- Stuff Under Header (Includes all rows) -->
+            <!-- Consider adding "align-center" or "justify-space-around" to layout tag below -->
+            <v-flex xs12 pa-2>
+            <v-layout align-center pb-2>
+              <!-- First Row Under Header -->
+              <!-- Left Arrow -->
+              <v-flex d-flex xs1 md6>
+                <div class="text-xs-center">
+            <v-btn large flat icon :ripple="false" :right="true">
+              <v-icon color="red">
+                keyboard_arrow_left
+              </v-icon>
+            </v-btn>
+          </div>
+          </v-flex>
+          <!-- Left Side of First Row -->
+            <v-flex d-flex xs7 md7>
             <v-card>
             <v-card-media contain :src="product.imageSrc" height="300" width="300"></v-card-media>
             <v-divider>
@@ -38,13 +92,13 @@
                     <div>
                       <h6
                         v-if="product.description"
-                        class="ma-0 pa-0 text-xs-left"
                       >
-                      Description <br>
+                      <p>
+                      Description
+                    </p>
                       </h6>
                       <p
                         v-if="product.description"
-                        class="ma-0 pa-0 text-xs-left"
                       >
                       {{ product.description }}
                       </p>
@@ -54,10 +108,10 @@
             </v-layout>
           </v-card>
           </v-flex>
-          <!-- Right Side Under Header -->
-          <v-flex xs5>
+          <!-- Right Side of First Row -->
+          <v-flex xs4 md5>
             <v-card>
-              <v-card-text class="text-xs-center" position: relative>
+              <v-card-text>
                 <!-- Product Price -->
                 <v-card-title primary-title class = "text-xs-center">
                   <v-card-text class="text-xs-center" position: relative>
@@ -67,19 +121,23 @@
                     </v-card-text>
                   </div>
                   per unit
+                  <br><br>
                   <!-- {{ product.unit }} -->
                   </v-card-text>
                 </v-card-title>
-                <!-- Quantity -->
                 <v-divider>
                   </v-divider>
-                <v-layout justify-center>
-
-                <v-flex xs2>
-                  <!-- Quantity: -->
+                <!-- Quantity -->
+                <v-flex xs12>
+                  <div class="text-xs-center">
                   <br>
                   <br>
+                  <subheading>
                   Quantity:
+                </subheading>
+                </div>
+                <v-layout justify-center>
+                <v-flex xs2>
                   <v-text-field
                     v-model="quantity"
                     type="number"
@@ -89,11 +147,12 @@
                   </v-text-field>
                 </v-flex>
               </v-layout>
+                </v-flex>
               </v-card-text>
               <!-- Add To Cart Button -->
               <v-divider>
               </v-divider>
-              <v-layout row>
+              <v-layout>
               <v-flex>
                 <v-card class="elevation-0 transparent">
                   <v-card-actions>
@@ -112,7 +171,78 @@
             </v-layout>
             </v-card>
           </v-flex>
+          <!-- Right Arrow -->
+          <v-flex d-flex xs1 md6>
+            <div class="text-xs-center">
+          <v-btn large flat icon :ripple="false">
+              <v-icon color="red">
+                keyboard_arrow_right
+              </v-icon>
+            </v-btn>
+          </div>
+          </v-flex>
           </v-layout>
+          <!-- End of First Row -->
+          <!-- Second Row Under Header -->
+          <!-- Instructions -->
+          <v-layout column>
+            <v-layout justify-center>
+          <v-flex d-flex xs6 md8>
+          <v-card
+          v-if="product.details"
+          >
+            <v-card-title primary-title>
+                    <div>
+                      <p>
+                      <h6>
+                      Instructions <br>
+                      </h6>
+                    </p>
+                      <subheading>
+                      {{ product.details }}
+                      </subheading>
+                    </div> 
+                  </v-card-title>
+            </v-card>
+          </v-flex>
+          <!-- Nutrition Facts -->
+          <v-flex d-flex xs6 md3>
+              <v-card>
+                <v-card-title primary-title>
+                    <div>
+                      <p>
+                      <h6>
+                      Nutrition Facts <br>
+                      </h6>
+                    </p>
+                      <p>
+                      {{ product.details }}
+                      </p>
+                    </div> 
+                  </v-card-title>
+              </v-card>
+        </v-flex>
+        </v-layout>
+          <v-layout justify-center>
+            <v-flex xs12 md11>
+              <v-card>
+                <v-card-title primary-title>
+                    <div>
+                      <p>
+                      <h6>
+                      Reviews <br>
+                      </h6>
+                    </p>
+                      <p>
+                      {{ product.details }}
+                      </p>
+                    </div> 
+                  </v-card-title>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-layout>
+        </v-flex>
           </v-layout>
         </v-flex>
       </v-layout>
@@ -135,6 +265,8 @@
     //
     // The final version of this should be empty because firebase will handle the values for this model.
     data: () => ({
+      // Favorited Item
+      starred: false,
       // Number of products to add to cart.
       quantity: 1,
       // Product details populated by firebase.
@@ -162,12 +294,17 @@
               price: productDetails.price,
               description: productDetails.description,
               imageSrc: url,
-              aisle: productDetails.aisles[0]
+              aisle: productDetails.aisles[0],
+              details: productDetails.details
             }
           })
       })
     },
     methods: {
+      star () {
+        this.starred = !this.starred
+      },
+
       addToCart () {
         const payload = {
           name: this.product.name,

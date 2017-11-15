@@ -73,6 +73,23 @@
     </main>
     <v-dialog v-model="loginDialog" width="400px">
       <v-card>
+        <v-snackbar
+        :timeout="3000"
+        :color="error"
+        :vertical="mode ===vertical"
+        :top="y===top"
+        v-model="authenticationFailedMessage"
+      >
+      Authentication Failed. 
+      <br>
+      Please Try Again.
+      <v-btn flat color = "red" @click.native="authenticationFailedMessage = false">
+        Close
+        <br>
+      </v-btn>
+      <br>
+      <br>
+    </v-snackbar>
         <v-card-title
           class="secondary py-4 title"
         >
@@ -113,7 +130,7 @@
                   @click="loginDialog = false">
                   Cancel
                   </v-btn>
-                  <v-btn flat color="green"
+                  <v-btn flat color="primary"
                   type="submit" 
                   :disabled="loading" 
                   :loading="loading">
@@ -141,7 +158,8 @@
       password: '',
       loginDialog: false,
       loginSuccessMessage: false,
-      logoutMessage: false
+      logoutMessage: false,
+      authenticationFailedMessage: false
     }),
     computed: {
       showSidebar () {
@@ -177,9 +195,12 @@
           email: this.email,
           password: this.password
         })
-        this.loginDialog = false
+        if (this.userSignedIn) {
+          this.loginDialog = false
+          this.loginSuccessMessage = true
+        }
+        this.authenticationFailedMessage = true
         console.log(this.userSignedIn)
-        this.loginSuccessMessage = true
         // if (this.userSignedIn) {
         //   this.loginSuccessMessage = true
         // }
