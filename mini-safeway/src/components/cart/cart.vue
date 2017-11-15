@@ -52,7 +52,6 @@
                         </v-list-tile-sub-title>
                       </v-flex>
                     </v-list-tile-content>
-
                     <!-- Quantity Picker -->
                     <v-btn
                       @click="subtract(i)"

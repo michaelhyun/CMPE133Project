@@ -32,7 +32,7 @@
       <v-btn v-if="!userSignedIn" icon to="/register">
         <v-icon>person_add</v-icon>
       </v-btn>
-      <v-btn v-if="!userSignedIn" icon @click.stop="login = !login">
+      <v-btn v-if="!userSignedIn" icon @click.stop="loginDialog = true">
         <v-icon>lock_open</v-icon>
       </v-btn>
       <v-btn v-if="userSignedIn" icon to="/profile">
@@ -41,13 +41,55 @@
       <v-btn v-if="userSignedIn" icon @click="onLogout">
         <v-icon>exit_to_app</v-icon>
       </v-btn>
+      <!-- Snackbar Popup to indicate Successful Login -->
+      <v-snackbar
+        :timeout="3000"
+        :top="y===top"
+        :right="x===right"
+        v-model="userSignedIn"
+        v-if="loginSuccessMessage"
+      >
+      User Login Successful
+      <v-btn flat color = "red" @click.native="loginSuccessMessage = false">
+        Close
+      </v-btn>
+    </v-snackbar>
+    <!-- Snackbar Popup to indicate User Logged Out -->
+    <v-snackbar
+        :timeout="3000"
+        :top="y===top"
+        :right="x===right"
+        v-model="logoutMessage"
+      >
+      User Logged Out
+      <v-btn flat color = "red" @click.native="logoutMessage = false">
+        Close
+      </v-btn>
+    </v-snackbar>
     </v-toolbar>
     <!-- Views Template -->
     <main>
       <router-view></router-view>
     </main>
-    <v-dialog v-model="login" width="400px">
+    <v-dialog v-model="loginDialog" width="400px">
       <v-card>
+        <v-snackbar
+        :timeout="3000"
+        :color="error"
+        :vertical="mode ===vertical"
+        :top="y===top"
+        v-model="authenticationFailedMessage"
+      >
+      Authentication Failed. 
+      <br>
+      Please Try Again.
+      <v-btn flat color = "red" @click.native="authenticationFailedMessage = false">
+        Close
+        <br>
+      </v-btn>
+      <br>
+      <br>
+    </v-snackbar>
         <v-card-title
           class="secondary py-4 title"
         >
@@ -80,10 +122,18 @@
               </v-layout>
               <v-layout row>
                 <v-flex xs12>
-                  <v-btn flat color="primary">Forgot Password?</v-btn>
-                  <v-spacer></v-spacer>
-                  <v-btn flat color="primary" @click="login = false">Cancel</v-btn>
-                  <v-btn type="submit" :disabled="loading" :loading="loading">
+                  <v-btn flat color="primary">Forgot Password?
+                  </v-btn>
+                  <v-spacer>
+                  </v-spacer>
+                  <v-btn flat color="primary" 
+                  @click="loginDialog = false">
+                  Cancel
+                  </v-btn>
+                  <v-btn flat color="primary"
+                  type="submit" 
+                  :disabled="loading" 
+                  :loading="loading">
                     Sign in
                      <span slot="loader" class="custom-loader">
                       <v-icon light>cached</v-icon>
@@ -106,7 +156,10 @@
       drawerItemsName: 'shopItems',
       email: '',
       password: '',
-      login: false
+      loginDialog: false,
+      loginSuccessMessage: false,
+      logoutMessage: false,
+      authenticationFailedMessage: false
     }),
     computed: {
       showSidebar () {
@@ -142,8 +195,15 @@
           email: this.email,
           password: this.password
         })
-        this.login = false
+        if (this.userSignedIn) {
+          this.loginDialog = false
+          this.loginSuccessMessage = true
+        }
+        this.authenticationFailedMessage = true
         console.log(this.userSignedIn)
+        // if (this.userSignedIn) {
+        //   this.loginSuccessMessage = true
+        // }
       },
       onDismissed () {
         this.$store.dispatch('clearError')
@@ -151,6 +211,7 @@
       onLogout () {
         this.$store.dispatch('logout')
         this.$router.push('/')
+        this.logoutMessage = true
       }
     },
     mounted () {

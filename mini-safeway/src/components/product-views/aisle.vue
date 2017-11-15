@@ -11,7 +11,7 @@
 
       <!-- Aisle Title -->
       <v-card-title primary-title class="layout justify-center">
-      <div class="headline text-xl-center">{{ aisle.name }}</div>
+      <h2>{{ aisle.name }}</h2>
       </v-card-title>
       </v-flex>
     
@@ -99,7 +99,7 @@
       }
     },
     beforeCreate () {
-      if (Object.keys(this.$store.state.productNames).length === 0) {
+      if (Object.keys(this.$store.getters.getProductNames).length === 0) {
         this.$store.dispatch('initializeStoreData').then(() => {
           this.$store.dispatch('populateAisleProducts', this.aisleName)
         })
@@ -108,7 +108,11 @@
     // The earliest a prop can be accessed in a Vue component's lifecycle is when it is mounted.
     // So, when the component is mounted, populate the products in the aisle.
     mounted () {
-      this.$store.dispatch('populateAisleProducts', this.aisleName)
+      if (Object.keys(this.$store.getters.getProductNames).length === 0) {
+        this.$store.dispatch('initializeStoreData').then(() => {
+          this.$store.dispatch('populateAisleProducts', this.aisleName)
+        })
+      }
     }
   }
 </script>
