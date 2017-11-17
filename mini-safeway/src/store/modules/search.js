@@ -1,6 +1,7 @@
 import { firebase } from '../../../firebase'
 
 const state = {
+  showSearchBar: false,
   liveSearchQuery: '',
   liveSearch: false,
   // /product keys that match search query
@@ -8,6 +9,9 @@ const state = {
 }
 
 const getters = {
+  getShowSearchBar (state) {
+    return state.showSearchBar
+  },
   getSearchQueryProducts (state) {
     return state.searchQueryProducts
   },
@@ -16,13 +20,13 @@ const getters = {
   },
   getLiveSearchQuery (state) {
     return state.liveSearchQuery
-  },
-  getProductNames (rootState) {
-    return rootState.products.getters.getProductNames
   }
 }
 
 const actions = {
+  toggleSearchBar ({ commit, state }) {
+    commit('setShowSearchBar', !state.showSearchBar)
+  },
   // This action toggles live search.
   toggleLiveSearch ({ commit, state }) {
     commit('setLiveSearch', !state.liveSearch)
@@ -82,6 +86,9 @@ const actions = {
 }
 
 const mutations = {
+  setShowSearchBar (state, showSearchBar) {
+    state.showSearchBar = showSearchBar
+  },
   // state.searchQueryProducts mutations
   setSearchQueryProducts (state, searchQueryProducts) {
     state.searchQueryProducts = searchQueryProducts
