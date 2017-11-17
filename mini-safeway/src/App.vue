@@ -20,6 +20,11 @@
         <router-link to="/" tag="span" style="cursor: pointer">MiniSafeway</router-link>
       </v-toolbar-title>
 
+      <!-- Toolbar Title -->
+      <v-spacer></v-spacer>
+      <v-toolbar-title>
+        {{ toolbarTitle }}
+      </v-toolbar-title>
       <v-spacer></v-spacer>
 
       <!-- Right-aligned Affordances -->
@@ -76,8 +81,6 @@
       <!-- Snackbar Popup to indicate Successful Login -->
       <v-snackbar
         :timeout="3000"
-        :top="y===top"
-        :right="x===right"
         v-model="userSignedIn"
         v-if="loginSuccessMessage"
       >
@@ -93,8 +96,6 @@
       <!-- Snackbar Popup to indicate User Logged Out -->
       <v-snackbar
           :timeout="3000"
-          :top="y===top"
-          :right="x===right"
           v-model="logoutMessage"
       >
         User Logged Out
@@ -116,8 +117,6 @@
         <v-snackbar
         :timeout="3000"
         :color="error"
-        :vertical="mode ===vertical"
-        :top="y===top"
         v-model="authenticationFailedMessage"
       >
       Authentication Failed. 
@@ -193,6 +192,7 @@
   export default {
     data: () => ({
       searchQuery: '',
+      toolbarTitle: '',
       drawerItemsName: 'shopItems',
       email: '',
       password: '',
@@ -207,16 +207,6 @@
       },
       showSearchBar () {
         return this.$store.getters.getShowSearchBar
-      },
-      showBadge () {
-        if (this.cartSize !== 0) {
-          return true
-        } else {
-          return false
-        }
-      },
-      cartSize () {
-        return this.$store.getters.getCartSize
       },
       userSignedIn () {
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined
