@@ -51,8 +51,6 @@
   // Refreshing the aisle page resets the store's state, meaning aisleProducts resets to empty so all products disappear.
   export default {
     data: () => ({
-      // Number of products to add to cart (also exists in product.vue, may need to merge later)
-      quantity: 1,
       // Rules for textfield input
       validQuantity: true,
       rules: {
@@ -81,21 +79,6 @@
     watch: {
       aisleName: function (context) {
         this.$store.dispatch('populateAisleProducts', this.aisleName)
-      },
-      quantity: function (context) {
-        if (this.quantity !== '') {
-          if (isNaN(this.quantity)) {
-            console.log('false')
-            this.validQuantity = false
-          } else {
-            this.quantity = parseInt(this.quantity)
-            if (this.quantity > 0 && this.quantity < 100) {
-              this.validQuantity = true
-            } else {
-              this.validQuantity = false
-            }
-          }
-        }
       }
     },
     beforeCreate () {
@@ -112,6 +95,8 @@
         this.$store.dispatch('initializeStoreData').then(() => {
           this.$store.dispatch('populateAisleProducts', this.aisleName)
         })
+      } else {
+        this.$store.dispatch('populateAisleProducts', this.aisleName)
       }
     }
   }
