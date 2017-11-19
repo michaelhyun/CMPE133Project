@@ -51,6 +51,9 @@
       promotions () {
         return this.$store.getters.promotions
       }
+    },
+    mounted () {
+      this.$store.commit('setTitle', 'Home')
     }
   }
 </script>

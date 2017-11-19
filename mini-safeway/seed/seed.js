@@ -1,87 +1,238 @@
 // Dotenv is used to hide credentials by allowing access to credentials
 // stored locally.
-require('dotenv').config();
+require('dotenv').config()
 
 // The following contain seed data for nodes in a Firebase database.
 // To add more data to seed, edit the files associated with the modules below.
-const products = require('./productsseed');
-const aisles = require('./aislesseed');
+const products = require('./productseed')
+var aisles = generateAislesSeed(products)
+var clubSavings = generateClubSavings(products)
+var promotionalCodes = generatePromotionalCodes(products)
 
-// Initialize firebase-admin to reset and populate a Firebase database.
-var admin = require("firebase-admin");
-var serviceAccount = require(process.env.SERVICE_ACCOUNT_PATH);
+// Initialize firebase-admin to get references to storage and database.
+var admin = require('firebase-admin')
+var serviceAccount = require(process.env.SERVICE_ACCOUNT_PATH)
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: process.env.DATABASE_URL
-});
-var database = admin.database();
+  databaseURL: process.env.DATABASE_URL,
+  storageBucket: process.env.BUCKET_URL
+})
+var database = admin.database()
+var bucket = admin.storage().bucket()
 
-console.log("Seeding database.");
+console.log('Seeding database.\n')
 // Attempt to seed the database.
-seedDataBase(products, aisles, database).then(
+seedDataBase().then(
   function(successCallback) { // If seeding succeeded..
-    console.log(successCallback);
-    process.exit();
+    console.log('\nResolved with message: ' + successCallback)
+    process.exit()
   }, function(errorCallback) { // If seeding failed..
-    console.log(errorCallback);
-    process.exit();
+    console.log('\nRejected with message: ' + errorCallback)
+    process.exit()
   }
-);
+)
 
-// seedDataBase(JSON, JSON, Firebase Database Reference)
-function seedDataBase(products, aisles, database) {
+// seedDataBase()
+function seedDataBase() {
   // Return a promise so that caller knows if database was successfully seeded or not.
-  return new Promise( function (resolve, reject) {
-    // Clean out the database.
-    database.ref().remove().then(() => { // Attempt to clean database, then..
-      // Push all products and corresponding images onto the database.
-      for(i = 0; i < Object.keys(products.data).length; i++) {
-        this.imageData = {
-          "name": products.data[i].name
-        };
-        database.ref('products').push().set(products.data[i]);
-        database.ref('images').push().set(this.imageData);
-      }
+  return new Promise(function (resolve, reject) {
+    // Replace all objects in 'products' in database.
+    database.ref('products').set(products)
+      .then(() => {
+        console.log("'products' in Database populated.")
+        // Replace all objects in 'savings/clubSavings' in database
+        database.ref('savings/club').set(clubSavings)
+          .then(() => {
+            console.log("'savings/club in Database populated.")
+            // Replace all object in 'savings/promotionalCodes in database'
+            database.ref('savings/codes').set(promotionalCodes)
+              .then(() => {
+                console.log("'savings/codes in Database populated.")
+                // Replace all objects in 'aisles' in database
+                database.ref('aisles').set(aisles)
+                  .then(() => {
+                    console.log("'aisles' in Database populated.")
+                    console.log('Database Populated.')
+                    console.log('Populating Storage.')
+                    var productImagesSet = false;
+                    var aislesImagesSet = false;
+                    // Clear out GCS/products
+                    bucket.deleteFiles({ prefix: 'products/' })
+                      .then(() => {
+                        console.log('Deleted all files in GCS/products')
+                        var numImages = 0
+                        var numImagesTotal = Object.keys(products).length
 
-      // Push all aisles onto the database.
-      for(i = 0; i < Object.keys(aisles.data).length; i++) {
-        database.ref('aisles').push().set(aisles.data[i]);
-      }
+                        for (var product in products) {
+                          uploadImage(product, 'products').then(() => {
+                            numImages++
+                          })
+                        }
 
-      // Must use reference to total products, total aisles, and number of products, images, and aisles in the database since checkIfSeeded() creates local scopes.
-      this.numTotalProducts = Object.keys(products.data).length;
-      this.numTotalAisles = Object.keys(aisles.data).length;
-      this.numProducts = this.numImages = this.numAisles
-      var self = this; // Must use closure since 'this' refers to a local scope.
-      // checkIfSeeded() is defined in a way that automatically and recursively executes since setTimeout() does not block.
-      (function checkIfSeeded(numProducts, numImages, numAisles) {
-        setTimeout(function() {
-          // Check if number of nodes is equal to number of local seed data.
-          if(self.numProducts !== self.numImages !== self.numTotalProducts && self.numAisles !== self.numTotalAisles) { // If not,
-            console.log("Database still populating...");
-            database.ref('products').once('value')            // then obtain a snapshot of the '/product' node.
-              .then(function(snapshot) {                      // When the snapshot of the '/products' node has been fetched,
-              self.numProducts = snapshot.numChildren();      // update the number of products in the database.
-              database.ref('images').once('value')            // Then obtain a snapshot of the '/images' node.
-                .then(function(snapshot) {                    // When the snapshot of the '/images' node has been fetched,
-                self.numImages = snapshot.numChildren();      // update the number of images in the database.
-                database.ref('aisles').once('value')          // Finally, obtain a snapshot of the '/aisles' node.
-                  .then(function(snapshot) {                  // When the snapshot of the '/aisles' node has been fetched,
-                  self.numAisles = snapshot.numChildren();    // update the number of aisles in the database.
-                  });
-                })
+                        (function checkIfSeeded() {
+                          setTimeout(function () {
+                            if(numImages !== numImagesTotal) {
+                              console.log('Storage still populating..')
+                              checkIfSeeded(numImages)
+                            } else {
+                              productImagesSet = true
+                            }
+                          }, 2000)
+                        })()
+                      }) 
+                      .catch((err) => {
+                        console.log('Error deleting or populating Storage.')
+                        reject(err)
+                      })
+                    // Clear out GCS/aisles
+                    bucket.deleteFiles({ prefix: 'aisles/' })
+                      .then(() => {
+                        console.log('Deleted all files in GCS/aisles')
+                        var numImages = 0
+                        var numImagesTotal = Object.keys(aisles).length
+
+                        for (var aisle in aisles) {
+                          console.log(aisle)
+                          uploadImage(aisle, 'aisles').then(() => {
+                            numImages++
+                          })
+                        }
+
+                        (function checkIfSeeded() {
+                          setTimeout(function () {
+                            if(numImages !== numImagesTotal) {
+                              console.log('Storage still populating..')
+                              checkIfSeeded(numImages)
+                            } else {
+                              aislesImagesSet = true
+                            }
+                          }, 2000)
+                        })()
+                      }) 
+                      .catch((err) => {
+                        console.log('Error deleting or populating Storage.')
+                        reject(err)
+                      });
+                      (function checkIfSeeded() {
+                        setTimeout(function () {
+                          if(productImagesSet === false || aislesImagesSet === false) {
+                            console.log('Storage still populating..')
+                            checkIfSeeded()
+                          } else {
+                            resolve('Database and Storage Populated.')
+                          }
+                        }, 2000)
+                      })()
+                  })
+                  .catch((err) => {
+                    console.log('Error setting "aisles" in Database.')
+                    reject(err)
+                  })
               })
-          // If the database has been seeded, the promise will resolve and seedDataBase() will return.
-          // Otherwise, recursively call checkIfSeeded() to check the database again after 3000 milliseconds (3 seconds).
-          checkIfSeeded(self.numProducts, self.numImages, self.numAisles);
-          } else {
-              // TODO: Add associations between aisles and products, and products and images by setting their corresponding ids before resolving the promise.
-              resolve("Database Populated");
-          }
-        }, 3000);
-      })(0, 0, 0);
-    }).catch(() => { // If anything goes wrong, reject promise.
-      reject("Could not remove database.");
-    });
-  });
+              .catch((err) => {
+                console.log('Error setting "savings/promotionalCodes" in Database.')
+                reject(err)
+              })
+          })
+          .catch((err) => {
+            console.log('Error setting "savings/clubSavings in Database.')
+            reject(err)
+          })
+      })
+      .catch((err) => {
+        console.log('Error setting "products" in Database.')
+        reject(err)
+      })
+  })
+}
+
+// This function parses a products JSON to generate an aisles JSON
+function generateAislesSeed(products) {
+  var aisles = {};
+  var aisleKeyArray;
+  var aisleKey;
+
+  // For every object in products
+  for (var product in products) {
+    // Check if products owns the object (ie object owns property, otherwise it will enumerate inherited properties)
+    // (see: https://stackoverflow.com/questions/3010840/loop-through-an-array-in-javascript)
+    if (products.hasOwnProperty(product)) {
+      aisleKeyArray = products[product].aisles
+      // For every aisle the product is in
+      for (var i = 0; i < aisleKeyArray.length; i++) {
+        aisleKey = aisleKeyArray[i]
+        if(!aisles.hasOwnProperty(aisleKey))
+          aisles[aisleKey] = []
+        aisles[aisleKey].push(product)
+      }
+    }
+  }
+
+  return aisles
+}
+
+
+// This function randomly applies club savings to products
+// Roughly applies club savings to 20% of all items
+function generateClubSavings(products) {
+  var clubSavingsProportion = .2
+  var maxSavings = .3
+  var tempClubSavings = { }
+  for (product in products) {
+    if(Math.random() < clubSavingsProportion) {
+      var clubSavings = Math.floor(products[product].price * (Math.random() * maxSavings) * 10) / 10
+      if (clubSavings === 0) {
+        clubSavings = .1
+      }
+      tempClubSavings[product] = clubSavings
+    }
+  }
+  return tempClubSavings
+}
+
+// This function randomly generates promotional codes
+// TODO: Change product to lowest price of brand before calculating savings
+function generatePromotionalCodes(products) {
+  var promotionalCodesMax = 10
+  var maxQuantity = 3
+  var maxSavings = .5
+  var tempPromotionalCodes = { }
+  var productKeys = Object.keys(products)
+  for (let count = 0; count < promotionalCodesMax; count++) {
+    var product = products[productKeys[Math.floor(Math.random() * productKeys.length)]]
+    var integerCode = (Math.floor(Math.random() * 999) + 1).toString()
+    integerCode = integerCode.padStart(3, "0")
+    var code = product.brand.replace(/\s/g,'').slice(0,5).toUpperCase() + integerCode
+    var clubSavings = Math.floor(product.price * (Math.random() * maxSavings) * 10) / 10
+    if (clubSavings === 0) {
+      clubSavings = .5
+    }
+    var tempPromotionalCode = {
+      brand: product.brand,
+      type: "brand",
+      savings: clubSavings,
+      quantity: Math.floor((Math.random() * maxQuantity) + 1)
+    }
+    tempPromotionalCodes[code] = tempPromotionalCode
+  }
+  return tempPromotionalCodes
+}
+
+function uploadImage(key, folder) {
+  return new Promise (function (resolve, reject) {
+    var seedFilePath = './seed/seed_images/' + key + '.jpg'
+    var options = {
+      destination: folder + '/' + key + '.jpg'
+    }
+    bucket.upload(seedFilePath, options, function(err, file, apiResponse) {
+      if(err) {
+        console.log(err)
+        reject(err)
+      }
+      else {
+        console.log('Uploaded "' + key + '.jpg" to storage in "' + folder + '".')
+        resolve(file)
+      }
+    })
+  })
 }

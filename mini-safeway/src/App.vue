@@ -10,62 +10,103 @@
       app
       clipped-left
       fixed
+      :extended="showSearchBar"
     >
+      <!-- Left-aligned Affordances -->
       <v-toolbar-title style="width: 300px">
+        <!-- Hamburger Icon for Sidebar -->
         <v-toolbar-side-icon @click.stop="toggleSidebar"></v-toolbar-side-icon>
+        <!-- MiniSafeway Text -->
         <router-link to="/" tag="span" style="cursor: pointer">MiniSafeway</router-link>
       </v-toolbar-title>
-      <v-text-field
-        solo
-        v-model="searchQuery"
-        label="Search products..."
-        @keyup="updateLiveSearchQuery"
-        @keyup.enter="searchProducts"
-      ></v-text-field>
-      <v-btn icon @click="searchProducts">
+
+      <!-- Toolbar Title -->
+      <v-spacer></v-spacer>
+      <v-toolbar-title>
+        {{ toolbarTitle }}
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+
+      <!-- Right-aligned Affordances -->
+      <!-- Search -->
+      <v-btn
+        icon
+        @click="toggleSearchBar"
+      >
         <v-icon>search</v-icon>
       </v-btn>
-      <v-spacer></v-spacer>
-      <v-btn icon to="/cart">
+      <!-- Cart -->
+      <v-btn
+        icon
+        to="/cart"
+      >
         <v-icon>shopping_cart</v-icon>
       </v-btn>
-      <v-btn v-if="!userSignedIn" icon to="/register">
+      <!-- Register -->
+      <v-btn
+        icon
+        v-if="!userSignedIn"
+        to="/register"
+      >
         <v-icon>person_add</v-icon>
       </v-btn>
-      <v-btn v-if="!userSignedIn" icon @click.stop="loginDialog = true">
+      <!-- Sign-in -->
+      <v-btn
+        icon
+        v-if="!userSignedIn"
+        @click.stop="loginDialog=true"
+      >
         <v-icon>lock_open</v-icon>
       </v-btn>
-      <v-btn v-if="userSignedIn" icon to="/profile">
+      <v-btn
+        icon
+        v-if="userSignedIn"
+        to="/profile"
+      >
         <v-icon>person</v-icon>
       </v-btn>
       <v-btn v-if="userSignedIn" icon @click="onLogout">
         <v-icon>exit_to_app</v-icon>
       </v-btn>
+      <!-- Toolbar Extension for Search Text-Field -->
+      <v-text-field
+        solo
+        slot="extension"
+        v-if="showSearchBar"
+        v-model="searchQuery"
+        label="Search products..."
+        @keyup="updateLiveSearchQuery"
+        @keyup.enter="searchProducts"
+      ></v-text-field>
       <!-- Snackbar Popup to indicate Successful Login -->
       <v-snackbar
         :timeout="3000"
-        :top="y===top"
-        :right="x===right"
         v-model="userSignedIn"
         v-if="loginSuccessMessage"
       >
-      User Login Successful
-      <v-btn flat color = "red" @click.native="loginSuccessMessage = false">
-        Close
-      </v-btn>
-    </v-snackbar>
-    <!-- Snackbar Popup to indicate User Logged Out -->
-    <v-snackbar
-        :timeout="3000"
-        :top="y===top"
-        :right="x===right"
-        v-model="logoutMessage"
+        User Login Successful
+        <v-btn
+          flat
+          color="red"
+          @click.native="loginSuccessMessage=false"
+        >
+          Close
+        </v-btn>
+      </v-snackbar>
+      <!-- Snackbar Popup to indicate User Logged Out -->
+      <v-snackbar
+          :timeout="3000"
+          v-model="logoutMessage"
       >
-      User Logged Out
-      <v-btn flat color = "red" @click.native="logoutMessage = false">
-        Close
-      </v-btn>
-    </v-snackbar>
+        User Logged Out
+        <v-btn
+          flat
+          color="red"
+          @click.native="logoutMessage=false"
+        >
+          Close
+        </v-btn>
+      </v-snackbar>
     </v-toolbar>
     <!-- Views Template -->
     <main>
@@ -76,8 +117,6 @@
         <v-snackbar
         :timeout="3000"
         :color="error"
-        :vertical="mode ===vertical"
-        :top="y===top"
         v-model="authenticationFailedMessage"
       >
       Authentication Failed. 
@@ -162,11 +201,14 @@
       authenticationFailedMessage: false
     }),
     computed: {
-      showSidebar () {
-        return this.$store.state.showSidebar
+      toolbarTitle () {
+        return this.$store.getters.getTitle
       },
-      productNames () {
-        return this.$store.state.productNames
+      showSidebar () {
+        return this.$store.getters.getShowSidebar
+      },
+      showSearchBar () {
+        return this.$store.getters.getShowSearchBar
       },
       userSignedIn () {
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined
@@ -179,6 +221,9 @@
       }
     },
     methods: {
+      setTitle (title) {
+        this.$store.toolbar.commit('setTitle', title)
+      },
       searchProducts () {
         this.$store.commit('setLiveSearchQuery', this.searchQuery)
         this.$store.dispatch('populateSearchQueryProducts', this.searchQuery)
@@ -189,6 +234,9 @@
       },
       toggleSidebar: function (context) {
         this.$store.commit('toggleSidebar')
+      },
+      toggleSearchBar: function (context) {
+        this.$store.dispatch('toggleSearchBar')
       },
       onSignin () {
         this.$store.dispatch('loginUser', {
