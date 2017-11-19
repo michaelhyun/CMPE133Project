@@ -1,10 +1,10 @@
 const state = {
-  promoCodes: [ ]
+  title: ''
 }
 
 const getters = {
-  getPromoCodes (state) {
-    return state.promoCodes
+  getTitle (state) {
+    return state.title
   }
 }
 
@@ -12,8 +12,8 @@ const actions = {
 }
 
 const mutations = {
-  setPromoCodes (state, promoCodes) {
-    state.promoCodes = promoCodes
+  setTitle (state, title) {
+    state.title = title
   }
 }
 

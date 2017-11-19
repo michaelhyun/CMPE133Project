@@ -10,6 +10,7 @@ import products from './modules/products'
 import promotions from './modules/promotions'
 import search from './modules/search'
 import sidebar from './modules/sidebar'
+import toolbar from './modules/toolbar'
 import users from './modules/users'
 
 Vue.use(Vuex)
@@ -24,6 +25,7 @@ export const store = new Vuex.Store({
     promotions: promotions,
     search: search,
     sidebar: sidebar,
+    toolbar: toolbar,
     users: users
   }
 })

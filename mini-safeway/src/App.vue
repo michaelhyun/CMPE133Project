@@ -192,7 +192,6 @@
   export default {
     data: () => ({
       searchQuery: '',
-      toolbarTitle: '',
       drawerItemsName: 'shopItems',
       email: '',
       password: '',
@@ -202,6 +201,9 @@
       authenticationFailedMessage: false
     }),
     computed: {
+      toolbarTitle () {
+        return this.$store.getters.getTitle
+      },
       showSidebar () {
         return this.$store.getters.getShowSidebar
       },
@@ -219,6 +221,9 @@
       }
     },
     methods: {
+      setTitle (title) {
+        this.$store.toolbar.commit('setTitle', title)
+      },
       searchProducts () {
         this.$store.commit('setLiveSearchQuery', this.searchQuery)
         this.$store.dispatch('populateSearchQueryProducts', this.searchQuery)

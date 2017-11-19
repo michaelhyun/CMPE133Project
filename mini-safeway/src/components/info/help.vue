@@ -43,8 +43,8 @@
         ]
       }
     },
-
-    methods: {
+    mounted () {
+      this.$store.commit('setTitle', 'Help')
     }
   }
 </script>

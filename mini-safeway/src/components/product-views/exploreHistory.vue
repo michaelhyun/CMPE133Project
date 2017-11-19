@@ -77,6 +77,7 @@
     // So, when the component is mounted, populate the products in the aisle.
     mounted () {
       // this.$store.dispatch('populateSearchQueryProducts', this.searchQuery)
+      this.$store.commit('setTitle', 'Explore History')
       this.$store.dispatch('populateSearchQueryProducts', this.$store.getLiveSearchQuery)
     },
     destroyed () {

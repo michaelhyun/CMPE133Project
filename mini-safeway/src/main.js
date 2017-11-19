@@ -6,6 +6,7 @@ import Vue from 'vue'
 import App from './App'
 import Sidebar from './components/core/sidebar'
 import ProductCard from './components/core/productCard'
+import PromoCard from './components/core/promoCard'
 
 // Import VueX store and Vue-Router
 import router from './router'
@@ -37,6 +38,7 @@ Vue.use(Vuetify)
 // Register components
 Vue.component('sidebar', Sidebar)
 Vue.component('productCard', ProductCard)
+Vue.component('promoCard', PromoCard)
 
 /* eslint-disable no-new */
 new Vue({

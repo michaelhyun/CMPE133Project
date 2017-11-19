@@ -1,34 +1,37 @@
 <template>
   <v-content>
-  <v-container>
-    <v-flex xs7 offset-xs5 sm4 offset-sm8 lg2 offset-lg10>
-      <v-select
-        v-bind:items="sortOptions"
-        v-model="sort"
-        label="Sort by"
-        single-line
-        bottom
-      ></v-select>
-    </v-flex>
-  </v-container>
-  <v-container grid-list-xl>
-    <v-layout row wrap align-center>
+    <v-container>
+      <v-layout align-center>
+        <v-flex xs5 sm8 lg10>
+          <h4> Search returned {{ Object.keys(products).length }} result(s) </h4>
+        </v-flex>
+        <v-flex xs7 justify-end>
+          <v-select
+            v-bind:items="sortOptions"
+            v-model="sort"
+            label="Sort by"
+            single-line
+            bottom
+          ></v-select>
+        </v-flex>
+      </v-layout>
+      <hr>
+    </v-container>
 
-      <!-- Product Cards (repeated for every product in the search) -->
-      <v-flex
-        xs12 md4 lg3
-        v-for="product in products"
-        :key="product.name"
-      >
-        <productCard :productName="product.name"></productCard>
-      </v-flex>
+    <v-container grid-list-xl>
+      <v-layout row wrap align-center>
 
-      <v-flex xs12 v-if="products.length==0">
-        <h2> Search returned 0 results </h2>
-      </v-flex>
-    
-    </v-layout>
-  </v-container>
+        <!-- Product Cards (repeated for every product in the search) -->
+        <v-flex
+          xs12 md4 lg3
+          v-for="product in products"
+          :key="product.name"
+        >
+          <productCard :productName="product.name"></productCard>
+        </v-flex>
+      
+      </v-layout>
+    </v-container>
 
   </v-content>
 </template>
@@ -78,6 +81,7 @@
     // So, when the component is mounted, populate the products in the aisle.
     mounted () {
       // this.$store.dispatch('populateSearchQueryProducts', this.searchQuery)
+      this.$store.commit('setTitle', 'Search')
       this.$store.dispatch('populateSearchQueryProducts', this.$store.getLiveSearchQuery)
     },
     destroyed () {
