@@ -1,7 +1,6 @@
 <template>
   <v-app light>   
-    <sidebar v-bind:drawerItemsName="drawerItemsName">
-    </sidebar>
+    <sidebar></sidebar>
 
     <!-- Top navigation bar -->
     <v-toolbar

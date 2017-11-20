@@ -12,6 +12,8 @@ import search from './modules/search'
 import sidebar from './modules/sidebar'
 import toolbar from './modules/toolbar'
 import users from './modules/users'
+// Store module
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
@@ -27,5 +29,6 @@ export const store = new Vuex.Store({
     sidebar: sidebar,
     toolbar: toolbar,
     users: users
-  }
+  },
+  plugins: [createPersistedState()]
 })
