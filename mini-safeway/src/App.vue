@@ -112,6 +112,10 @@
     <main>
       <router-view></router-view>
     </main>
+    <v-footer class="pa-3">
+    <v-spacer></v-spacer>
+    <div>Cloud8 MiniSafeway© {{ new Date().getFullYear() }}</div>
+  </v-footer>
     <v-dialog v-model="loginDialog" width="400px">
       <v-card>
         <v-snackbar
