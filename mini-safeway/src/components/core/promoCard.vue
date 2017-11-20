@@ -11,8 +11,18 @@
     </v-card-title>
     <v-card-actions>
     <v-spacer></v-spacer>
+    <template id="t">
+  <div class="container">
+    <input type="text" v-model="message">
+    <button type="button"
+    flat color="deep-orange"
+      v-clipboard:copy="message"
+      v-clipboard:success="onCopy"
+      v-clipboard:error="onError">Getcode</button>
+  </div>
+</template>
       <v-btn flat color="deep-orange">Getcode</v-btn>
-      <v-btn flat color="orange">Cart</v-btn>
+      <v-btn flat color="orange" @click="" :to="'/cart/'">Cart</v-btn>
     </v-card-actions>
     <v-card-text>
       <div><span class="black--text">1. Purchase {{ promoCode.quantity }} of any {{ promoCode.brand }} product.</span></div>
@@ -44,6 +54,19 @@
             savings: promoObj.savings
           }
         })
+    },
+    computed: {
+      message () {
+        return this.promoCode.code
+      }
+    },
+    methods: {
+      onCopy: function (e) {
+        alert('You just copied: ' + e.text)
+      },
+      onError: function (e) {
+        alert('Failed to copy texts')
+      }
     }
   }
 </script>
