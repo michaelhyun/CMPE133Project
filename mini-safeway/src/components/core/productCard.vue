@@ -57,19 +57,31 @@
               </v-flex>
               <v-flex xs8 justify-center>
                 <v-btn
+                  @click="setLoginDialog(true)"
+                  :disabled="!validQuantity"
+                  class="white--text justify-center"
+                  color="blue-grey darken-2"
+                  medium
+                  block
+                  v-if="!userSignedIn"
+                >
+                  Add To Cart
+                </v-btn>
+                <v-btn
                   @click="addToCart"
                   :disabled="!validQuantity"
                   class="white--text justify-center"
                   :color="colorButton"
                   medium
                   block
+                  v-if="userSignedIn"
                 >
-                <transition name="slide-fade" mode="out-in">
-                  <v-icon v-if="animatingButton">check</v-icon>
-                  <span v-if="!animatingButton">
-                    Add To Cart
-                  </span>
-                </transition>
+                  <transition name="slide-fade" mode="out-in">
+                    <v-icon v-if="animatingButton">check</v-icon>
+                    <span v-if="!animatingButton">
+                      Add To Cart
+                    </span>
+                  </transition>
                 </v-btn>
               </v-flex>
             </v-layout>
@@ -110,6 +122,9 @@
         }
         return name.slice(0, 32) + '...'
       },
+      userSignedIn () {
+        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      },
       animateButton () {
         if (this.animatingButton === true) {
           return true
@@ -142,6 +157,9 @@
       initButtonChange () {
         this.animatingButton = true
         setTimeout(() => { this.animatingButton = false }, 750)
+      },
+      setLoginDialog (show) {
+        this.$store.commit('setLoginDialog', show)
       }
     },
 

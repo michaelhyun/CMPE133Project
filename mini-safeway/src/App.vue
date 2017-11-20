@@ -53,7 +53,7 @@
       <v-btn
         icon
         v-if="!userSignedIn"
-        @click.stop="loginDialog=true"
+        @click.stop="setLoginDialog(true)"
       >
         <v-icon>lock_open</v-icon>
       </v-btn>
@@ -166,7 +166,7 @@
                   <v-spacer>
                   </v-spacer>
                   <v-btn flat color="primary" 
-                  @click="loginDialog = false">
+                  @click="setLoginDialog(false)">
                   Cancel
                   </v-btn>
                   <v-btn flat color="primary"
@@ -195,7 +195,6 @@
       drawerItemsName: 'shopItems',
       email: '',
       password: '',
-      loginDialog: false,
       loginSuccessMessage: false,
       logoutMessage: false,
       authenticationFailedMessage: false
@@ -210,6 +209,9 @@
       showSearchBar () {
         return this.$store.getters.getShowSearchBar
       },
+      loginDialog () {
+        return this.$store.getters.getLoginDialog
+      },
       userSignedIn () {
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined
       },
@@ -221,6 +223,9 @@
       }
     },
     methods: {
+      setLoginDialog (show) {
+        this.$store.commit('setLoginDialog', show)
+      },
       setTitle (title) {
         this.$store.toolbar.commit('setTitle', title)
       },
@@ -244,7 +249,7 @@
           password: this.password
         })
           .then((obj) => {
-            this.loginDialog = false
+            this.$store.commit('setLoginDialog', false)
             this.loginSuccessMessage = true
           }, (obj) => {
             this.authenticationFailedMessage = true
