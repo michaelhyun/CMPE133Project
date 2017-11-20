@@ -12,17 +12,15 @@
     <v-card-actions>
     <v-spacer></v-spacer>
     <template id="t">
-  <div class="container">
-    <input type="text" v-model="message">
-    <button type="button"
-    flat color="deep-orange"
-      v-clipboard:copy="message"
-      v-clipboard:success="onCopy"
-      v-clipboard:error="onError">Getcode</button>
-  </div>
-</template>
-      <v-btn flat color="deep-orange">Getcode</v-btn>
-      <v-btn flat color="orange" @click="" :to="'/cart/'">Cart</v-btn>
+      <div class="container">
+        <v-btn flat color="deep-orange"
+          type="button"
+          v-clipboard:copy="message"
+          v-clipboard:success="onCopy"
+          v-clipboard:error="onError">Getcode</v-btn>
+        <v-btn flat color="orange" @click="" :to="'/cart/'">Cart</v-btn>
+      </div>
+    </template>      
     </v-card-actions>
     <v-card-text>
       <div><span class="black--text">1. Purchase {{ promoCode.quantity }} of any {{ promoCode.brand }} product.</span></div>
