@@ -131,7 +131,9 @@
 
                 <!-- Apply Promotion Button -->
                 <v-flex xs12>
-                  <v-btn color="error">
+                  <v-btn
+                    @click="applyPromoCode(promotionCode)"
+                    color="white--text blue-grey darken-2">
                     APPLY
                   </v-btn>
                 </v-flex>
@@ -141,9 +143,6 @@
                   <div>
                     <v-btn
                     color="success"
-                    :loading="loading2"
-                    @click.native="loader = 'loading2'"
-                    :disabled="loading2"
                     :to="'/checkout'"
                     >
                       Proceed to Checkout <br>
@@ -165,12 +164,14 @@
 </template>
 
 <script>
+  import { firebase } from '../../../firebase'
 // ****Need to figure out how to store the state of quantity for each Item
   export default {
     data: () => ({
       // *****Need to figure out how to keep state of quantity of products to add to cart (also exists in product.vue and aisle.vue)
       // Rules for textfield input
       promotionCode: '',
+      applyingPromotion: false,
       // quantity: 1,
       validQuantity: true,
       rules: {
@@ -209,6 +210,20 @@
       },
       remove (index) {
         this.products.splice(index, 1)
+      },
+      applyPromoCode (promoCode) {
+        this.applyingPromotion = true
+        firebase.database().ref('savings/promotions/' + this.promotionCode.toUpperCase()).once('value')
+          .then((snapshot) => {
+            if (snapshot) {
+              // var obj = snapshot.val()
+            }
+            this.applyingPromotion = false
+          })
+          .catch((err) => {
+            console.log('Error applying promotion' + err)
+            this.applyingPromotion = false
+          })
       }
     }
   }

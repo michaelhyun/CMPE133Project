@@ -14,13 +14,6 @@
           height="300px"
         >
           <v-card-media
-            v-if="!product.imageSrc"
-            contain
-            class="ma-0 pa-0"
-          >
-            <img src="./loading.gif">
-          </v-card-media>
-          <v-card-media
             contain
             :src="product.imageSrc"
             height="200px"
