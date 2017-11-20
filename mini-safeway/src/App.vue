@@ -92,6 +92,21 @@
           Close
         </v-btn>
       </v-snackbar>
+      <!-- Snackbar Popup to indicate Unsuccessful Login -->
+      <v-snackbar
+        :timeout="3000"
+        v-model="authenticationFailedMessage"
+      >
+        Authentication Failed. 
+        <br>
+        Please Try Again.
+        <v-btn flat color = "red" @click.native="authenticationFailedMessage = false">
+          Close
+          <br>
+        </v-btn>
+        <br>
+        <br>
+      </v-snackbar>
       <!-- Snackbar Popup to indicate User Logged Out -->
       <v-snackbar
           :timeout="3000"
@@ -106,6 +121,7 @@
           Close
         </v-btn>
       </v-snackbar>
+
     </v-toolbar>
     <!-- Views Template -->
     <main>
@@ -113,21 +129,6 @@
     </main>
     <v-dialog v-model="loginDialog" width="400px">
       <v-card>
-        <v-snackbar
-        :timeout="3000"
-        :color="error"
-        v-model="authenticationFailedMessage"
-      >
-      Authentication Failed. 
-      <br>
-      Please Try Again.
-      <v-btn flat color = "red" @click.native="authenticationFailedMessage = false">
-        Close
-        <br>
-      </v-btn>
-      <br>
-      <br>
-    </v-snackbar>
         <v-card-title
           class="secondary py-4 title"
         >
@@ -242,15 +243,15 @@
           email: this.email,
           password: this.password
         })
-        if (this.userSignedIn) {
-          this.loginDialog = false
-          this.loginSuccessMessage = true
-        }
-        this.authenticationFailedMessage = true
-        console.log(this.userSignedIn)
-        // if (this.userSignedIn) {
-        //   this.loginSuccessMessage = true
-        // }
+          .then((obj) => {
+            this.loginDialog = false
+            this.loginSuccessMessage = true
+          }, (obj) => {
+            this.authenticationFailedMessage = true
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       },
       onDismissed () {
         this.$store.dispatch('clearError')

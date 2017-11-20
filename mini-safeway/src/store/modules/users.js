@@ -62,29 +62,33 @@ const actions = {
         }
       )
   },
-  loginUser ({commit}, payload) {
-    commit('setLoading', true)
-    commit('clearError')
-    firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
-      .then(
-        user => {
-          commit('setLoading', false)
-          const newUser = {
-            id: user.uid,
-            registeredMeetups: []
+  loginUser ({ commit, dispatch }, payload) {
+    return new Promise(function (resolve, reject) {
+      commit('setLoading', true)
+      commit('clearError')
+      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+        .then(
+          user => {
+            commit('setLoading', false)
+            const newUser = {
+              id: user.uid,
+              registeredMeetups: []
+            }
+            commit('setUser', newUser)
+            console.log('Welcome, user ' + newUser.id)
+            dispatch('retrieveOrderHistory')
+            resolve(user)
           }
-          commit('setUser', newUser)
-          console.log('Welcome, user ' + newUser.id)
-          this.$store.dispatch('retrieveOrderHistory')
-        }
-      )
-      .catch(
-        error => {
-          commit('setLoading', false)
-          commit('setError', error)
-          console.log(error)
-        }
-      )
+        )
+        .catch(
+          error => {
+            commit('setLoading', false)
+            commit('setError', error)
+            console.log(error)
+            reject(error)
+          }
+        )
+    })
   },
   autoSignIn ({commit}, payload) {
     commit('setUser', {id: payload.uid, registeredMeetups: []})
