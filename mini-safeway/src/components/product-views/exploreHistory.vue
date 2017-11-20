@@ -37,40 +37,19 @@
   // Known issues:
   // Refreshing the aisle page resets the store's state, meaning aisleProducts resets to empty so all products disappear.
   export default {
-    data () {
-      return {
-        sortOptions: ['Sort by name', 'Sort by price'],
-        sort: 'Sort by name'
-      }
-    },
+    data: () => ({
+      sortOptions: ['Sort by name', 'Sort by price'],
+      sort: 'Sort by name'
+    }),
     computed: {
       products () {
-        console.log(this.$store.getters.loadedOrders)
-        var products = this.$store.getters.loadedOrders
+        var prod = this.$store.getters.loadedOrders
         if (this.sort === this.sortOptions[1]) {
-          products.sort((a, b) => a.price.localeCompare(b.price))
+          prod.sort((a, b) => a.price.localeCompare(b.price))
         } else {
-          products.sort((a, b) => a.name.localeCompare(b.name))
+          prod.sort((a, b) => a.name.localeCompare(b.name))
         }
-        return products
-      }
-    },
-    // Watchers for when a new search is entered.
-    watch: {
-      // Search while user is typing
-      liveSearchQuery () {
-        this.$store.dispatch('populateSearchQueryProducts', this.liveSearchQuery)
-      }
-    },
-    // If the page is refreshed, then the store must be re-initialized before populating the store's
-    // searchQueryProducts member. However, I don't know how the prop is accessed.
-    // (maybe it's because the refresh includes the route prop?).
-    beforeCreate () {
-      this.$store.dispatch('toggleLiveSearch')
-      if (Object.keys(this.$store.getters.getProductNames).length === 0) {
-        this.$store.dispatch('initializeStoreData').then(() => {
-          this.$store.dispatch('populateSearchQueryProducts', this.liveSearchQuery)
-        })
+        return prod
       }
     },
     // The earliest a prop can be accessed in a Vue component's lifecycle is when it is mounted.
@@ -78,10 +57,7 @@
     mounted () {
       // this.$store.dispatch('populateSearchQueryProducts', this.searchQuery)
       this.$store.commit('setTitle', 'Explore History')
-      this.$store.dispatch('populateSearchQueryProducts', this.$store.getLiveSearchQuery)
-    },
-    destroyed () {
-      this.$store.dispatch('toggleLiveSearch')
+      this.$store.dispatch('retrieveOrderHistory')
     }
   }
 </script>

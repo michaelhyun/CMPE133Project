@@ -258,6 +258,8 @@
       },
       onLogout () {
         this.$store.dispatch('logout')
+        this.$store.commit('clearCart')
+        this.$store.commit('clearOrderHistory')
         this.$router.push('/')
         this.logoutMessage = true
       }
