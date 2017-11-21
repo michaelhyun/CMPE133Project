@@ -127,7 +127,7 @@
     <main>
       <router-view></router-view>
     </main>
-    <v-dialog v-model="loginDialog" width="400px">
+    <v-dialog persistent v-model="loginDialog" width="400px">
       <v-card>
         <v-card-title
           class="secondary py-4 title"
