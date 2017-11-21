@@ -37,7 +37,15 @@
       <!-- Cart -->
       <v-btn
         icon
+        @click="setLoginDialog(true)"
+        v-if="!userSignedIn"
+      >
+        <v-icon>shopping_cart</v-icon>
+      </v-btn>
+      <v-btn
+        icon
         to="/cart"
+        v-if="userSignedIn"
       >
         <v-icon>shopping_cart</v-icon>
       </v-btn>

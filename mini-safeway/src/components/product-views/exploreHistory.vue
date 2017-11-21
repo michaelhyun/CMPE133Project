@@ -1,36 +1,40 @@
 <template>
   <v-content>
-      <v-flex xs12 v-if="products.length!=0">
-        <h2 primary-title class="layout justify-center"> Order History </h2>
-      </v-flex>
-      <v-flex xs12 v-if="products.length==0">
-        <h2> Must have a Purchase History to use this feature </h2>
-      </v-flex>
-  <v-container>
-    <v-flex xs7 offset-xs5 sm4 offset-sm8 lg2 offset-lg10>
-      <v-select
-        v-bind:items="sortOptions"
-        v-model="sort"
-        label="Sort by"
-        single-line
-        bottom
-      ></v-select>
-    </v-flex>
-  </v-container>
+    <v-container>
+      <v-layout align-center>
+        <v-flex xs5 sm8 lg10>
+          <h4> Order History contains {{ Object.keys(products).length }} result(s) </h4>
+        </v-flex>
+        <v-flex xs7 justify-end>
+          <v-select
+            v-bind:items="sortOptions"
+            v-model="sort"
+            label="Sort by"
+            single-line
+            bottom
+          ></v-select>
+        </v-flex>
+      </v-layout>
+      <hr>
+    </v-container>
 
-  <v-container grid-list-xl>
-    <v-layout row wrap align-center>
-      <!-- Product Cards (repeated for every product in the search) -->
-      <v-flex
-        xs12 md4 lg3
-        v-for="product in products"
-        :key="product.name"
-      >
-        <productCard :productName="product.name"></productCard>
-      </v-flex>
-    
-    </v-layout>
-  </v-container>
+    <v-container grid-list-xl>
+      <v-layout row wrap align-center>
+        <v-flex xs12 v-if="products.length==0">
+          <h2> Must have a Purchase History to use this feature </h2>
+        </v-flex>
+
+        <!-- Product Cards (repeated for every product in the search) -->
+        <v-flex
+          xs12 md4 lg3
+          v-for="product in products"
+          :key="product.name"
+        >
+          <productCard :productName="product.name"></productCard>
+        </v-flex>
+      
+      </v-layout>
+    </v-container>
   </v-content>
 </template>
 <script>
