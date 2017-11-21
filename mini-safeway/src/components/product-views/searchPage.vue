@@ -49,7 +49,7 @@
       products () {
         var products = this.$store.getters.getSearchQueryProducts
         if (this.sort === this.sortOptions[1]) {
-          products.sort((a, b) => a.price.localeCompare(b.price))
+          products.sort((a, b) => a.price - b.price)
         } else {
           products.sort((a, b) => a.name.localeCompare(b.name))
         }
