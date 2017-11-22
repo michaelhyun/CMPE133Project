@@ -193,7 +193,7 @@
           firebase.storage().ref('products/' + self.productName + '.jpg').getDownloadURL()
             .then(function (url) {
               var productUrl = url
-              firebase.database().ref('promotions/clubSavings/' + self.productName).once('value')
+              firebase.database().ref('savings/club/' + self.productName).once('value')
                 .then(function (snapshot) {
                   self.product = {
                     name: self.productName,
