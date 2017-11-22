@@ -90,6 +90,42 @@
               </template>
             </v-list>
 
+            <v-list two-line>
+              <v-subheader>
+                <v-flex xs2> 
+                  Code
+                </v-flex>
+                <v-spacer></v-spacer>
+                <v-flex xs2 offset-xs10> 
+                  Discount
+                </v-flex>
+              </v-subheader>
+
+              <!-- Discount List -->
+              <template v-for="(discount, i) in discounts">
+                <v-flex
+                  :key="i"
+                  pa-2 pl-3
+                >
+                  <v-divider>
+                  </v-divider>
+                  <!-- Discount Row -->
+                  <v-list-tile>
+                    <!-- Discount Code, and Price -->
+                      <v-flex pt-3 pl-4>
+                        <v-list-tile-title>
+                          {{ discount.code }}
+                        </v-list-tile-title>
+                      </v-flex>
+                      <v-spacer/>
+                    <v-flex pt-3 xs2 offset-xs-10>
+                      <div> {{ discount.discount }} </div>
+                    </v-flex>
+                  </v-list-tile>
+                </v-flex>
+              </template>
+            </v-list>
+
             <!-- Subtotal Row -->
             <template>
               <v-footer>
@@ -184,6 +220,9 @@
       // Products should be retrieved from the vuex store
       products () {
         return this.$store.getters.getShoppingCart
+      },
+      discounts () {
+        return this.$store.getters.getDiscounts
       },
       // Subtotal calculated as the sum of each product's price times its quantity
       subTotal () {

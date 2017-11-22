@@ -4,7 +4,8 @@
     </v-card-media>
     <v-card-title primary-title>
       <div>
-        <div class="headline">GET ${{ promoCode.savings.toFixed(2) }} Off</div> 
+        <div v-if="typeof promoCode.savings === 'number'" class="headline">GET ${{ promoCode.savings.toFixed(2) }} Off</div>
+        <div v-else class="headline">GET {{ promoCode.savings }}</div> 
           <v-icon>check_circle</v-icon><span class="grey--text"> Promo Code: {{ promoCode.code }}</span>
         </div>
       </div>

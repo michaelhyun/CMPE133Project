@@ -8,6 +8,9 @@ const state = {
 const getters = {
   getShoppingCart (state) {
     return state.shoppingCart
+  },
+  getDiscounts (state) {
+    return state.discounts
   }
 }
 
@@ -25,6 +28,7 @@ const actions = {
             // Then, apply promotion based on 'type' and 'savings'
             if (snapshot) {
               var obj = snapshot.val()
+              var discount
               switch (obj.type) {
                 // Product promotions
                 case 'product':
@@ -34,7 +38,7 @@ const actions = {
                   if (product.quantity >= obj.quantity) {
                     // Dollar amount off if savings is integer, free product if savings is string
                     if (typeof obj.savings === 'number') {
-                      var discount = {
+                      discount = {
                         'code': code,
                         'discount': obj.savings
                       }
@@ -54,7 +58,11 @@ const actions = {
                                 imageSrc: url,
                                 price: freeProduct.price
                               })
-                              commit('addToDiscounts', code, freeProduct.price)
+                              discount = {
+                                'code': code,
+                                'discount': freeProduct.price
+                              }
+                              commit('addToDiscounts', discount)
                             })
                         })
                     }
@@ -72,8 +80,12 @@ const actions = {
                   if (brandProductsNum >= obj.quantity) {
                     // Dollar amount off if savings is integer, free product if savings is string
                     if (typeof obj.savings === 'number') {
+                      discount = {
+                        'code': code,
+                        'discount': obj.savings
+                      }
                       console.log(obj)
-                      commit('addToDiscounts', {'code': code, 'discount': obj.savings})
+                      commit('addToDiscounts', discount)
                       resolve(code)
                     } else {
                       firebase.database().ref('products/' + obj.savings).once('value')
@@ -87,7 +99,11 @@ const actions = {
                                 imageSrc: url,
                                 price: freeProduct.price
                               })
-                              commit('addToDiscounts', code, freeProduct.price)
+                              discount = {
+                                'code': code,
+                                'discount': freeProduct.price
+                              }
+                              commit('addToDiscounts', discount)
                             })
                         })
                     }
