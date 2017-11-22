@@ -25,6 +25,7 @@ import { store } from './store'
  */
 import VueFire from 'vuefire'
 import Vuetify from 'vuetify'
+import VueClipboard from 'vue-clipboard2'
 
 // Import styling for Vuetify
 import '../node_modules/vuetify/src/stylus/main.styl'
@@ -34,7 +35,7 @@ Vue.config.productionTip = false
 // Install plugins
 Vue.use(VueFire)
 Vue.use(Vuetify)
-
+Vue.use(VueClipboard)
 // Register components
 Vue.component('sidebar', Sidebar)
 Vue.component('productCard', ProductCard)

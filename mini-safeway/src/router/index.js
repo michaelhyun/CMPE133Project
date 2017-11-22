@@ -19,6 +19,7 @@ import Savings from '@/components/promotions/savings'
 import Help from '@/components/info/help'
 import ContactUs from '@/components/info/contactUs'
 import OrderConfirmation from '@/components/cart/orderConfirmation'
+import AboutUs from '@/components/info/aboutUs'
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -88,6 +89,11 @@ export default new Router({
       path: '/orderConfirmation',
       name: 'orderConfirmation',
       component: OrderConfirmation
+    },
+    {
+      path: '/aboutUs',
+      name: 'aboutUs',
+      component: AboutUs
     }
   ],
   mode: 'history'
