@@ -40,7 +40,6 @@ const actions = {
         for (let key in obj) {
           var matchingProduct = false
           for (let productKey in products) {
-            console.log(products)
             if (products[productKey].name === obj[key].name) {
               matchingProduct = true
             }

@@ -131,7 +131,8 @@
 
                 <!-- Apply Promotion Button -->
                 <v-flex xs12>
-                  <v-btn color="error">
+                  <v-btn
+                    @click="applyPromotion(promotionCode)" color="error">
                     APPLY
                   </v-btn>
                 </v-flex>
@@ -209,6 +210,16 @@
       },
       remove (index) {
         this.products.splice(index, 1)
+      },
+      applyPromotion (code) {
+        this.$store.dispatch('applyPromotion', this.promotionCode)
+          .then((result) => {
+            if (result) {
+              // Finished applying
+            } else {
+              // Could not apply
+            }
+          })
       }
     }
   }

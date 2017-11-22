@@ -200,7 +200,7 @@
                 <v-flex> 
                   Quantity
                 </v-flex>
-                
+
               </v-subheader>
               <v-spacer>
               </v-spacer>
@@ -231,7 +231,7 @@
                     </v-list-tile-content>
 
                     <!-- Quantity Picker -->
-                    
+
                     <div align="justify-right">
                       {{product.quantity}}
                     </div>
@@ -260,11 +260,6 @@
                 </v-flex>
               </v-footer>
             </template>
-          
-
-          
-      
-                       
     </v-expansion-panel-content>
   </v-layout>
 

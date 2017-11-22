@@ -148,6 +148,7 @@
         const payload = {
           name: this.product.name,
           quantity: parseInt(this.quantity),
+          brand: this.product.brand,
           imageSrc: this.product.imageSrc,
           price: this.product.price
         }
@@ -193,11 +194,12 @@
           firebase.storage().ref('products/' + self.productName + '.jpg').getDownloadURL()
             .then(function (url) {
               var productUrl = url
-              firebase.database().ref('promotions/clubSavings/' + self.productName).once('value')
+              firebase.database().ref('savings/club/' + self.productName).once('value')
                 .then(function (snapshot) {
                   self.product = {
                     name: self.productName,
                     price: productDetails.price,
+                    brand: productDetails.brand,
                     description: productDetails.description,
                     imageSrc: productUrl,
                     clubSavings: snapshot.val()
