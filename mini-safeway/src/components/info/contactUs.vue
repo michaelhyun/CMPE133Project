@@ -160,9 +160,9 @@
   export default {
     data: () => ({
       socialMedia: [
-      { name: 'Facebook', link: 'https://facebook.com/cloud8', imgSrc: 'https://facebookbrand.com/wp-content/themes/fb-branding/prj-fb-branding/assets/images/fb-art.png' },
+      { name: 'Instagram', link: 'https://instagram.com/cloud8minisafeway', imgSrc: 'https://placester.com/wp-content/uploads/2012/04/Instagram-Logo.png' },
       { name: 'Twitter', link: 'https://twitter.com/cloud8', imgSrc: 'https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Twitter_bird_logo_2012.svg/1259px-Twitter_bird_logo_2012.svg.png' },
-      { name: 'Instagram', link: 'https://instagram.com/cloud8', imgSrc: 'https://placester.com/wp-content/uploads/2012/04/Instagram-Logo.png' }
+      { name: 'Facebook', link: 'https://facebook.com/cloud8', imgSrc: 'https://facebookbrand.com/wp-content/themes/fb-branding/prj-fb-branding/assets/images/fb-art.png' }
       ]
     }),
     mounted () {
