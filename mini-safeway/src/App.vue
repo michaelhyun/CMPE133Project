@@ -80,6 +80,7 @@
       ></v-text-field>
       <!-- Snackbar Popup to indicate Successful Login -->
       <v-snackbar
+        :top="y===top"
         :timeout="3000"
         v-model="userSignedIn"
         v-if="loginSuccessMessage"
@@ -95,6 +96,7 @@
       </v-snackbar>
       <!-- Snackbar Popup to indicate Unsuccessful Login -->
       <v-snackbar
+        :top="y===top"
         :timeout="3000"
         v-model="authenticationFailedMessage"
       >
@@ -110,6 +112,7 @@
       </v-snackbar>
       <!-- Snackbar Popup to indicate User Logged Out -->
       <v-snackbar
+          :top="y===top"
           :timeout="3000"
           v-model="logoutMessage"
       >

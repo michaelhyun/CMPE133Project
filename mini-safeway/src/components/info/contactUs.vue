@@ -23,17 +23,20 @@
                   <h6>
                     HQ Campus:
                   </h6>
+                  <subheading>
                   San Jose State University<br>
                   1 Washington Sq. <br>
                   San Jose, CA 95112<br><br>
                   <br>
-
+                </subheading>
                   <h6>
 
                     Tech Labs:
                   </h6>
+                  <subheading>
                   Engineering Building Rm. #493<br>
                   San Jose State University
+                </subheading>
                 </div>
               </div>
             </v-card-title>
@@ -66,15 +69,18 @@
                   <v-btn flat icon
                   :ripple="false"
                   flat icon
-                  :to= "item.link" exact>
+                  :href="item.link"
+                  >
                 <img :src="item.imgSrc" height="25px">
               </v-btn>
                 <br>
-                <!-- // BROKEN -->
-                <a v-bind:href="item.link
-              ">
+                
+                <!-- <a v-bind:href="item.link
+              "> -->
+              <subheading>
                 {{ item.name }}
-              </a>
+              </subheading>
+             <!--  </a> -->
               <br>
                 <br>
               </v-flex>
@@ -108,6 +114,9 @@
                   <h6>
                     Phone:
                   </h6>
+                  <v-icon color = "cyan darken-2" class = "mr-2">
+                    phone
+                  </v-icon>
                   <subheading>
                     (408) 808-8008
                   </subheading>
@@ -116,15 +125,25 @@
                     E-mail:
                   </h6>
                   
-                  cloud8@sjsu.edu<br><br><br>
+                  <v-icon color = "purple darken-2" class = "mr-2">
+                    computer
+                  </v-icon>
+                <subheading>
+                  cloud8@sjsu.edu
+                </subheading>
+                <br><br><br>
+                
                   <h6>
                     P.O. Box:
                   </h6>
-              
-                  88 E San Fernando St.
-                  <br> 
+              <v-icon color = "orange darken-3" class = "mr-2">
+                    inbox
+                  </v-icon>
+                  <subheading>
+                  88 E San Fernando St., 
                     San Jose, CA 95112
                   <br><br><br>
+                </subheading>
 
                 </div>
               </div>
