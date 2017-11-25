@@ -55,7 +55,7 @@
         isNumber: (value) => !isNaN(value) || 'Quantity must be a number',
         max: (value) => (isNaN(value) || value < 100) || 'Maximum value is 99'
       },
-      sortOptions: ['Sort by name', 'Sort by price'],
+      sortOptions: ['Sort by name', 'Sort by price, low to high', 'Sort by price, high to low'],
       sort: 'Sort by name'
     }),
     props: ['aisleName'],
@@ -67,6 +67,8 @@
         var products = this.$store.getters.getAisleProducts
         if (this.sort === this.sortOptions[1]) {
           products.sort((a, b) => a.price - b.price)
+        } else if (this.sort === this.sortOptions[2]) {
+          products.sort((a, b) => b.price.localeCompare(a.price))
         } else {
           products.sort((a, b) => a.name.localeCompare(b.name))
         }

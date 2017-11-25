@@ -1,6 +1,5 @@
 <template>
   <v-content>
-
     <!--  Top bar -->
     <v-container fluid mx-0 my-0 px-0 py-0 elevation-4>
       <v-card-media
@@ -9,8 +8,7 @@
         class="layout justify-center">
       </v-card-media>
     </v-container>
-
-    <v-container>
+    <v-container fluid>
       <v-layout align-center>
         <v-flex xs5 sm8 lg10>
           <h4>Order History</h4>
@@ -29,7 +27,7 @@
       <hr>
     </v-container>
 
-    <v-container grid-list-xl>
+    <v-container fluid grid-list-xl>
       <v-layout row wrap align-center>
         <v-flex xs12 v-if="products.length==0">
           <h2> Must have a Purchase History to use this feature </h2>
@@ -53,14 +51,16 @@
   // Refreshing the aisle page resets the store's state, meaning aisleProducts resets to empty so all products disappear.
   export default {
     data: () => ({
-      sortOptions: ['Sort by name', 'Sort by price'],
+      sortOptions: ['Sort by name', 'Sort by price, low to high', 'Sort by price, high to low'],
       sort: 'Sort by name'
     }),
     computed: {
       products () {
         var prod = this.$store.getters.loadedOrders
         if (this.sort === this.sortOptions[1]) {
-          prod.sort((a, b) => a.price.localeCompare(b.price))
+          prod.sort((a, b) => a.price - b.price)
+        } else if (this.sort === this.sortOptions[2]) {
+          prod.sort((a, b) => b.price.localeCompare(a.price))
         } else {
           prod.sort((a, b) => a.name.localeCompare(b.name))
         }
