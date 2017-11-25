@@ -26,7 +26,7 @@ const actions = {
         firebase.database().ref('savings/codes/' + code).once('value')
           .then((snapshot) => {
             // Then, apply promotion based on 'type' and 'savings'
-            if (snapshot) {
+            if (snapshot.val() !== null) {
               var obj = snapshot.val()
               var discount
               switch (obj.type) {
@@ -114,7 +114,7 @@ const actions = {
               }
               resolve(snapshot)
             } else {
-              reject('Error retrieving promotions.')
+              reject('Promotion not found.')
             }
           })
       }
