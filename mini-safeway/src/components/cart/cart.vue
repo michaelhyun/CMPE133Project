@@ -192,9 +192,8 @@
                   <v-list-tile-content>
                     <v-flex xs12>
                       <v-text-field
-                      name="input-1-3"
                       v-model="promotionCode"
-                      label='ex: NY2018'
+                      label='ex: MINIS123'
                       single-line
                       >
                       </v-text-field>
@@ -206,8 +205,16 @@
                 <v-flex xs12>
                   <v-btn
                     @click="applyPromotion(promotionCode)"
-                    color="white--text blue-grey darken-2">
-                    APPLY
+                    :color="applyButtonColor"
+                    :disabled="!validPromoString"
+                  >
+                  <transition name="slide-fade" mode="out-in">
+                    <v-icon v-if="applyButtonAnimationState && validPromo">check</v-icon>
+                    <v-icon v-if="applyButtonAnimationState && !validPromo">clear</v-icon>
+                    <span v-if="!applyButtonAnimationState">
+                      APPLY
+                    </span>
+                  </transition>
                   </v-btn>
                 </v-flex>
 
@@ -231,6 +238,18 @@
             </v-flex>
           </v-card>
         </v-flex>
+        <v-snackbar
+          :timeout="3000"
+          v-model="promoCodeFailedToast"
+        >
+          {{ toastReason }}
+          <v-btn flat color = "red" @click.native="promoCodeFailedToast=false">
+            Close
+            <br>
+          </v-btn>
+          <br>
+          <br>
+        </v-snackbar>
       </v-layout>
     </v-container>
   </v-content>
@@ -242,6 +261,11 @@
     data: () => ({
       // *****Need to figure out how to keep state of quantity of products to add to cart (also exists in product.vue and aisle.vue)
       // Rules for textfield input
+      animatingApplyButton: false,
+      validPromo: false,
+      loadingPromo: false,
+      promoCodeFailedToast: false,
+      toastReason: '',
       promotionCode: '',
       // quantity: 1,
       validQuantity: true,
@@ -252,6 +276,13 @@
       showMenu: false
     }),
     computed: {
+      validPromoString () {
+        if (this.promotionCode.length === 0) {
+          return false
+        } else {
+          return true
+        }
+      },
       // Products should be retrieved from the vuex store
       products () {
         return this.$store.getters.getShoppingCart
@@ -270,21 +301,29 @@
         }
         // Round to two decimal places
         return total.toFixed(2)
+      },
+      applyButtonAnimationState () {
+        if (this.animatingApplyButton === true) {
+          return true
+        } else {
+          return false
+        }
+      },
+      applyButtonColor () {
+        if (this.animatingApplyButton === true) {
+          if (this.loadingPromo) {
+            return 'grey lighten-2'
+          } else if (this.validPromo) {
+            return 'white--text green'
+          } else {
+            return 'white--text red'
+          }
+        } else {
+          return 'white--text blue-grey darken-2'
+        }
       }
     },
     methods: {
-      // method for + icon in Quantity
-      add (index) {
-        if (this.products[index].quantity < 100) {
-          this.products[index].quantity++
-        }
-      },
-      // method for - icon in Quantity
-      subtract (index) {
-        if (this.products[index].quantity > 1) {
-          this.products[index].quantity--
-        }
-      },
       remove (index) {
         this.products.splice(index, 1)
       },
@@ -292,14 +331,35 @@
         this.discounts.splice(index, 1)
       },
       applyPromotion (code) {
+        var self = this
+        this.loadingPromo = true
         this.$store.dispatch('applyPromotion', this.promotionCode)
-          .then((result) => {
-            if (result) {
-              // Finished applying
-            } else {
-              // Could not apply
-            }
+          .then(function successCallback (result) {
+            self.validPromo = true
+            self.loadingPromo = false
+            self.animateApplyButtonSuccess()
+          }, function errorCallback (reason) {
+            self.validPromo = false
+            self.loadingPromo = false
+            self.toastReason = reason
+            self.animateApplyButtonError()
           })
+      },
+      animateApplyButtonLoading () {
+        this.loadingPromo = true
+      },
+      animateApplyButtonSuccess () {
+        this.animatingApplyButton = true
+        setTimeout(() => {
+          this.animatingApplyButton = false
+        }, 750)
+      },
+      animateApplyButtonError () {
+        this.promoCodeFailedToast = true
+        this.animatingApplyButton = true
+        setTimeout(() => {
+          this.animatingApplyButton = false
+        }, 750)
       }
     },
     mounted () {
@@ -307,3 +367,19 @@
     }
   }
 </script>
+
+<style>
+/* Enter and leave animations can use different */
+/* durations and timing functions.              */
+.slide-fade-enter-active {
+  transition: all .1s ease;
+}
+.slide-fade-leave-active {
+  transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+</style>
