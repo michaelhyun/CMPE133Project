@@ -1,7 +1,7 @@
 <template>
   <v-container fluid mx-0 my-0 px-0 py-0 elevation-4>
-    <v-card>
-      <v-card-media src="https://static-communitytable.parade.com/wp-content/uploads/2014/04/super-save-grocery-shopping-ftr.jpg" height="200px">
+    <v-card height="290px">
+      <v-card-media src="https://static-communitytable.parade.com/wp-content/uploads/2014/04/super-save-grocery-shopping-ftr.jpg" height="45px">
       </v-card-media>
       <v-card-title primary-title>
         <div>
@@ -11,25 +11,23 @@
           </div>
         </div>
       </v-card-title>
-      <v-card-actions>
-      <v-spacer></v-spacer>
-      <template id="t">
-        <div class="container">
-          <v-btn flat color="deep-orange"
-            type="button"
-            v-clipboard:copy="message"
-            v-clipboard:success="onCopy"
-            v-clipboard:error="onError">Getcode</v-btn>
-          <v-btn flat color="orange" @click="" :to="'/cart/'">Cart</v-btn>
-        </div>
-      </template>      
-      </v-card-actions>
       <v-card-text>
         <div v-if="promoCode.brand"><span class="black--text">1. Purchase {{ promoCode.quantity }} of any {{ promoCode.brand }} product.</span></div>
         <div v-if="promoCode.product"><span class="black--text">1. Purchase {{ promoCode.quantity }} of any {{ promoCode.product }}.</span></div>
         <div><span class="black--text">2. Apply Promo Code </span><span class="red--text">{{ promoCode.code }}</span><span class="black--text"> at Checkout</span></div>
         <div></div>
       </v-card-text>
+    </v-card>
+    <v-card>
+    <v-card-actions>
+      <v-btn
+            block 
+            flat color="deep-orange"
+            type="button"
+            v-clipboard:copy="message"
+            v-clipboard:success="onCopy"
+            v-clipboard:error="onError">Getcode</v-btn>
+      </v-card-actions>
     </v-card>
   </v-container>
 </template>
