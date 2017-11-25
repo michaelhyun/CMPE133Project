@@ -1,6 +1,6 @@
 <template>
   <v-content>
-    <v-container>
+    <v-container fluid>
       <v-layout align-center>
         <v-flex xs5 sm8 lg10>
           <h4> Order History contains {{ Object.keys(products).length }} result(s) </h4>
@@ -18,7 +18,7 @@
       <hr>
     </v-container>
 
-    <v-container grid-list-xl>
+    <v-container fluid grid-list-xl>
       <v-layout row wrap align-center>
         <v-flex xs12 v-if="products.length==0">
           <h2> Must have a Purchase History to use this feature </h2>
