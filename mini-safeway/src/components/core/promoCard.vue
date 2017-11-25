@@ -1,6 +1,6 @@
 <template>
   <v-container fluid mx-0 my-0 px-0 py-0 elevation-4>
-    <v-card height="290px">
+    <v-card height="320px">
       <v-card-media src="https://static-communitytable.parade.com/wp-content/uploads/2014/04/super-save-grocery-shopping-ftr.jpg" height="45px">
       </v-card-media>
       <v-card-title primary-title>
