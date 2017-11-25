@@ -245,7 +245,7 @@ function generatePromotionalCodes(products) {
           clubSavings = .5
         }
         var tempPromotionalCode = {
-          brand: product.brand,
+          product: productKey,
           type: "product",
           savings: clubSavings,
           quantity: Math.floor((Math.random() * maxQuantity) + 1)
@@ -255,7 +255,7 @@ function generatePromotionalCodes(products) {
       case 3:
         var code = productKey.replace(/\s/g, '').slice(0,5).toUpperCase() + integerCode
         var tempPromotionalCode = {
-          brand: product.brand,
+          product: productKey,
           type: "product",
           savings: brandProducts[Math.floor(Math.random() * brandProducts.length)],
           quantity: Math.floor((Math.random() * maxQuantity) + 1)
