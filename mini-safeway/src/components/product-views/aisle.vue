@@ -33,7 +33,7 @@
       <v-layout row wrap align-center>
         <!-- Product Cards (repeated for every product in the aisle) -->
         <v-flex
-          xs12 md4 lg3
+          xs12 md4 xl3
           v-for="product in products"
           :key="product.name"
         >

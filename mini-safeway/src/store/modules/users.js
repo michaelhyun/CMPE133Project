@@ -70,14 +70,24 @@ const actions = {
         .then(
           user => {
             commit('setLoading', false)
-            const newUser = {
-              id: user.uid,
-              registeredMeetups: []
-            }
-            commit('setUser', newUser)
-            console.log('Welcome, user ' + newUser.id)
-            dispatch('retrieveOrderHistory')
-            resolve(user)
+            var newUser
+            firebase.database().ref('users/' + user.uid).on('value', function (snapshot) {
+              newUser = {
+                id: user.uid,
+                first: snapshot.val().first,
+                last: snapshot.val().last,
+                phone: snapshot.val().phone,
+                type: snapshot.val().type,
+                address: snapshot.val().address,
+                city: snapshot.val().city,
+                state: snapshot.val().state,
+                zip: snapshot.val().zip
+              }
+              console.log(newUser)
+              commit('setUser', newUser)
+              dispatch('retrieveOrderHistory')
+              resolve(user)
+            })
           }
         )
         .catch(

@@ -328,31 +328,30 @@
   </v-content>
 </template>
 <script>
-  const defaultForm = {
-    first: '',
-    last: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    zip: '',
-    cardFirst: '',
-    cardLast: '',
-    creditCardNumber: '',
-    expiration: '',
-    ccv: '',
-    creditZip: ''
-  }
-
   export default {
     data: () => ({
-      form: Object.assign({}, defaultForm),
+      user: {},
       rules: {
         name: [val => (val || '').length > 0 || 'This field is required'],
         password: [val => (val || '').length > 7 || 'Password requires at least 8 characters']
       },
       days: [{ text: 'Day 1' }, { text: 'Day 2' }, { text: 'Day 3' }, { text: 'Day 4' }],
-      snackbar: false
+      snackbar: false,
+      form: {
+        first: '',
+        last: '',
+        email: '',
+        phone: '',
+        address: '',
+        city: '',
+        zip: '',
+        cardFirst: '',
+        cardLast: '',
+        creditCardNumber: '',
+        expiration: '',
+        ccv: '',
+        creditZip: ''
+      }
     }),
     computed: {
       // Products should be retrieved from the vuex store
@@ -373,9 +372,6 @@
         }
         // Round to two decimal places
         return total.toFixed(2)
-      },
-      user () {
-        return this.$store.getters.user
       },
       formIsValid () {
         return (
@@ -406,12 +402,11 @@
         }
       }
     },
-
+    beforeCreate () {
+      this.user = this.$store.getters.user
+      console.log(this.user)
+    },
     methods: {
-      resetForm () {
-        this.form = Object.assign({}, defaultForm)
-        this.$refs.form.reset()
-      },
       addToOrderHistory () {
         this.$store.dispatch('addToOrderHistory', this.$store.getters.getShoppingCart)
         this.$store.dispatch('retrieveOrderHistory')
