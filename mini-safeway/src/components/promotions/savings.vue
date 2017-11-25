@@ -91,7 +91,7 @@
         tabmenus: [
           'Member Specials', 'Promo Codes'
         ],
-        sortOptions: ['Sort by name', 'Sort by price'],
+        sortOptions: ['Sort by name', 'Sort by price, low to high', 'Sort by price, high to low'],
         sort: 'Sort by name',
         active: 'tab-0'
       }
@@ -104,6 +104,8 @@
         var products = this.$store.getters.getSavingsItems
         if (this.sort === this.sortOptions[1]) {
           products.sort((a, b) => a.price.localeCompare(b.price))
+        } else if (this.sort === this.sortOptions[2]) {
+          products.sort((a, b) => b.price.localeCompare(a.price))
         } else {
           products.sort((a, b) => a.name.localeCompare(b.name))
         }
