@@ -141,7 +141,7 @@
                   <!-- Quantity Picker -->
                   <v-list-tile-content>
                     <v-flex pt-3 mt-2 pr-0 mr-0>
-                      <div> ${{ parseInt(discount.discount).toFixed(2) }} Off </div>
+                      <div> ${{ parseFloat(discount.discount).toFixed(2) }} Off </div>
                     </v-flex>
                   </v-list-tile-content>
                   <v-list-tile-action>

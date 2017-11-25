@@ -25,7 +25,8 @@
       </template>      
       </v-card-actions>
       <v-card-text>
-        <div><span class="black--text">1. Purchase {{ promoCode.quantity }} of any {{ promoCode.brand }} product.</span></div>
+        <div v-if="promoCode.brand"><span class="black--text">1. Purchase {{ promoCode.quantity }} of any {{ promoCode.brand }} product.</span></div>
+        <div v-if="promoCode.product"><span class="black--text">1. Purchase {{ promoCode.quantity }} of any {{ promoCode.product }}.</span></div>
         <div><span class="black--text">2. Apply Promo Code </span><span class="red--text">{{ promoCode.code }}</span><span class="black--text"> at Checkout</span></div>
         <div></div>
       </v-card-text>
@@ -51,6 +52,7 @@
             code: this.promoCodeName,
             type: promoObj.type,
             brand: promoObj.brand,
+            product: promoObj.product,
             quantity: promoObj.quantity,
             savings: promoObj.savings
           }
