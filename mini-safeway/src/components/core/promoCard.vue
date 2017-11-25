@@ -26,11 +26,20 @@
     <v-card-actions>
       <v-btn
             block 
-            flat color="deep-orange"
+            flat
+            :color="colorButton"
             type="button"
             v-clipboard:copy="message"
             v-clipboard:success="onCopy"
-            v-clipboard:error="onError">Getcode</v-btn>
+            v-clipboard:error="onError"
+      >
+        <transition name="slide-fade" mode="out-in">
+          <v-icon v-if="animatingButton">check</v-icon>
+          <span v-if="!animatingButton">
+            GET CODE
+          </span>
+        </transition>
+      </v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
@@ -42,7 +51,8 @@
   import { firebase } from '../../../firebase'
   export default {
     data: () => ({
-      promoCode: { }
+      promoCode: { },
+      animatingButton: false
     }),
     // Key for database (productName)
     props: ['promoCodeName'],
@@ -63,15 +73,46 @@
     computed: {
       message () {
         return this.promoCode.code
+      },
+      animateButton () {
+        if (this.animatingButton === true) {
+          return true
+        } else {
+          return false
+        }
+      },
+      colorButton () {
+        if (this.animatingButton === true) {
+          return 'green'
+        } else {
+          return 'orange'
+        }
       }
     },
     methods: {
       onCopy: function (e) {
-        alert('You just copied: ' + e.text)
+        this.initButtonChange()
       },
-      onError: function (e) {
-        alert('Failed to copy texts')
+      initButtonChange () {
+        this.animatingButton = true
+        setTimeout(() => { this.animatingButton = false }, 750)
       }
     }
   }
 </script>
+
+<style>
+/* Enter and leave animations can use different */
+/* durations and timing functions.              */
+.slide-fade-enter-active {
+  transition: all .1s ease;
+}
+.slide-fade-leave-active {
+  transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+</style>

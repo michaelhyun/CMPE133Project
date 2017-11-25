@@ -160,7 +160,6 @@
         this.$store.commit('setLoginDialog', show)
       }
     },
-
     watch: {
       // Watch the text-field for changes
       quantity: function (context) {

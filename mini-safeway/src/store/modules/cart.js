@@ -35,7 +35,7 @@ const actions = {
                   // First, check if the requirements have been met.
                   var product = state.shoppingCart.find(shoppingCart => shoppingCart.name === obj.product)
                   // If the requirements have been met, proceed and apply savings based on 'savings'
-                  if (product.quantity >= obj.quantity) {
+                  if (product !== undefined && product.quantity >= obj.quantity) {
                     // Dollar amount off if savings is integer, free product if savings is string
                     if (typeof obj.savings === 'number') {
                       discount = {
