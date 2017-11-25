@@ -1,6 +1,6 @@
 import { firebase } from '../../../firebase'
 const state = {
-  promoCodes: [ ],
+  promoCodes: [],
   savings: []
 }
 

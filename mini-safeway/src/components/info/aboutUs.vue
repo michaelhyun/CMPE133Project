@@ -60,8 +60,10 @@
         ]
       }
     },
-
     methods: {
+    },
+    mounted () {
+      this.$store.commit('setTitle', 'About Us')
     }
   }
 </script>

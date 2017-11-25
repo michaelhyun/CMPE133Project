@@ -1,5 +1,9 @@
 <template>
-  <v-container align-center elevation-1 class="grey lighten-4">
+  <v-container
+    align-center
+    elevation-4
+    class="grey lighten-4"
+  >
     <!-- Product Card (Consists of two clickable cards, the image, and a control card) -->
     <!-- Image Card -->
     <v-layout row align-center>
@@ -13,13 +17,6 @@
           class="ma-0 pa-0"
           height="300px"
         >
-          <v-card-media
-            v-if="!product.imageSrc"
-            contain
-            class="ma-0 pa-0"
-          >
-            <img src="./loading.gif">
-          </v-card-media>
           <v-card-media
             contain
             :src="product.imageSrc"

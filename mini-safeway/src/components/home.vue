@@ -1,17 +1,27 @@
 <template>
   <v-content>
-    <v-container fluid >
-      <h2 class="red--text text--darken-2" style="text-align: center;">Welcome to MiniSafeway</h2>
-      <v-layout justify-center >
-        <v-flex xs12 lg10>
-          <v-carousel hide-controls>
-            <v-carousel-item v-for="(promotion, i) in promotions" v-bind:src="promotion.src" :key="i"></v-carousel-item>
-          </v-carousel>
+    <v-container fluid>
+      <h2
+        class="red--text text--darken-2 text-xs-center"
+      >
+        Welcome to MiniSafeway
+      </h2>
+      <v-layout>
+        <v-flex xs6>
+          <h4 class="red--text text--darken-2">Explore Our Club Savings</h4>
+          <v-divider></v-divider>
+        </v-flex>
+        <v-flex xs6>
+          <h4 class="red--text text--darken-2">Explore Our Promotions</h4>
+          <v-divider></v-divider>
         </v-flex>
       </v-layout>
     </v-container>
-    <v-container fluid grid-list-md class="grey lighten-4">
-      <h4 class="red--text text--darken-2" style="text-align: center">EXPLORE OUR AISLES</h4>
+    <v-container fluid>
+      <h4 class="red--text text--darken-2">Explore Our Aisles</h4>
+      <v-divider></v-divider>
+    </v-container>
+    <v-container fluid grid-list-xl>
       <v-layout row wrap>
         <v-flex
           v-bind="{ [`lg4`]: true, [`xs12`]: true }"
@@ -19,8 +29,11 @@
           :key="aisle.name"
         >
           <v-card
+            hover
             @click=""
-            :to="'/aisles/' + aisle.name">
+            :to="'/aisles/' + aisle.name"
+            px-0 py-0 mx-0 my-0
+          >
             <v-card-media
               :src="aisle.imageSrc"
               height="200px"
@@ -28,7 +41,7 @@
               <v-container fill-height fluid>
                 <v-layout fill-height>
                   <v-flex xs12 align-end flexbox>
-                    <span class="headline white--text" style="text-shadow: 1px 1px 1px #000000;" v-text="aisle.name"></span>
+                    <span class="headline white--text" style="text-shadow: 2px 2px 1px #000000;" v-text="aisle.name"></span>
                   </v-flex>
                 </v-layout>
               </v-container>

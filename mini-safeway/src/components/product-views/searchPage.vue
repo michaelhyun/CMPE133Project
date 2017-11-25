@@ -1,6 +1,6 @@
 <template>
   <v-content>
-    <v-container>
+    <v-container fluid>
       <v-layout align-center>
         <v-flex xs5 sm8 lg10>
           <h4> Search returned {{ Object.keys(products).length }} result(s) </h4>
@@ -18,7 +18,7 @@
       <hr>
     </v-container>
 
-    <v-container grid-list-xl>
+    <v-container grid-list-xl fluid>
       <v-layout row wrap align-center>
 
         <!-- Product Cards (repeated for every product in the search) -->

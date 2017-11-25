@@ -44,7 +44,6 @@ export const initializeStoreData = ({ commit, state }) => {
                     products: obj[key],
                     imageSrc: url
                   })
-                  console.log('Fetched ' + key + ' image from storage')
                 })
             }
 

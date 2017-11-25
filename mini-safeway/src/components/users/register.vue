@@ -198,7 +198,9 @@
         }
       }
     },
-
+    mounted () {
+      this.$store.commit('setTitle', 'Register')
+    },
     methods: {
       resetForm () {
         this.form = Object.assign({}, defaultForm)

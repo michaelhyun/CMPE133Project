@@ -1,5 +1,6 @@
 <template>
-  <v-app light>   
+  <v-app light>
+
     <sidebar></sidebar>
 
     <!-- Top navigation bar -->
@@ -16,8 +17,16 @@
         <!-- Hamburger Icon for Sidebar -->
         <v-toolbar-side-icon @click.stop="toggleSidebar"></v-toolbar-side-icon>
         <!-- MiniSafeway Text -->
-        <router-link to="/" tag="span" style="cursor: pointer">MiniSafeway<v-avatar> 
-      <img src="https://cbssacramento.files.wordpress.com/2013/06/safeway-logo.jpg?w=420" alt="Safeway"></v-avatar></router-link>
+        <router-link to="/" tag="span" style="cursor: pointer">
+          MiniSafeway
+          <v-avatar> 
+            <img
+              src="https://cbssacramento.files.wordpress.com/2013/06/safeway-logo.jpg?w=420"
+              alt="Safeway"
+              to="/"
+            >
+          </v-avatar>
+        </router-link>
       </v-toolbar-title>
 
       <!-- Toolbar Title -->

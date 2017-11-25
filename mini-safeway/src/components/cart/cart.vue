@@ -1,158 +1,195 @@
 <template>
   <v-content>
     <v-container fluid>
-      <v-layout row wrap mt-5 pt-5>
-        <v-flex>
+      <v-layout row wrap>
+        <!-- Header Row -->
+        <v-flex xs12>
           <!-- Card for Shopping Cart Header, Column Headers, Products, and Subtotal -->
-          <v-card>
+          <v-card flat>
             <!-- Shopping Cart Header -->
             <v-card-title>
               <div>
                 Shopping Cart
               </div>
             </v-card-title>
+          </v-card>
+        </v-flex>
 
-            <!-- Column Headers -->
-            <v-list two-line>
-              <v-subheader>
-                <v-flex xs7> 
-                  Items
-                </v-flex>
-                <v-flex xs4> 
-                  Quantity
-                </v-flex>
-                <v-flex> 
-                  Delete
-                </v-flex>
-              </v-subheader>
-              <v-spacer>
-              </v-spacer>
+        <!-- Product Row: Item image, name, and price -->
+        <v-flex xs10>
+          <v-list two-line>
+            <v-subheader> 
+              Items
+            </v-subheader>
+            <v-spacer></v-spacer>
+            <!-- Product List -->
+            <template v-for="(product, i) in products">
+              <v-flex
+                :key="i"
+                pa-2 pl-3
+              >
+                <v-divider></v-divider>
+                <!-- Product List Row -->
+                <v-list-tile>
+                  <!-- Product Image, Name, and Price -->
+                  <v-list-tile-avatar>
+                    <img v-bind:src="product.imageSrc">
+                  </v-list-tile-avatar>
+                  <v-list-tile-content>
+                    <v-flex pt-3 pl-4>
+                      <v-list-tile-title>
+                        {{ product.name }}
+                      </v-list-tile-title>
+                      <v-list-tile-sub-title>
+                        ${{ product.price }} per unit
+                      </v-list-tile-sub-title>
+                    </v-flex>
+                  </v-list-tile-content>
+                  <v-spacer></v-spacer>
+                </v-list-tile>
+              </v-flex>
+            </template>
+          </v-list>
+        </v-flex>
 
-              <!-- Product List -->
-              <template v-for="(product, i) in products">
-                <v-flex
-                  :key="i"
-                  pa-2 pl-3
-                >
-                  <v-divider>
-                  </v-divider>
-                  <!-- Product Row -->
-                  <v-list-tile>
-                    <!-- Product Image, Name, and Price -->
-                    <v-list-tile-avatar>
-                      <img v-bind:src="product.imageSrc">
-                    </v-list-tile-avatar>
-                    <v-list-tile-content>
-                      <v-flex pt-3 pl-4>
-                        <v-list-tile-title>
-                          {{ product.name }}
-                        </v-list-tile-title>
-                        <v-list-tile-sub-title>
-                          {{ product.price }}
-                        </v-list-tile-sub-title>
-                      </v-flex>
-                    </v-list-tile-content>
-                    <!-- Quantity Picker -->
-                    <v-btn
-                      @click="subtract(i)"
-                      class="elevation-0 transparent"
-                    >
-                      <v-icon>
-                        remove
-                      </v-icon>
-                    </v-btn>
+        <!-- Product Row: Quantity Picker -->
+        <v-flex xs2>
+          <v-list two-line>
+            <v-subheader>
+              Quantity
+            </v-subheader>
+            <v-spacer></v-spacer>
+            <template v-for="(product, i) in products">
+              <v-flex
+                :key="i"
+                pa-2 pl-3
+              >
+                <v-divider></v-divider>
+                <v-list-tile>
+                  <!-- Quantity Picker -->
+                  <v-list-tile-content>
                     <v-text-field
+                      type="number"
                       v-model="product.quantity"
                       :rules="[rules.isNumber, rules.max]"
+                      class="pr-2 mr-2 px-5 input-group--focused"
                     >
                     </v-text-field>
+                  </v-list-tile-content>
+                  <v-list-tile-action>
                     <v-btn
-                    @click="add(i)"
-                    class="elevation-0 transparent"
+                      xs-2
+                      class="elevation-0 transparent"
+                      @click="remove(i)"
                     >
                       <v-icon>
-                        radd
+                        delete
                       </v-icon>
                     </v-btn>
-                    <v-list-tile-action>
-                      <v-btn
-                        xs-2
-                        class="elevation-0 transparent"
-                        @click="remove(i)"
-                      >
-                        <v-icon>
-                          delete
-                        </v-icon>
-                      </v-btn>
-                    </v-list-tile-action>
-                  </v-list-tile>
-                </v-flex>
-              </template>
-            </v-list>
-
-            <v-list two-line>
-              <v-subheader>
-                <v-flex xs2> 
-                  Code
-                </v-flex>
-                <v-spacer></v-spacer>
-                <v-flex xs2 offset-xs10> 
-                  Discount
-                </v-flex>
-              </v-subheader>
-
-              <!-- Discount List -->
-              <template v-for="(discount, i) in discounts">
-                <v-flex
-                  :key="i"
-                  pa-2 pl-3
-                >
-                  <v-divider>
-                  </v-divider>
-                  <!-- Discount Row -->
-                  <v-list-tile>
-                    <!-- Discount Code, and Price -->
-                      <v-flex pt-3 pl-4>
-                        <v-list-tile-title>
-                          {{ discount.code }}
-                        </v-list-tile-title>
-                      </v-flex>
-                      <v-spacer/>
-                    <v-flex pt-3 xs2 offset-xs-10>
-                      <div> {{ discount.discount }} </div>
-                    </v-flex>
-                  </v-list-tile>
-                </v-flex>
-              </template>
-            </v-list>
-
-            <!-- Subtotal Row -->
-            <template>
-              <v-footer>
-                <v-flex class="text-xs-left" pa-3>
-                  <div>
-                    Subtotal: 
-                  </div>
-                </v-flex>
-                <v-flex class="text-xs-right" pa-3>
-                  <div>
-                     $ {{ subTotal }}
-                  </div>
-                </v-flex>
-              </v-footer>
+                  </v-list-tile-action>
+                </v-list-tile>
+              </v-flex>
             </template>
-          </v-card>
+          </v-list>
+        </v-flex>
 
-          <!-- Card for Promotion Code and Checkout -->
+        <v-flex xs12>
+          <v-divider></v-divider>
+        </v-flex>
+
+        <!-- Discount Row: Discount Code -->
+        <v-flex xs10>
+          <v-list two-line>
+            <v-subheader> 
+              Code
+            </v-subheader>
+            <!-- Discount List -->
+            <template v-for="(discount, i) in discounts">
+              <v-flex
+                :key="i"
+                pa-2 pl-3
+              >
+                <v-divider></v-divider>
+                <!-- Discount List Row -->
+                <v-list-tile>
+                  <!-- Discount Code, and Price -->
+                  <v-flex pt-3 pl-4>
+                    <v-list-tile-title>
+                      {{ discount.code }}
+                    </v-list-tile-title>
+                  </v-flex>
+                </v-list-tile>
+              </v-flex>
+            </template>
+          </v-list>
+        </v-flex>
+
+        <!-- Discount Row: Discount Price, Delete Button -->
+        <v-flex xs2>
+          <v-list two-line>
+            <v-subheader>
+              Discount
+            </v-subheader>
+            <v-spacer></v-spacer>
+            <template v-for="(discount, i) in discounts">
+              <v-flex
+                :key="i"
+                pa-2 pl-3
+              >
+                <v-divider></v-divider>
+                <v-list-tile>
+                  <!-- Quantity Picker -->
+                  <v-list-tile-content>
+                    <v-flex pt-3 mt-2 pr-0 mr-0>
+                      <div> ${{ parseInt(discount.discount).toFixed(2) }} Off </div>
+                    </v-flex>
+                  </v-list-tile-content>
+                  <v-list-tile-action>
+                    <v-btn
+                      xs-2
+                      class="elevation-0 transparent"
+                      @click="removeDiscount(i)"
+                    >
+                      <v-icon>
+                        delete
+                      </v-icon>
+                    </v-btn>
+                  </v-list-tile-action>
+                </v-list-tile>
+              </v-flex>
+            </template>
+          </v-list>
+        </v-flex>
+
+        <!-- Subtotal Row -->
+        <v-flex xs12>
+          <template>
+            <v-footer>
+              <v-flex class="text-xs-left" pa-3>
+                <div>
+                  Subtotal: 
+                </div>
+              </v-flex>
+              <v-flex class="text-xs-right" pa-3>
+                <div>
+                   $ {{ subTotal }}
+                </div>
+              </v-flex>
+            </v-footer>
+          </template>
+        </v-flex>
+
+        <!-- Card for Promotion Code and Checkout -->
+        <v-flex xs12>
           <v-card>
             <v-flex pa-3>
               <v-list-tile>
                 <!-- Promotion Code Text-Field -->
                 <v-flex xs3>
+                  <v-list-tile-title>
+                    Promotion Code:
+                  </v-list-tile-title>
                   <v-list-tile-content>
-                    <v-list-tile-title>
-                      Promotion Code:
-                    </v-list-tile-title>
                     <v-flex xs12>
                       <v-text-field
                       name="input-1-3"
@@ -168,7 +205,8 @@
                 <!-- Apply Promotion Button -->
                 <v-flex xs12>
                   <v-btn
-                    @click="applyPromotion(promotionCode)" color="error">
+                    @click="applyPromotion(promotionCode)"
+                    color="white--text blue-grey darken-2">
                     APPLY
                   </v-btn>
                 </v-flex>
@@ -177,10 +215,7 @@
                 <v-flex xs4 class="layout justify-center">
                   <div>
                     <v-btn
-                    color="success"
-                    :loading="loading2"
-                    @click.native="loader = 'loading2'"
-                    :disabled="loading2"
+                    color="green lighten-1"
                     :to="'/checkout'"
                     >
                       Proceed to Checkout <br>
@@ -230,6 +265,9 @@
         for (var i = this.products.length - 1; i >= 0; i--) {
           total += this.products[i].price * this.products[i].quantity
         }
+        for (i = 0; i < this.discounts.length; i++) {
+          total -= this.discounts[i].discount
+        }
         // Round to two decimal places
         return total.toFixed(2)
       }
@@ -238,17 +276,20 @@
       // method for + icon in Quantity
       add (index) {
         if (this.products[index].quantity < 100) {
-          this.products[index].quantity += 1
+          this.products[index].quantity++
         }
       },
       // method for - icon in Quantity
       subtract (index) {
         if (this.products[index].quantity > 1) {
-          this.products[index].quantity -= 1
+          this.products[index].quantity--
         }
       },
       remove (index) {
         this.products.splice(index, 1)
+      },
+      removeDiscount (index) {
+        this.discounts.splice(index, 1)
       },
       applyPromotion (code) {
         this.$store.dispatch('applyPromotion', this.promotionCode)
@@ -260,6 +301,9 @@
             }
           })
       }
+    },
+    mounted () {
+      this.$store.commit('setTitle', 'Cart')
     }
   }
 </script>

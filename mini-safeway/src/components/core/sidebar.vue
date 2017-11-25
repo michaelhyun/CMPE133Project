@@ -11,9 +11,8 @@
   -->
 
   <v-navigation-drawer
-    persistent
-    clipped
     app
+    clipped
     disable-route-watcher
     v-model="visible"
   >
@@ -85,6 +84,11 @@
       },
       visible () {
         return this.$store.getters.getShowSidebar
+      }
+    },
+    watch: {
+      visible: function (context) {
+        this.$store.commit('setShowSidebar', this.visible)
       }
     }
   }

@@ -1,34 +1,36 @@
 <template>
-  <v-card>
-    <v-card-media src="https://static-communitytable.parade.com/wp-content/uploads/2014/04/super-save-grocery-shopping-ftr.jpg" height="200px">
-    </v-card-media>
-    <v-card-title primary-title>
-      <div>
-        <div v-if="typeof promoCode.savings === 'number'" class="headline">GET ${{ promoCode.savings.toFixed(2) }} Off</div>
-        <div v-else class="headline">GET {{ promoCode.savings }}</div> 
-          <v-icon>check_circle</v-icon><span class="grey--text"> Promo Code: {{ promoCode.code }}</span>
+  <v-container fluid mx-0 my-0 px-0 py-0 elevation-4>
+    <v-card>
+      <v-card-media src="https://static-communitytable.parade.com/wp-content/uploads/2014/04/super-save-grocery-shopping-ftr.jpg" height="200px">
+      </v-card-media>
+      <v-card-title primary-title>
+        <div>
+          <div v-if="typeof promoCode.savings === 'number'" class="headline">GET ${{ promoCode.savings.toFixed(2) }} Off</div>
+          <div v-else class="headline">GET {{ promoCode.savings }}</div> 
+            <v-icon>check_circle</v-icon><span class="grey--text"> Promo Code: {{ promoCode.code }}</span>
+          </div>
         </div>
-      </div>
-    </v-card-title>
-    <v-card-actions>
-    <v-spacer></v-spacer>
-    <template id="t">
-      <div class="container">
-        <v-btn flat color="deep-orange"
-          type="button"
-          v-clipboard:copy="message"
-          v-clipboard:success="onCopy"
-          v-clipboard:error="onError">Getcode</v-btn>
-        <v-btn flat color="orange" @click="" :to="'/cart/'">Cart</v-btn>
-      </div>
-    </template>      
-    </v-card-actions>
-    <v-card-text>
-      <div><span class="black--text">1. Purchase {{ promoCode.quantity }} of any {{ promoCode.brand }} product.</span></div>
-      <div><span class="black--text">2. Apply Promo Code </span><span class="red--text">{{ promoCode.code }}</span><span class="black--text"> at Checkout</span></div>
-      <div></div>
-    </v-card-text>
-  </v-card>
+      </v-card-title>
+      <v-card-actions>
+      <v-spacer></v-spacer>
+      <template id="t">
+        <div class="container">
+          <v-btn flat color="deep-orange"
+            type="button"
+            v-clipboard:copy="message"
+            v-clipboard:success="onCopy"
+            v-clipboard:error="onError">Getcode</v-btn>
+          <v-btn flat color="orange" @click="" :to="'/cart/'">Cart</v-btn>
+        </div>
+      </template>      
+      </v-card-actions>
+      <v-card-text>
+        <div><span class="black--text">1. Purchase {{ promoCode.quantity }} of any {{ promoCode.brand }} product.</span></div>
+        <div><span class="black--text">2. Apply Promo Code </span><span class="red--text">{{ promoCode.code }}</span><span class="black--text"> at Checkout</span></div>
+        <div></div>
+      </v-card-text>
+    </v-card>
+  </v-container>
 </template>
 
 <script>

@@ -1,92 +1,87 @@
 <template>
   <v-content>
-  <v-container fluid>
+    <v-container fluid class="py-0 px-0 my-0 mx-0">
 
-  <v-tabs fluid dark fixed centered>
-    <!--  Top bar -->
-     <v-card-media src="https://alittleyum.files.wordpress.com/2015/10/mealbox-grocery-spread.jpg"
-        height="200px" class="layout justify-center">
-      </v-card-media>
-      <v-tabs-bar class="red darken-1">
-      <v-tabs-slider color="red accent-1"></v-tabs-slider>
-      <v-tabs-item
-        v-for="(tabmenu, i) in tabmenus"
-        :key="i"
-        :href="'#tab-' + i"
+      <v-tabs
+        v-model="active"
+        dark
+        fixed
+        centered
       >
-        {{ tabmenu }}
-      </v-tabs-item>
-    </v-tabs-bar>
+        <!--  Top bar -->
+        <v-container fluid mx-0 my-0 px-0 py-0 elevation-4>
+          <v-card-media
+            src="https://alittleyum.files.wordpress.com/2015/10/mealbox-grocery-spread.jpg"
+            height="200px"
+            class="layout justify-center">
+          </v-card-media>
+          <v-tabs-bar class="red darken-1">
+            <v-tabs-slider color="red accent-1"></v-tabs-slider>
+            <v-tabs-item
+              v-for="(tabmenu, i) in tabmenus"
+              :key="i"
+              :href="'#tab-' + i"
+            >
+              {{ tabmenu }}
+            </v-tabs-item>
+          </v-tabs-bar>
+        </v-container>
 
-    <!--  Content of each tab -->
-    <v-tabs-items>
-      <!--  Member Specialst (Tab 1/2) -->
-      <v-tabs-content
-        :key="0"
-        :id="'tab-' + 0"
-      >
-        <v-card-text primary-title class="layout justify-center">
-            <div class="headline text-xs-center">Member Specials</div>
-          </v-card-text>
-        <template>
-          <v-content>
+        <!--  Content of each tab -->
+        <v-tabs-items>
+          <!--  Member Specials (Tab 1/2) -->
+          <v-tabs-content
+            :key="0"
+            :id="'tab-' + 0"
+          >
+            <template>
+              <v-container align-center>
+                <v-flex xs5 offset-xs7 justify-end>
+                  <v-select
+                    v-bind:items="sortOptions"
+                    v-model="sort"
+                    label="Sort by"
+                    single-line
+                    bottom
+                  ></v-select>
+                </v-flex>
+              </v-container>
 
-  <!-- Sort -->
-  <v-container>
-    <v-flex xs7 offset-xs5 sm4 offset-sm8 lg2 offset-lg10>
-      <v-select
-        v-bind:items="sortOptions"
-        v-model="sort"
-        label="Sort by"
-        single-line
-        bottom
-      ></v-select>
-    </v-flex>
-  </v-container>
+              <v-container grid-list-xl>
+                <v-layout row wrap align-center>
+                  <!-- Product Cards (repeated for every product in the aisle) -->
+                  <v-flex
+                    xs12 md4 lg3
+                    v-for="product in savingsItems"
+                    :key="product.name"
+                  >
+                    <productCard :productName="product.name"></productCard>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </template>
 
-  <v-container grid-list-xl>
-    <v-layout row wrap align-center>
-      <!-- Product Cards (repeated for every product in the aisle) -->
-      <v-flex
-        xs12 md4 lg3
-        v-for="product in savingsItems"
-        :key="product.name"
-      >
-        <productCard :productName="product.name"></productCard>
-
-      </v-flex>
-    </v-layout>
-  </v-container>
-
-  </v-content>
-
-        </template>
-
-      </v-tabs-content>
+          </v-tabs-content>
       
-      <!-- Promo Codes (Tab 2/2) -->
-      <v-tabs-content
-        :key="1"
-        :id="'tab-' + 1"
-      >
-        <v-card-text primary-title class="layout justify-center">
-          <div class="headline text-xs-center">Promo Codes</div>
-        </v-card-text>
-        <template>
-          <v-container grid-list-xl>
-            <v-layout row wrap align-center>
-              <v-flex xs12 sm3 offset-sm1 v-for="item in promoCodes" :key="item">
-                <promoCard :promoCodeName="item"></promoCard>
-              </v-flex>        
-            </v-layout>
-          </v-container>
-        </template>
-      </v-tabs-content>
-
-    </v-tabs-items>
-  </v-tabs>
-</v-container>
-</v-content>
+          <!-- Promo Codes (Tab 2/2) -->
+          <v-tabs-content
+            :key="1"
+            :id="'tab-' + 1"
+          >
+            <template>
+              <v-container grid-list-xl>
+                <v-layout row wrap align-center>
+                  <v-flex xs12 sm4 v-for="item in promoCodes" :key="item">
+                    <promoCard :promoCodeName="item"></promoCard>
+                  </v-flex>        
+                </v-layout>
+              </v-container>
+            </template>
+          </v-tabs-content>
+        </v-tabs-items>
+      </v-tabs>
+    </v-container>
+  </v-content>
 </template>
 
 <script>
@@ -97,7 +92,8 @@
           'Member Specials', 'Promo Codes'
         ],
         sortOptions: ['Sort by name', 'Sort by price'],
-        sort: 'Sort by name'
+        sort: 'Sort by name',
+        active: 'tab-0'
       }
     },
     computed: {
@@ -115,9 +111,18 @@
         return products
       }
     },
+    watch: {
+      active: function (context) {
+        if (this.active === 'tab-0') {
+          this.$store.commit('setTitle', 'Savings - ' + this.tabmenus[0])
+        } else {
+          this.$store.commit('setTitle', 'Savings - ' + this.tabmenus[1])
+        }
+      }
+    },
     mounted () {
       this.$store.dispatch('getSavingsItems')
-      this.$store.commit('setTitle', 'Savings')
+      this.$store.commit('setTitle', 'Savings - ' + this.tabmenus[0])
     }
   }
 </script>
