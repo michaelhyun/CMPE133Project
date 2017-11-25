@@ -1,20 +1,16 @@
 <template>
   <v-content>
+        <!--  Top bar -->
+    <v-container fluid mx-0 my-0 px-0 py-0 elevation-4>
+      <v-card-media
+        src="https://alittleyum.files.wordpress.com/2015/10/mealbox-grocery-spread.jpg"
+        height="200px"
+        class="layout justify-center">
+      </v-card-media>
+    </v-container>
+
     <v-container fluid>
       <v-layout row wrap>
-        <!-- Header Row -->
-        <v-flex xs12>
-          <!-- Card for Shopping Cart Header, Column Headers, Products, and Subtotal -->
-          <v-card flat>
-            <!-- Shopping Cart Header -->
-            <v-card-title>
-              <div>
-                Shopping Cart
-              </div>
-            </v-card-title>
-          </v-card>
-        </v-flex>
-
         <!-- Product Row: Item image, name, and price -->
         <v-flex xs10>
           <v-list two-line>
@@ -303,7 +299,7 @@
       }
     },
     mounted () {
-      this.$store.commit('setTitle', 'Cart')
+      this.$store.commit('setTitle', 'Shopping Cart')
     }
   }
 </script>

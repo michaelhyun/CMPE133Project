@@ -113,16 +113,12 @@
     },
     watch: {
       active: function (context) {
-        if (this.active === 'tab-0') {
-          this.$store.commit('setTitle', 'Savings - ' + this.tabmenus[0])
-        } else {
-          this.$store.commit('setTitle', 'Savings - ' + this.tabmenus[1])
-        }
+        this.$store.commit('setTitle', 'Savings')
       }
     },
     mounted () {
       this.$store.dispatch('getSavingsItems')
-      this.$store.commit('setTitle', 'Savings - ' + this.tabmenus[0])
+      this.$store.commit('setTitle', 'Savings')
     }
   }
 </script>

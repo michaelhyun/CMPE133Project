@@ -1,11 +1,20 @@
 <template>
   <v-content>
+    <!--  Top bar -->
+    <v-container fluid mx-0 my-0 px-0 py-0 elevation-4>
+      <v-card-media
+        src="https://alittleyum.files.wordpress.com/2015/10/mealbox-grocery-spread.jpg"
+        height="200px"
+        class="layout justify-center">
+      </v-card-media>
+    </v-container>
 
     <!-- Sort -->
     <v-container fluid>
       <v-layout align-center>
         <v-flex xs5 sm8 lg10>
-          <h4> {{ Object.keys(products).length }} result(s) </h4>
+          <h4> {{aisle.name}} </h4>
+          <h6> {{ Object.keys(products).length }} result(s) </h6>
         </v-flex>
         <v-flex xs7 justify-end>
           <v-select
@@ -67,7 +76,7 @@
     // Whenever the user navigates to a different aisle, repopulate the products in the aisle.
     watch: {
       aisleName: function (context) {
-        this.$store.commit('setTitle', 'Aisle - ' + this.aisleName)
+        this.$store.commit('setTitle', 'Aisle')
         this.$store.dispatch('populateAisleProducts', this.aisleName)
       }
     },
