@@ -112,12 +112,10 @@
     computed: {
       name () {
         var name = this.product.name
-        if (name === undefined || name === null || name.length < 25) {
-          return name
-        } else if (name.length <= 25) {
+        if (name === undefined || name === null || name.length <= 43) {
           return name
         }
-        return name.slice(0, 32) + '...'
+        return name.slice(0, 40) + '...'
       },
       userSignedIn () {
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined

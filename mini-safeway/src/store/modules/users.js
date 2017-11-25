@@ -74,6 +74,7 @@ const actions = {
             firebase.database().ref('users/' + user.uid).on('value', function (snapshot) {
               newUser = {
                 id: user.uid,
+                email: payload.email,
                 first: snapshot.val().first,
                 last: snapshot.val().last,
                 phone: snapshot.val().phone,
