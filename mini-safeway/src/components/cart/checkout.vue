@@ -229,9 +229,6 @@
                         </v-list-tile-sub-title>
                       </v-flex>
                     </v-list-tile-content>
-
-                    <!-- Quantity Picker -->
-
                     <div align="justify-right">
                       {{product.quantity}}
                     </div>
@@ -244,6 +241,33 @@
               </template>
             </v-list>
 </v-flex>
+
+        <!-- Discount Row: Discount Code -->
+        <v-flex xs10>
+          <v-list two-line>
+            <v-subheader> 
+              Code
+            </v-subheader>
+            <!-- Discount List -->
+            <template v-for="(discount, i) in discounts">
+              <v-flex
+                :key="i"
+                pa-2 pl-3
+              >
+                <v-divider></v-divider>
+                <!-- Discount List Row -->
+                <v-list-tile>
+                  <!-- Discount Code, and Price -->
+                  <v-flex pt-3 pl-4>
+                    <v-list-tile-title>
+                      {{ discount.code }}
+                    </v-list-tile-title>
+                  </v-flex>
+                </v-list-tile>
+              </v-flex>
+            </template>
+          </v-list>
+        </v-flex>
 
             <!-- Subtotal Row -->
             <template>
@@ -335,11 +359,17 @@
       products () {
         return this.$store.getters.getShoppingCart
       },
+      discounts () {
+        return this.$store.getters.getDiscounts
+      },
       // Subtotal calculated as the sum of each product's price times its quantity
       subTotal () {
         var total = 0
         for (var i = this.products.length - 1; i >= 0; i--) {
           total += this.products[i].price * this.products[i].quantity
+        }
+        for (i = 0; i < this.discounts.length; i++) {
+          total -= this.discounts[i].discount
         }
         // Round to two decimal places
         return total.toFixed(2)
