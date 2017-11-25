@@ -1,5 +1,5 @@
 <template>
-  <v-container white align-center elevation-1>
+  <v-container align-center elevation-1 class="grey lighten-4">
     <!-- Product Card (Consists of two clickable cards, the image, and a control card) -->
     <!-- Image Card -->
     <v-layout row align-center>
@@ -11,7 +11,7 @@
           hover
           raised
           class="ma-0 pa-0"
-          height="300px"
+          height="310px"
         >
           <v-card-media
             contain
