@@ -3,7 +3,7 @@
     <v-card height="320px">
       <v-card-media src="https://static-communitytable.parade.com/wp-content/uploads/2014/04/super-save-grocery-shopping-ftr.jpg" height="45px">
       </v-card-media>
-      <v-card flat height="140">
+      <v-card flat height="150">
       <v-card-title primary-title>
         <div>
           <div v-if="typeof promoCode.savings === 'number'" class="headline">GET ${{ promoCode.savings.toFixed(2) }} Off</div>
@@ -13,7 +13,7 @@
         </div>
       </v-card-title>
       </v-card>
-      <v-card flat height="180">
+      <v-card flat height="170">
       <v-card-text>
         <div v-if="promoCode.brand"><span class="black--text">1. Purchase {{ promoCode.quantity }} of any {{ promoCode.brand }} product.</span></div>
         <div v-if="promoCode.product"><span class="black--text">1. Purchase {{ promoCode.quantity }} of any {{ promoCode.product }}.</span></div>
