@@ -28,7 +28,6 @@ const actions = {
           commit('setLoading', false)
           const newUser = {
             id: user.uid,
-            history: [],
             first: payload.first,
             last: payload.last,
             phone: payload.phone,
@@ -40,7 +39,6 @@ const actions = {
             // code to commit to database
           }
           const firebaseUser = {
-            history: [],
             first: payload.first,
             last: payload.last,
             phone: payload.phone,
@@ -62,7 +60,7 @@ const actions = {
         }
       )
   },
-  loginUser ({ commit, dispatch }, payload) {
+  loginUser ({commit, dispatch}, payload) {
     return new Promise(function (resolve, reject) {
       commit('setLoading', true)
       commit('clearError')
@@ -70,13 +68,26 @@ const actions = {
         .then(
           user => {
             commit('setLoading', false)
-            const newUser = {
-              id: user.uid
-            }
-            commit('setUser', newUser)
-            console.log('Welcome, user ' + newUser.id)
-            dispatch('retrieveOrderHistory')
-            resolve(user)
+            var existingUser
+            firebase.database().ref('users/' + user.uid).on('value', function (snapshot) {
+              var userInfo = snapshot.val()
+              existingUser = {
+                id: user.uid,
+                first: userInfo.first,
+                last: userInfo.last,
+                phone: userInfo.phone,
+                type: userInfo.type,
+                address: userInfo.address,
+                city: userInfo.city,
+                state: userInfo.state,
+                zip: userInfo.zip,
+                email: payload.email
+              }
+              console.log(existingUser)
+              commit('setUser', existingUser)
+              dispatch('retrieveOrderHistory')
+              resolve(user)
+            })
           }
         )
         .catch(
@@ -89,8 +100,110 @@ const actions = {
         )
     })
   },
+  updateUser ({commit}, payload) {
+    var user = firebase.auth().currentUser
+    user.updateProfile({
+      id: user.uid,
+      first: payload.first,
+      last: payload.last,
+      phone: payload.phone,
+      type: payload.type,
+      address: payload.address,
+      city: payload.city,
+      state: payload.state,
+      zip: payload.zip,
+      email: payload.email
+    })
+    // this works
+    user.updateEmail(payload.email)
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        const updatedUser = {
+          id: user.uid,
+          first: payload.first,
+          last: payload.last,
+          phone: payload.phone,
+          type: payload.type,
+          address: payload.address,
+          city: payload.city,
+          state: payload.state,
+          zip: payload.zip,
+          email: payload.email
+        }
+        firebase.database().ref('users/' + user.uid).update(updatedUser)
+        commit('setUser', updatedUser)
+      }
+    })
+  },
+  updateName ({commit}, payload) {
+    // var user = firebase.auth().currentUser
+    // user.updateProfile({
+    //   first: payload.first,
+    //   last: payload.last
+    // })
+    // var user = firebase.auth().currentUser
+    // if (user) {
+    //   const updatedUser = {
+        // id: user.uid,
+        // first: payload.first,
+        // last: payload.last,
+        // phone: user.phone,
+        // type: user.type,
+        // address: user.address,
+        // city: user.city,
+        // state: user.state,
+        // zip: user.zip,
+        // email: user.email
+    //   }
+    //   firebase.database().ref('users/' + user.uid).update(updatedUser)
+    //   commit('setUser', updatedUser)
+    // }
+    commit('setLoading', true)
+    commit('clearError')
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        commit('setLoading', false)
+        const updatedUser = {
+          id: user.uid,
+          first: payload.first,
+          last: payload.last,
+          phone: user.phone,
+          type: user.type,
+          address: user.address,
+          city: user.city,
+          state: user.state,
+          zip: user.zip,
+          email: user.email
+        }
+        firebase.database().ref('users/' + user.uid).update(updatedUser)
+        commit('setUser', updatedUser)
+      }
+    })
+  },
+  updateEmail ({commit}, payload) {
+    var user = firebase.auth().currentUser
+    user.updateEmail(payload.email)
+  },
+  // work on this last
+  deleteUser ({commit}) {
+    // commit('setLoading', true)
+    commit('clearError')
+    var user = firebase.auth().currentUser
+    user.delete().then(function () {
+      // commit('setLoading', false)
+      console.log('User' + user.uid + 'deleted')
+    }).catch(
+          error => {
+            // commit('setLoading', false)
+            commit('setError', error)
+            console.log(error)
+          }
+        )
+  },
   autoSignIn ({commit}, payload) {
-    commit('setUser', {id: payload.uid})
+    commit('setUser', {
+      id: payload.uid
+    })
   },
   logout ({commit}) {
     firebase.auth().signOut()
@@ -113,12 +226,6 @@ const mutations = {
   },
   clearError (state) {
     state.error = null
-  },
-  // vivian
-  updateEmail (state, payload) {
-    state.user.updateEmail('payload').then(function () { console.log('update successful') }).catch(function () {
-      console.log('update failed')
-    })
   }
 }
 

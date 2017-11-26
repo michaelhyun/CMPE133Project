@@ -12,7 +12,7 @@
       :extended="showSearchBar"
     >
       <!-- Left-aligned Affordances -->
-      <v-toolbar-title style="width: 300px">
+      <v-toolbar-title style="max-width: 300px">
         <!-- Hamburger Icon for Sidebar -->
         <v-toolbar-side-icon @click.stop="toggleSidebar"></v-toolbar-side-icon>
         <!-- MiniSafeway Text -->
@@ -80,7 +80,7 @@
       ></v-text-field>
       <!-- Snackbar Popup to indicate Successful Login -->
       <v-snackbar
-        :top="y===top"
+        :top="true"
         :timeout="3000"
         v-model="userSignedIn"
         v-if="loginSuccessMessage"
@@ -96,7 +96,7 @@
       </v-snackbar>
       <!-- Snackbar Popup to indicate Unsuccessful Login -->
       <v-snackbar
-        :top="y===top"
+        :top="true"
         :timeout="3000"
         v-model="authenticationFailedMessage"
       >
@@ -112,7 +112,7 @@
       </v-snackbar>
       <!-- Snackbar Popup to indicate User Logged Out -->
       <v-snackbar
-          :top="y===top"
+          :top="true"
           :timeout="3000"
           v-model="logoutMessage"
       >
@@ -131,7 +131,7 @@
     <main>
       <router-view></router-view>
     </main>
-    <v-dialog v-model="loginDialog" width="400px">
+    <v-dialog v-model="loginDialog" max-width="400px">
       <v-card>
         <v-card-title
           class="secondary py-4 title"
