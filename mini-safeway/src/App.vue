@@ -154,9 +154,11 @@
       </v-snackbar>
       <v-card>
         <v-card-title
-          class="secondary py-4 title"
+          class="primary py-4 title"
         >
+        <div class="justify-center white--text">
           Log In
+        </div>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-sm class="pa-4">
@@ -185,15 +187,15 @@
               </v-layout>
               <v-layout row>
                 <v-flex xs12>
-                  <v-btn flat color="primary">Forgot Password?
+                  <v-btn color="primary">Forgot Password?
                   </v-btn>
                   <v-spacer>
                   </v-spacer>
-                  <v-btn flat color="primary" 
+                  <v-btn color="primary" 
                   @click="setLoginDialog(false)">
                   Cancel
                   </v-btn>
-                  <v-btn flat color="primary"
+                  <v-btn color="primary"
                   type="submit" 
                   :disabled="loading" 
                   :loading="loading">

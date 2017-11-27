@@ -151,10 +151,6 @@
                   </v-card-actions>
           </v-card>
         </v-dialog>
-        <!-- test -->
-        <v-btn color = "primary" @click="returnFirst">
-          TEST
-          </v-btn>
     </v-layout>
  </v-container>
 </template>

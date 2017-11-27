@@ -158,13 +158,28 @@ class="elevation-0 transparent" -->
                   <v-card-actions>
                     <v-btn
                       @click="addToCart"
+                      :disabled="!validQuantity"
+                      class="white--text justify-center"
+                      :color="colorButton"
+                      medium
+                      block
+                    >
+                    <transition name="slide-fade" mode="out-in">
+                      <v-icon v-if="animatingButton">check</v-icon>
+                      <span v-if="!animatingButton">
+                        Add To Cart
+                      </span>
+                    </transition>
+                    </v-btn>
+                    <!-- <v-btn
+                      @click="addToCart"
                       flat
                       color="red"
                       class="layout justify-center"
                       :disabled="!validQuantity"
                     >
                       Add To Cart
-                    </v-btn>
+                    </v-btn> -->
                   </v-card-actions>
                 </v-card>
               </v-flex>
@@ -265,6 +280,8 @@ class="elevation-0 transparent" -->
     //
     // The final version of this should be empty because firebase will handle the values for this model.
     data: () => ({
+      // Add To Cart Button transition color
+      animatingButton: false,
       // Favorited Item
       starred: false,
       // Number of products to add to cart.
@@ -300,6 +317,15 @@ class="elevation-0 transparent" -->
           })
       })
     },
+    computed: {
+      colorButton () {
+        if (this.animatingButton === true) {
+          return 'green'
+        } else {
+          return 'primary'
+        }
+      }
+    },
     methods: {
       star () {
         this.starred = !this.starred
@@ -313,6 +339,11 @@ class="elevation-0 transparent" -->
           price: this.product.price
         }
         this.$store.commit('addToCart', payload)
+        this.initButtonChange()
+      },
+      initButtonChange () {
+        this.animatingButton = true
+        setTimeout(() => { this.animatingButton = false }, 750)
       }
     },
     watch: {

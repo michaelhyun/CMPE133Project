@@ -224,6 +224,7 @@
                 <v-flex xs4 class="layout justify-center">
                   <div>
                     <v-btn
+                    dark
                     color="green lighten-1"
                     :to="'/checkout'"
                     >

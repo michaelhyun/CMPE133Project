@@ -131,7 +131,7 @@
         if (this.animatingButton === true) {
           return 'green'
         } else {
-          return 'blue-grey darken-2'
+          return 'primary'
         }
       }
     },
