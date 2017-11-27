@@ -16,7 +16,7 @@
         <!-- Hamburger Icon for Sidebar -->
         <v-toolbar-side-icon @click.stop="toggleSidebar"></v-toolbar-side-icon>
         <!-- MiniSafeway Text -->
-        <router-link to="/" tag="span" style="cursor: pointer">MiniSafeway<v-avatar> 
+        <router-link to="/" tag="span" style="cursor: pointer">MiniSafeway<v-avatar>
       <img src="https://cbssacramento.files.wordpress.com/2013/06/safeway-logo.jpg?w=420" alt="Safeway"></v-avatar></router-link>
       </v-toolbar-title>
 

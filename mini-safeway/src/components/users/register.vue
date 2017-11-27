@@ -128,7 +128,6 @@
                   flat
                   color="primary"
                   type="submit"
-                  :disabled="!formIsValid"
                 >Register</v-btn>
               </v-card-actions>
             </v-form>
