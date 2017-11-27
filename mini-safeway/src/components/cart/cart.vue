@@ -69,9 +69,9 @@
                   <v-list-tile-content>
                     <v-text-field
                       type="number"
-                      v-model="product.quantity"
+                      v-model="product.quantity" 
                       :rules="[rules.isNumber, rules.max]"
-                      class="pa-1 px-3 input-group--focused"
+                      class="pa-1 px-2 input-group--focused"
                     >
                     </v-text-field>
                   </v-list-tile-content>
