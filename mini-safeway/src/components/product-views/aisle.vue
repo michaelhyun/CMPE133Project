@@ -68,7 +68,7 @@
         if (this.sort === this.sortOptions[1]) {
           products.sort((a, b) => a.price - b.price)
         } else if (this.sort === this.sortOptions[2]) {
-          products.sort((a, b) => b.price.localeCompare(a.price))
+          products.sort((a, b) => b.price - a.price)
         } else {
           products.sort((a, b) => a.name.localeCompare(b.name))
         }

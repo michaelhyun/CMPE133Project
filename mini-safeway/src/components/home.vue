@@ -41,7 +41,7 @@
               <v-container fill-height fluid>
                 <v-layout fill-height>
                   <v-flex xs12 align-end flexbox>
-                    <span class="headline white--text" style="text-shadow: 2px 2px 1px #000000;" v-text="aisle.name"></span>
+                    <span class="headline white--text" style="text-shadow: 1px 3px 3px #000000;" v-text="aisle.name"></span>
                   </v-flex>
                 </v-layout>
               </v-container>

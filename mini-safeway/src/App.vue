@@ -27,6 +27,7 @@
             >
           </v-avatar>
         </router-link>
+
       </v-toolbar-title>
 
       <!-- Toolbar Title -->
