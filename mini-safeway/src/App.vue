@@ -99,6 +99,7 @@
       <!-- Snackbar Popup to indicate Successful Login -->
       <v-snackbar
         :top="true"
+        :right="true"
         :timeout="3000"
         v-model="userSignedIn"
         v-if="loginSuccessMessage"
@@ -112,25 +113,10 @@
           Close
         </v-btn>
       </v-snackbar>
-      <!-- Snackbar Popup to indicate Unsuccessful Login -->
-      <v-snackbar
-        :top="true"
-        :timeout="3000"
-        v-model="authenticationFailedMessage"
-      >
-        Authentication Failed. 
-        <br>
-        Please Try Again.
-        <v-btn flat color = "red" @click.native="authenticationFailedMessage = false">
-          Close
-          <br>
-        </v-btn>
-        <br>
-        <br>
-      </v-snackbar>
       <!-- Snackbar Popup to indicate User Logged Out -->
       <v-snackbar
           :top="true"
+          :right="true"
           :timeout="3000"
           v-model="logoutMessage"
       >
@@ -150,6 +136,22 @@
       <router-view></router-view>
     </main>
     <v-dialog persistent v-model="loginDialog" width="400px">
+      <!-- Snackbar Popup to indicate Unsuccessful Login -->
+      <v-snackbar
+        :top="true"
+        :timeout="3000"
+        v-model="authenticationFailedMessage"
+      >
+        Authentication Failed. 
+        <br>
+        Please Try Again.
+        <v-btn flat color = "red" @click.native="authenticationFailedMessage = false">
+          Close
+          <br>
+        </v-btn>
+        <br>
+        <br>
+      </v-snackbar>
       <v-card>
         <v-card-title
           class="secondary py-4 title"
