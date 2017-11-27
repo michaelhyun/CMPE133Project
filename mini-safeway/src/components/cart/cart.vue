@@ -319,12 +319,21 @@
         }
       }
     },
+    watch: {
+      products: {
+        handler: function (context) {
+          this.$store.dispatch('updateDiscounts')
+        },
+        deep: true
+      }
+    },
     methods: {
       remove (index) {
-        this.products.splice(index, 1)
+        this.$store.commit('removeFromCart', this.products[index])
+        this.$store.dispatch('updateDiscounts')
       },
       removeDiscount (index) {
-        this.discounts.splice(index, 1)
+        this.$store.commit('removeDiscount', this.discounts[index])
       },
       applyPromotion (code) {
         var self = this
