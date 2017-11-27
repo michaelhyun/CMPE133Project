@@ -330,30 +330,29 @@
 <script>
   export default {
     data: () => ({
-      user: {},
       rules: {
         name: [val => (val || '').length > 0 || 'This field is required'],
         password: [val => (val || '').length > 7 || 'Password requires at least 8 characters']
       },
       days: [{ text: 'Day 1' }, { text: 'Day 2' }, { text: 'Day 3' }, { text: 'Day 4' }],
-      snackbar: false,
-      form: {
-        first: '',
-        last: '',
-        email: '',
-        phone: '',
-        address: '',
-        city: '',
-        zip: '',
-        cardFirst: '',
-        cardLast: '',
-        creditCardNumber: '',
-        expiration: '',
-        ccv: '',
-        creditZip: ''
-      }
+      snackbar: false
     }),
     computed: {
+      form () {
+        var user = this.$store.getters.user
+        console.log(user)
+        var form = {
+          first: user.first,
+          last: user.last,
+          address: user.address,
+          city: user.city,
+          state: user.state,
+          zip: user.zip,
+          email: user.email,
+          phone: user.phone
+        }
+        return form
+      },
       // Products should be retrieved from the vuex store
       products () {
         return this.$store.getters.getShoppingCart
@@ -403,8 +402,6 @@
       }
     },
     beforeCreate () {
-      this.user = this.$store.getters.user
-      console.log(this.user)
     },
     methods: {
       addToOrderHistory () {
