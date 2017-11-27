@@ -51,9 +51,11 @@
         <!-- Product Row: Quantity Picker -->
         <v-flex xs2>
           <v-list two-line>
+            <v-flex class="pl-3">
             <v-subheader>
               Quantity
             </v-subheader>
+          </v-flex>
             <v-spacer></v-spacer>
             <template v-for="(product, i) in products">
               <v-flex
@@ -63,15 +65,17 @@
                 <v-divider></v-divider>
                 <v-list-tile>
                   <!-- Quantity Picker -->
+                  <v-list-tile-avatar>
                   <v-list-tile-content>
                     <v-text-field
                       type="number"
                       v-model="product.quantity"
                       :rules="[rules.isNumber, rules.max]"
-                      class="pr-2 mr-2 px-5 input-group--focused"
+                      class="pa-1 px-3 input-group--focused"
                     >
                     </v-text-field>
                   </v-list-tile-content>
+                </v-list-tile-avatar>
                   <v-list-tile-action>
                     <v-btn
                       xs-2
@@ -123,9 +127,11 @@
         <!-- Discount Row: Discount Price, Delete Button -->
         <v-flex xs2>
           <v-list two-line>
+            <v-flex class="pl-3">
             <v-subheader>
               Discount
             </v-subheader>
+          </v-flex>
             <v-spacer></v-spacer>
             <template v-for="(discount, i) in discounts">
               <v-flex
@@ -319,12 +325,21 @@
         }
       }
     },
+    watch: {
+      products: {
+        handler: function (context) {
+          this.$store.dispatch('updateDiscounts')
+        },
+        deep: true
+      }
+    },
     methods: {
       remove (index) {
-        this.products.splice(index, 1)
+        this.$store.commit('removeFromCart', this.products[index])
+        this.$store.dispatch('updateDiscounts')
       },
       removeDiscount (index) {
-        this.discounts.splice(index, 1)
+        this.$store.commit('removeDiscount', this.discounts[index])
       },
       applyPromotion (code) {
         var self = this
