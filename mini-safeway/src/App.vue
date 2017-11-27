@@ -1,5 +1,6 @@
 <template>
-  <v-app light>   
+  <v-app light>
+
     <sidebar></sidebar>
 
     <!-- Top navigation bar -->
@@ -16,8 +17,16 @@
         <!-- Hamburger Icon for Sidebar -->
         <v-toolbar-side-icon @click.stop="toggleSidebar"></v-toolbar-side-icon>
         <!-- MiniSafeway Text -->
-        <router-link to="/" tag="span" style="cursor: pointer">MiniSafeway<v-avatar> 
-      <img src="https://cbssacramento.files.wordpress.com/2013/06/safeway-logo.jpg?w=420" alt="Safeway"></v-avatar></router-link>
+        <router-link to="/" tag="span" style="cursor: pointer">
+          MiniSafeway
+          <v-avatar> 
+            <img
+              src="https://cbssacramento.files.wordpress.com/2013/06/safeway-logo.jpg?w=420"
+              alt="Safeway"
+              to="/"
+            >
+          </v-avatar>
+        </router-link>
       </v-toolbar-title>
 
       <!-- Toolbar Title -->
@@ -38,7 +47,15 @@
       <!-- Cart -->
       <v-btn
         icon
+        @click="setLoginDialog(true)"
+        v-if="!userSignedIn"
+      >
+        <v-icon>shopping_cart</v-icon>
+      </v-btn>
+      <v-btn
+        icon
         to="/cart"
+        v-if="userSignedIn"
       >
         <v-icon>shopping_cart</v-icon>
       </v-btn>
@@ -131,7 +148,7 @@
     <main>
       <router-view></router-view>
     </main>
-    <v-dialog v-model="loginDialog" max-width="400px">
+    <v-dialog persistent v-model="loginDialog" width="400px">
       <v-card>
         <v-card-title
           class="secondary py-4 title"

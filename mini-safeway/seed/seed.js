@@ -193,27 +193,77 @@ function generateClubSavings(products) {
 // This function randomly generates promotional codes
 // TODO: Change product to lowest price of brand before calculating savings
 function generatePromotionalCodes(products) {
-  var promotionalCodesMax = 10
+  var promotionalCodesMax = 20
   var maxQuantity = 3
   var maxSavings = .5
   var tempPromotionalCodes = { }
   var productKeys = Object.keys(products)
+  var brandProducts = [ ]
   for (let count = 0; count < promotionalCodesMax; count++) {
-    var product = products[productKeys[Math.floor(Math.random() * productKeys.length)]]
+    var productKey = productKeys[Math.floor(Math.random() * productKeys.length)]
+    var product = products[productKey]
     var integerCode = (Math.floor(Math.random() * 999) + 1).toString()
     integerCode = integerCode.padStart(3, "0")
-    var code = product.brand.replace(/\s/g,'').slice(0,5).toUpperCase() + integerCode
-    var clubSavings = Math.floor(product.price * (Math.random() * maxSavings) * 10) / 10
-    if (clubSavings === 0) {
-      clubSavings = .5
+    var type = Math.floor(Math.random() * 4)
+
+    for (let index = 0; index < productKeys.length; index++) {
+      if (products[productKeys[index]].brand === product.brand) {
+        brandProducts.push(productKeys[index])
+      }
     }
-    var tempPromotionalCode = {
-      brand: product.brand,
-      type: "brand",
-      savings: clubSavings,
-      quantity: Math.floor((Math.random() * maxQuantity) + 1)
+
+    switch (type) {
+      // Buy X of brand, get Y off price
+      case 0:
+        var code = product.brand.replace(/\s/g,'').slice(0,5).toUpperCase() + integerCode
+        var clubSavings = Math.floor(product.price * (Math.random() * maxSavings) * 10) / 10
+        if (clubSavings === 0) {
+          clubSavings = .5
+        }
+        var tempPromotionalCode = {
+          brand: product.brand,
+          type: "brand",
+          savings: clubSavings,
+          quantity: Math.floor((Math.random() * maxQuantity) + 1)
+        }
+        break
+      // Buy X of brand, get another brand product
+      case 1:
+        var code = product.brand.replace(/\s/g,'').slice(0,5).toUpperCase() + integerCode
+        var tempPromotionalCode = {
+          brand: product.brand,
+          type: "brand",
+          savings: brandProducts[Math.floor(Math.random() * brandProducts.length)],
+          quantity: Math.floor((Math.random() * maxQuantity) + 1)
+        }
+        break
+      // Buy X of product, get Y off price
+      case 2:
+        var code = productKey.replace(/\s/g, '').slice(0,5).toUpperCase() + integerCode
+        var clubSavings = Math.floor(product.price * (Math.random() * maxSavings) * 10) / 10
+        if (clubSavings === 0) {
+          clubSavings = .5
+        }
+        var tempPromotionalCode = {
+          product: productKey,
+          type: "product",
+          savings: clubSavings,
+          quantity: Math.floor((Math.random() * maxQuantity) + 1)
+        }
+        break
+      // Buy X of product, get another of same product (BOGO)
+      case 3:
+        var code = productKey.replace(/\s/g, '').slice(0,5).toUpperCase() + integerCode
+        var tempPromotionalCode = {
+          product: productKey,
+          type: "product",
+          savings: brandProducts[Math.floor(Math.random() * brandProducts.length)],
+          quantity: Math.floor((Math.random() * maxQuantity) + 1)
+        }
+        break
     }
     tempPromotionalCodes[code] = tempPromotionalCode
+    brandProducts = [ ]
   }
   return tempPromotionalCodes
 }

@@ -1,127 +1,195 @@
 <template>
   <v-content>
+        <!--  Top bar -->
+    <v-container fluid mx-0 my-0 px-0 py-0 elevation-4>
+      <v-card-media
+        src="https://alittleyum.files.wordpress.com/2015/10/mealbox-grocery-spread.jpg"
+        height="200px"
+        class="layout justify-center">
+      </v-card-media>
+    </v-container>
+
     <v-container fluid>
-      <v-layout row wrap mt-5 pt-5>
-        <v-flex>
-          <!-- Card for Shopping Cart Header, Column Headers, Products, and Subtotal -->
-          <v-card>
-            <!-- Shopping Cart Header -->
-            <v-card-title>
-              <div>
-                Shopping Cart
-              </div>
-            </v-card-title>
+      <v-layout row wrap>
+        <!-- Product Row: Item image, name, and price -->
+        <v-flex xs10>
+          <v-list two-line>
+            <v-subheader> 
+              Items
+            </v-subheader>
+            <v-spacer></v-spacer>
+            <!-- Product List -->
+            <template v-for="(product, i) in products">
+              <v-flex
+                :key="i"
+                pa-2 pl-3
+              >
+                <v-divider></v-divider>
+                <!-- Product List Row -->
+                <v-list-tile>
+                  <!-- Product Image, Name, and Price -->
+                  <v-list-tile-avatar>
+                    <img v-bind:src="product.imageSrc">
+                  </v-list-tile-avatar>
+                  <v-list-tile-content>
+                    <v-flex pt-3 pl-4>
+                      <v-list-tile-title>
+                        {{ product.name }}
+                      </v-list-tile-title>
+                      <v-list-tile-sub-title>
+                        ${{ product.price }} per unit
+                      </v-list-tile-sub-title>
+                    </v-flex>
+                  </v-list-tile-content>
+                  <v-spacer></v-spacer>
+                </v-list-tile>
+              </v-flex>
+            </template>
+          </v-list>
+        </v-flex>
 
-            <!-- Column Headers -->
-            <v-list two-line>
-              <v-subheader>
-                <v-flex xs7> 
-                  Items
-                </v-flex>
-                <v-flex xs4> 
-                  Quantity
-                </v-flex>
-                <v-flex> 
-                  Delete
-                </v-flex>
-              </v-subheader>
-              <v-spacer>
-              </v-spacer>
-
-              <!-- Product List -->
-              <template v-for="(product, i) in products">
-                <v-flex
-                  :key="i"
-                  pa-2 pl-3
-                >
-                  <v-divider>
-                  </v-divider>
-                  <!-- Product Row -->
-                  <v-list-tile>
-                    <!-- Product Image, Name, and Price -->
-                    <v-list-tile-avatar>
-                      <img v-bind:src="product.imageSrc">
-                    </v-list-tile-avatar>
-                    <v-list-tile-content>
-                      <v-flex pt-3 pl-4>
-                        <v-list-tile-title>
-                          {{ product.name }}
-                        </v-list-tile-title>
-                        <v-list-tile-sub-title>
-                          {{ product.price }}
-                        </v-list-tile-sub-title>
-                      </v-flex>
-                    </v-list-tile-content>
-                    <!-- Quantity Picker -->
-                    <v-btn
-                      @click="subtract(i)"
-                      class="elevation-0 transparent"
-                    >
-                      <v-icon>
-                        remove
-                      </v-icon>
-                    </v-btn>
+        <!-- Product Row: Quantity Picker -->
+        <v-flex xs2>
+          <v-list two-line>
+            <v-subheader>
+              Quantity
+            </v-subheader>
+            <v-spacer></v-spacer>
+            <template v-for="(product, i) in products">
+              <v-flex
+                :key="i"
+                pa-2 pl-3
+              >
+                <v-divider></v-divider>
+                <v-list-tile>
+                  <!-- Quantity Picker -->
+                  <v-list-tile-content>
                     <v-text-field
+                      type="number"
                       v-model="product.quantity"
                       :rules="[rules.isNumber, rules.max]"
+                      class="pr-2 mr-2 px-5 input-group--focused"
                     >
                     </v-text-field>
+                  </v-list-tile-content>
+                  <v-list-tile-action>
                     <v-btn
-                    @click="add(i)"
-                    class="elevation-0 transparent"
+                      xs-2
+                      class="elevation-0 transparent"
+                      @click="remove(i)"
                     >
                       <v-icon>
-                        radd
+                        delete
                       </v-icon>
                     </v-btn>
-                    <v-list-tile-action>
-                      <v-btn
-                        xs-2
-                        class="elevation-0 transparent"
-                        @click="remove(i)"
-                      >
-                        <v-icon>
-                          delete
-                        </v-icon>
-                      </v-btn>
-                    </v-list-tile-action>
-                  </v-list-tile>
-                </v-flex>
-              </template>
-            </v-list>
-
-            <!-- Subtotal Row -->
-            <template>
-              <v-footer>
-                <v-flex class="text-xs-left" pa-3>
-                  <div>
-                    Subtotal: 
-                  </div>
-                </v-flex>
-                <v-flex class="text-xs-right" pa-3>
-                  <div>
-                     $ {{ subTotal }}
-                  </div>
-                </v-flex>
-              </v-footer>
+                  </v-list-tile-action>
+                </v-list-tile>
+              </v-flex>
             </template>
-          </v-card>
+          </v-list>
+        </v-flex>
 
-          <!-- Card for Promotion Code and Checkout -->
+        <v-flex xs12>
+          <v-divider></v-divider>
+        </v-flex>
+
+        <!-- Discount Row: Discount Code -->
+        <v-flex xs10>
+          <v-list two-line>
+            <v-subheader> 
+              Code
+            </v-subheader>
+            <!-- Discount List -->
+            <template v-for="(discount, i) in discounts">
+              <v-flex
+                :key="i"
+                pa-2 pl-3
+              >
+                <v-divider></v-divider>
+                <!-- Discount List Row -->
+                <v-list-tile>
+                  <!-- Discount Code, and Price -->
+                  <v-flex pt-3 pl-4>
+                    <v-list-tile-title>
+                      {{ discount.code }}
+                    </v-list-tile-title>
+                  </v-flex>
+                </v-list-tile>
+              </v-flex>
+            </template>
+          </v-list>
+        </v-flex>
+
+        <!-- Discount Row: Discount Price, Delete Button -->
+        <v-flex xs2>
+          <v-list two-line>
+            <v-subheader>
+              Discount
+            </v-subheader>
+            <v-spacer></v-spacer>
+            <template v-for="(discount, i) in discounts">
+              <v-flex
+                :key="i"
+                pa-2 pl-3
+              >
+                <v-divider></v-divider>
+                <v-list-tile>
+                  <!-- Quantity Picker -->
+                  <v-list-tile-content>
+                    <v-flex pt-3 mt-2 pr-0 mr-0>
+                      <div> ${{ parseFloat(discount.discount).toFixed(2) }} Off </div>
+                    </v-flex>
+                  </v-list-tile-content>
+                  <v-list-tile-action>
+                    <v-btn
+                      xs-2
+                      class="elevation-0 transparent"
+                      @click="removeDiscount(i)"
+                    >
+                      <v-icon>
+                        delete
+                      </v-icon>
+                    </v-btn>
+                  </v-list-tile-action>
+                </v-list-tile>
+              </v-flex>
+            </template>
+          </v-list>
+        </v-flex>
+
+        <!-- Subtotal Row -->
+        <v-flex xs12>
+          <template>
+            <v-footer>
+              <v-flex class="text-xs-left" pa-3>
+                <div>
+                  Subtotal: 
+                </div>
+              </v-flex>
+              <v-flex class="text-xs-right" pa-3>
+                <div>
+                   $ {{ subTotal }}
+                </div>
+              </v-flex>
+            </v-footer>
+          </template>
+        </v-flex>
+
+        <!-- Card for Promotion Code and Checkout -->
+        <v-flex xs12>
           <v-card>
             <v-flex pa-3>
               <v-list-tile>
                 <!-- Promotion Code Text-Field -->
                 <v-flex xs3>
+                  <v-list-tile-title>
+                    Promotion Code:
+                  </v-list-tile-title>
                   <v-list-tile-content>
-                    <v-list-tile-title>
-                      Promotion Code:
-                    </v-list-tile-title>
                     <v-flex xs12>
                       <v-text-field
-                      name="input-1-3"
                       v-model="promotionCode"
-                      label='ex: NY2018'
+                      label='ex: MINIS123'
                       single-line
                       >
                       </v-text-field>
@@ -131,8 +199,18 @@
 
                 <!-- Apply Promotion Button -->
                 <v-flex xs12>
-                  <v-btn color="error">
-                    APPLY
+                  <v-btn
+                    @click="applyPromotion(promotionCode)"
+                    :color="applyButtonColor"
+                    :disabled="!validPromoString"
+                  >
+                  <transition name="slide-fade" mode="out-in">
+                    <v-icon v-if="applyButtonAnimationState && validPromo">check</v-icon>
+                    <v-icon v-if="applyButtonAnimationState && !validPromo">clear</v-icon>
+                    <span v-if="!applyButtonAnimationState">
+                      APPLY
+                    </span>
+                  </transition>
                   </v-btn>
                 </v-flex>
 
@@ -140,10 +218,7 @@
                 <v-flex xs4 class="layout justify-center">
                   <div>
                     <v-btn
-                    color="success"
-                    :loading="loading2"
-                    @click.native="loader = 'loading2'"
-                    :disabled="loading2"
+                    color="green lighten-1"
                     :to="'/checkout'"
                     >
                       Proceed to Checkout <br>
@@ -159,6 +234,18 @@
             </v-flex>
           </v-card>
         </v-flex>
+        <v-snackbar
+          :timeout="3000"
+          v-model="promoCodeFailedToast"
+        >
+          {{ toastReason }}
+          <v-btn flat color = "red" @click.native="promoCodeFailedToast=false">
+            Close
+            <br>
+          </v-btn>
+          <br>
+          <br>
+        </v-snackbar>
       </v-layout>
     </v-container>
   </v-content>
@@ -170,6 +257,11 @@
     data: () => ({
       // *****Need to figure out how to keep state of quantity of products to add to cart (also exists in product.vue and aisle.vue)
       // Rules for textfield input
+      animatingApplyButton: false,
+      validPromo: false,
+      loadingPromo: false,
+      promoCodeFailedToast: false,
+      toastReason: '',
       promotionCode: '',
       // quantity: 1,
       validQuantity: true,
@@ -180,9 +272,19 @@
       showMenu: false
     }),
     computed: {
+      validPromoString () {
+        if (this.promotionCode.length === 0) {
+          return false
+        } else {
+          return true
+        }
+      },
       // Products should be retrieved from the vuex store
       products () {
         return this.$store.getters.getShoppingCart
+      },
+      discounts () {
+        return this.$store.getters.getDiscounts
       },
       // Subtotal calculated as the sum of each product's price times its quantity
       subTotal () {
@@ -190,26 +292,90 @@
         for (var i = this.products.length - 1; i >= 0; i--) {
           total += this.products[i].price * this.products[i].quantity
         }
+        for (i = 0; i < this.discounts.length; i++) {
+          total -= this.discounts[i].discount
+        }
         // Round to two decimal places
         return total.toFixed(2)
+      },
+      applyButtonAnimationState () {
+        if (this.animatingApplyButton === true) {
+          return true
+        } else {
+          return false
+        }
+      },
+      applyButtonColor () {
+        if (this.animatingApplyButton === true) {
+          if (this.loadingPromo) {
+            return 'grey lighten-2'
+          } else if (this.validPromo) {
+            return 'white--text green'
+          } else {
+            return 'white--text red'
+          }
+        } else {
+          return 'white--text blue-grey darken-2'
+        }
       }
     },
     methods: {
-      // method for + icon in Quantity
-      add (index) {
-        if (this.products[index].quantity < 100) {
-          this.products[index].quantity += 1
-        }
-      },
-      // method for - icon in Quantity
-      subtract (index) {
-        if (this.products[index].quantity > 1) {
-          this.products[index].quantity -= 1
-        }
-      },
       remove (index) {
         this.products.splice(index, 1)
+      },
+      removeDiscount (index) {
+        this.discounts.splice(index, 1)
+      },
+      applyPromotion (code) {
+        var self = this
+        this.loadingPromo = true
+        this.$store.dispatch('applyPromotion', this.promotionCode)
+          .then(function successCallback (result) {
+            self.validPromo = true
+            self.loadingPromo = false
+            self.animateApplyButtonSuccess()
+          }, function errorCallback (reason) {
+            self.validPromo = false
+            self.loadingPromo = false
+            self.toastReason = reason
+            self.animateApplyButtonError()
+          })
+      },
+      animateApplyButtonLoading () {
+        this.loadingPromo = true
+      },
+      animateApplyButtonSuccess () {
+        this.animatingApplyButton = true
+        setTimeout(() => {
+          this.animatingApplyButton = false
+        }, 750)
+      },
+      animateApplyButtonError () {
+        this.promoCodeFailedToast = true
+        this.animatingApplyButton = true
+        setTimeout(() => {
+          this.animatingApplyButton = false
+        }, 750)
       }
+    },
+    mounted () {
+      this.$store.commit('setTitle', 'Shopping Cart')
     }
   }
 </script>
+
+<style>
+/* Enter and leave animations can use different */
+/* durations and timing functions.              */
+.slide-fade-enter-active {
+  transition: all .1s ease;
+}
+.slide-fade-leave-active {
+  transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+</style>

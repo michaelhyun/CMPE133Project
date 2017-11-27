@@ -1,6 +1,6 @@
 <template>
   <v-content>
-    <v-container>
+    <v-container fluid>
       <v-layout align-center>
         <v-flex xs5 sm8 lg10>
           <h4> Search returned {{ Object.keys(products).length }} result(s) </h4>
@@ -18,12 +18,12 @@
       <hr>
     </v-container>
 
-    <v-container grid-list-xl>
+    <v-container grid-list-xl fluid>
       <v-layout row wrap align-center>
 
         <!-- Product Cards (repeated for every product in the search) -->
         <v-flex
-          xs12 md4 lg3
+          xs12 md4 xl3
           v-for="product in products"
           :key="product.name"
         >
@@ -41,7 +41,7 @@
   export default {
     data () {
       return {
-        sortOptions: ['Sort by name', 'Sort by price'],
+        sortOptions: ['Sort by name', 'Sort by price, low to high', 'Sort by price, high to low'],
         sort: 'Sort by name'
       }
     },
@@ -49,7 +49,9 @@
       products () {
         var products = this.$store.getters.getSearchQueryProducts
         if (this.sort === this.sortOptions[1]) {
-          products.sort((a, b) => a.price.localeCompare(b.price))
+          products.sort((a, b) => a.price - b.price)
+        } else if (this.sort === this.sortOptions[2]) {
+          products.sort((a, b) => b.price.localeCompare(a.price))
         } else {
           products.sort((a, b) => a.name.localeCompare(b.name))
         }

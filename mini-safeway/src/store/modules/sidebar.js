@@ -28,6 +28,9 @@ const actions = {
 const mutations = {
   toggleSidebar (state) {
     state.showSidebar = !state.showSidebar
+  },
+  setShowSidebar (state, visible) {
+    state.showSidebar = visible
   }
 }
 

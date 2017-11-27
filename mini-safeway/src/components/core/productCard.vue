@@ -11,15 +11,8 @@
           hover
           raised
           class="ma-0 pa-0"
-          height="300px"
+          height="310px"
         >
-          <v-card-media
-            v-if="!product.imageSrc"
-            contain
-            class="ma-0 pa-0"
-          >
-            <img src="./loading.gif">
-          </v-card-media>
           <v-card-media
             contain
             :src="product.imageSrc"
@@ -27,19 +20,35 @@
             class="ma-0 pa-0"
           >
           </v-card-media>
+          <v-card flat
+          height="60px"
+          >
           <v-card-title>
             <div class="text-xs-left">
               <h6 class="my-0 pa-0 text-xs-left"> {{name}} <br></h6>
-              <p class="my-0 pa-0 text-xs-left"> Price per unit: ${{product.price}} </p>
-              <div class="amber lighten-4">
-                <p v-if="product.clubSavings"> Club Savings: ${{product.clubSavings.toFixed(2)}} </p>
               </div>
             </div>
           </v-card-title>
+          </v-card>
+          <v-card flat>
+            <v-card-text class="my-0 py-0">
+              <div class="text-xs-left">
+                <p class="my-0 pa-0 text-xs-left"><v-icon>check_circle</v-icon> Price: ${{product.price}} </p>
+              </div>
+            </v-card-text>
+          </v-card>
+          <v-card-text class="my-0 py-0">
+            <v-card flat>
+              <div class="text-xs-left">
+                <div class="amber lighten-4">
+                  <p v-if="product.clubSavings"> Club Savings: ${{product.clubSavings.toFixed(2)}} </p>
+                </div>
+              </div>
+            </v-card>
+          </v-card-text>
         </v-card>
       </v-flex>
     </v-layout>
-
     <!-- Card Actions (Situated directly below picture) -->
     <v-layout row>
       <v-flex xs12 class="ml-0 mr-0 pl-0 pr-0">
@@ -57,31 +66,19 @@
               </v-flex>
               <v-flex xs8 justify-center>
                 <v-btn
-                  @click="setLoginDialog(true)"
-                  :disabled="!validQuantity"
-                  class="white--text justify-center"
-                  color="blue-grey darken-2"
-                  medium
-                  block
-                  v-if="!userSignedIn"
-                >
-                  Add To Cart
-                </v-btn>
-                <v-btn
                   @click="addToCart"
                   :disabled="!validQuantity"
                   class="white--text justify-center"
                   :color="colorButton"
                   medium
                   block
-                  v-if="userSignedIn"
                 >
-                  <transition name="slide-fade" mode="out-in">
-                    <v-icon v-if="animatingButton">check</v-icon>
-                    <span v-if="!animatingButton">
-                      Add To Cart
-                    </span>
-                  </transition>
+                <transition name="slide-fade" mode="out-in">
+                  <v-icon v-if="animatingButton">check</v-icon>
+                  <span v-if="!animatingButton">
+                    Add To Cart
+                  </span>
+                </transition>
                 </v-btn>
               </v-flex>
             </v-layout>
@@ -115,12 +112,10 @@
     computed: {
       name () {
         var name = this.product.name
-        if (name === undefined || name === null || name.length < 25) {
-          return name
-        } else if (name.length <= 25) {
+        if (name === undefined || name === null || name.length <= 43) {
           return name
         }
-        return name.slice(0, 32) + '...'
+        return name.slice(0, 40) + '...'
       },
       userSignedIn () {
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined
@@ -148,6 +143,7 @@
         const payload = {
           name: this.product.name,
           quantity: parseInt(this.quantity),
+          brand: this.product.brand,
           imageSrc: this.product.imageSrc,
           price: this.product.price
         }
@@ -162,7 +158,6 @@
         this.$store.commit('setLoginDialog', show)
       }
     },
-
     watch: {
       // Watch the text-field for changes
       quantity: function (context) {
@@ -198,6 +193,7 @@
                   self.product = {
                     name: self.productName,
                     price: productDetails.price,
+                    brand: productDetails.brand,
                     description: productDetails.description,
                     imageSrc: productUrl,
                     clubSavings: snapshot.val()

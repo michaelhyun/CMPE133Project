@@ -1,36 +1,49 @@
 <template>
   <v-content>
-      <v-flex xs12 v-if="products.length!=0">
-        <h2 primary-title class="layout justify-center"> Order History </h2>
-      </v-flex>
-      <v-flex xs12 v-if="products.length==0">
-        <h2> Must have a Purchase History to use this feature </h2>
-      </v-flex>
-  <v-container>
-    <v-flex xs7 offset-xs5 sm4 offset-sm8 lg2 offset-lg10>
-      <v-select
-        v-bind:items="sortOptions"
-        v-model="sort"
-        label="Sort by"
-        single-line
-        bottom
-      ></v-select>
-    </v-flex>
-  </v-container>
+    <!--  Top bar -->
+    <v-container fluid mx-0 my-0 px-0 py-0 elevation-4>
+      <v-card-media
+        src="https://alittleyum.files.wordpress.com/2015/10/mealbox-grocery-spread.jpg"
+        height="200px"
+        class="layout justify-center">
+      </v-card-media>
+    </v-container>
+    <v-container fluid>
+      <v-layout align-center>
+        <v-flex xs5 sm8 lg10>
+          <h4>Order History</h4>
+          <h6>{{ Object.keys(products).length }} result(s) </h6>
+        </v-flex>
+        <v-flex xs7 justify-end>
+          <v-select
+            v-bind:items="sortOptions"
+            v-model="sort"
+            label="Sort by"
+            single-line
+            bottom
+          ></v-select>
+        </v-flex>
+      </v-layout>
+      <hr>
+    </v-container>
 
-  <v-container grid-list-xl>
-    <v-layout row wrap align-center>
-      <!-- Product Cards (repeated for every product in the search) -->
-      <v-flex
-        xs12 md4 lg3
-        v-for="product in products"
-        :key="product.name"
-      >
-        <productCard :productName="product.name"></productCard>
-      </v-flex>
-    
-    </v-layout>
-  </v-container>
+    <v-container fluid grid-list-xl>
+      <v-layout row wrap align-center>
+        <v-flex xs12 v-if="products.length==0">
+          <h2> Must have a Purchase History to use this feature </h2>
+        </v-flex>
+
+        <!-- Product Cards (repeated for every product in the search) -->
+        <v-flex
+          xs12 md4 xl3
+          v-for="product in products"
+          :key="product.name"
+        >
+          <productCard :productName="product.name"></productCard>
+        </v-flex>
+      
+      </v-layout>
+    </v-container>
   </v-content>
 </template>
 <script>
@@ -38,14 +51,16 @@
   // Refreshing the aisle page resets the store's state, meaning aisleProducts resets to empty so all products disappear.
   export default {
     data: () => ({
-      sortOptions: ['Sort by name', 'Sort by price'],
+      sortOptions: ['Sort by name', 'Sort by price, low to high', 'Sort by price, high to low'],
       sort: 'Sort by name'
     }),
     computed: {
       products () {
         var prod = this.$store.getters.loadedOrders
         if (this.sort === this.sortOptions[1]) {
-          prod.sort((a, b) => a.price.localeCompare(b.price))
+          prod.sort((a, b) => a.price - b.price)
+        } else if (this.sort === this.sortOptions[2]) {
+          prod.sort((a, b) => b.price.localeCompare(a.price))
         } else {
           prod.sort((a, b) => a.name.localeCompare(b.name))
         }

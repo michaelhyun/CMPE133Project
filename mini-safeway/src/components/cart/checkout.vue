@@ -200,7 +200,7 @@
                 <v-flex> 
                   Quantity
                 </v-flex>
-                
+
               </v-subheader>
               <v-spacer>
               </v-spacer>
@@ -229,9 +229,6 @@
                         </v-list-tile-sub-title>
                       </v-flex>
                     </v-list-tile-content>
-
-                    <!-- Quantity Picker -->
-                    
                     <div align="justify-right">
                       {{product.quantity}}
                     </div>
@@ -244,6 +241,33 @@
               </template>
             </v-list>
 </v-flex>
+
+        <!-- Discount Row: Discount Code -->
+        <v-flex xs10>
+          <v-list two-line>
+            <v-subheader> 
+              Code
+            </v-subheader>
+            <!-- Discount List -->
+            <template v-for="(discount, i) in discounts">
+              <v-flex
+                :key="i"
+                pa-2 pl-3
+              >
+                <v-divider></v-divider>
+                <!-- Discount List Row -->
+                <v-list-tile>
+                  <!-- Discount Code, and Price -->
+                  <v-flex pt-3 pl-4>
+                    <v-list-tile-title>
+                      {{ discount.code }}
+                    </v-list-tile-title>
+                  </v-flex>
+                </v-list-tile>
+              </v-flex>
+            </template>
+          </v-list>
+        </v-flex>
 
             <!-- Subtotal Row -->
             <template>
@@ -260,11 +284,6 @@
                 </v-flex>
               </v-footer>
             </template>
-          
-
-          
-      
-                       
     </v-expansion-panel-content>
   </v-layout>
 
@@ -309,25 +328,8 @@
   </v-content>
 </template>
 <script>
-  const defaultForm = {
-    first: '',
-    last: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    zip: '',
-    cardFirst: '',
-    cardLast: '',
-    creditCardNumber: '',
-    expiration: '',
-    ccv: '',
-    creditZip: ''
-  }
-
   export default {
     data: () => ({
-      form: Object.assign({}, defaultForm),
       rules: {
         name: [val => (val || '').length > 0 || 'This field is required'],
         password: [val => (val || '').length > 7 || 'Password requires at least 8 characters']
@@ -336,9 +338,27 @@
       snackbar: false
     }),
     computed: {
+      form () {
+        var user = this.$store.getters.user
+        console.log(user)
+        var form = {
+          first: user.first,
+          last: user.last,
+          address: user.address,
+          city: user.city,
+          state: user.state,
+          zip: user.zip,
+          email: user.email,
+          phone: user.phone
+        }
+        return form
+      },
       // Products should be retrieved from the vuex store
       products () {
         return this.$store.getters.getShoppingCart
+      },
+      discounts () {
+        return this.$store.getters.getDiscounts
       },
       // Subtotal calculated as the sum of each product's price times its quantity
       subTotal () {
@@ -346,11 +366,11 @@
         for (var i = this.products.length - 1; i >= 0; i--) {
           total += this.products[i].price * this.products[i].quantity
         }
+        for (i = 0; i < this.discounts.length; i++) {
+          total -= this.discounts[i].discount
+        }
         // Round to two decimal places
         return total.toFixed(2)
-      },
-      user () {
-        return this.$store.getters.user
       },
       formIsValid () {
         return (
@@ -381,12 +401,9 @@
         }
       }
     },
-
+    beforeCreate () {
+    },
     methods: {
-      resetForm () {
-        this.form = Object.assign({}, defaultForm)
-        this.$refs.form.reset()
-      },
       addToOrderHistory () {
         this.$store.dispatch('addToOrderHistory', this.$store.getters.getShoppingCart)
         this.$store.dispatch('retrieveOrderHistory')

@@ -1,6 +1,6 @@
 import { firebase } from '../../../firebase'
 const state = {
-  promoCodes: [ ],
+  promoCodes: [],
   savings: []
 }
 
@@ -15,17 +15,30 @@ const getters = {
 
 const actions = {
   getSavingsItems ({commit}) {
+    var productNames = []
+    var products = []
     firebase.database().ref('savings/club').once('value')
       .then((data) => {
-        const products = []
         const obj = data.val()
         for (let key in obj) {
-          products.push({
-            name: key,
-            price: obj[key]
+          productNames.push({
+            name: key
           })
         }
-        console.log(products)
+      })
+    firebase.database().ref('products/').once('value')
+      .then((data) => {
+        const obj = data.val()
+        for (let key in obj) {
+          for (var i = 0; i < productNames.length; i++) {
+            if (productNames[i].name === key) {
+              products.push({
+                name: key,
+                price: obj[key].price
+              })
+            }
+          }
+        }
         commit('setSavingsItems', products)
       })
   }
