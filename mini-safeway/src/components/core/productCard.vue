@@ -175,6 +175,32 @@
         } else {
           this.validQuantity = false
         }
+      },
+      // Watch the prop for carousel on home
+      productName: function (context) {
+        // When the component is mounted, populate this.product with data from database.
+        var self = this
+        firebase.database().ref('products/' + this.productName).once('value')
+          .then(function (snapshot) {
+            // Save product details so callback can access them
+            var productDetails = snapshot.val()
+            // Get Download URL
+            firebase.storage().ref('products/' + self.productName + '.jpg').getDownloadURL()
+              .then(function (url) {
+                var productUrl = url
+                firebase.database().ref('savings/club/' + self.productName).once('value')
+                  .then(function (snapshot) {
+                    self.product = {
+                      name: self.productName,
+                      price: productDetails.price,
+                      brand: productDetails.brand,
+                      description: productDetails.description,
+                      imageSrc: productUrl,
+                      clubSavings: snapshot.val()
+                    }
+                  })
+              })
+          })
       }
     },
     created () {
