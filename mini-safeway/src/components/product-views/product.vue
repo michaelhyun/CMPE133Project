@@ -38,28 +38,6 @@ class="elevation-0 transparent" -->
                 <!-- <v-flex d-flex> -->
               <!-- </v-flex> -->
                 <h4 class="red--text text--darken-2 text-xs-center">
-                <v-btn 
-                :ripple="false"
-                flat icon
-                @click = "star"
-                v-if="!starred">
-                <v-icon
-
-                @click="star"
-                  color="grey lighten-1"
-                  v-if="!starred"
-                >star_border</v-icon></v-btn>
-                <v-btn 
-                :ripple="false"
-                flat icon
-                @click = "star"
-                v-else>
-                  <v-icon
-                  large
-                    color="yellow darken-2"
-                    @click="star"
-                  >star</v-icon>
-                </v-btn>
               {{ product.name }}</h4>
               </v-card>
             </v-flex>
@@ -73,11 +51,6 @@ class="elevation-0 transparent" -->
               <!-- Left Arrow -->
               <v-flex d-flex xs1 md6>
                 <div class="text-xs-center">
-            <v-btn large flat icon :ripple="false" :right="true">
-              <v-icon color="red">
-                keyboard_arrow_left
-              </v-icon>
-            </v-btn>
           </div>
           </v-flex>
           <!-- Left Side of First Row -->
@@ -173,13 +146,7 @@ class="elevation-0 transparent" -->
           </v-flex>
           <!-- Right Arrow -->
           <v-flex d-flex xs1 md6>
-            <div class="text-xs-center">
-          <v-btn large flat icon :ripple="false">
-              <v-icon color="red">
-                keyboard_arrow_right
-              </v-icon>
-            </v-btn>
-          </div>
+
           </v-flex>
           </v-layout>
           <!-- End of First Row -->

@@ -207,6 +207,13 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+    <v-footer light color="grey lighten-1" fill-height>
+        <v-layout row wrap align-center>
+          <v-flex class="text-xs-center">
+            <p class="white--text justify-center"> © 2017 MiniSafeway. All rights reserved. </p>
+          </v-flex>
+        </v-layout>
+    </v-footer>
   </v-app>
 </template>
 

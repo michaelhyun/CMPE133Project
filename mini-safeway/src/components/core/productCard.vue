@@ -68,7 +68,7 @@
                 <v-btn
                   @click="addToCart"
                   :disabled="!validQuantity"
-                  class="white--text justify-center"
+                  class="black--text justify-center"
                   :color="colorButton"
                   medium
                   block
@@ -115,7 +115,7 @@
         if (name === undefined || name === null || name.length <= 43) {
           return name
         }
-        return name.slice(0, 40) + '...'
+        return name
       },
       userSignedIn () {
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined
@@ -129,9 +129,9 @@
       },
       colorButton () {
         if (this.animatingButton === true) {
-          return 'green'
+          return 'green accent-3'
         } else {
-          return 'blue-grey darken-2'
+          return 'grey lighten-2'
         }
       }
     },
