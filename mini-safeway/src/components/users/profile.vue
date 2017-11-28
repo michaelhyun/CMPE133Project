@@ -1,7 +1,8 @@
 <template>
-    <v-container fluid fill-height>
-      <v-layout row justify-center>
-        <v-flex xs10 md6 sm6>
+  <v-content>
+    <v-container>
+      <v-layout row>
+        <v-flex xs11>
         <v-card pa-5>
           <v-card-media src="https://steamuserimages-a.akamaihd.net/ugc/269463939060234411/47F1E70BD90DB25A97F3B761B07764F7F947287E/"
           height="300px">
@@ -13,11 +14,6 @@
                   delete
                 </v-icon>
               </v-btn>
-              <v-btn dark icon>
-              <v-icon>
-                more_vert
-              </v-icon>
-            </v-btn>
             </v-card-title>
             <v-spacer></v-spacer>
             <v-card-title class="white--text justify-center">
@@ -151,12 +147,10 @@
                   </v-card-actions>
           </v-card>
         </v-dialog>
-        <!-- test -->
-        <v-btn color = "primary" @click="returnFirst">
-          TEST
-          </v-btn>
     </v-layout>
  </v-container>
+</v-content>
+
 </template>
 
 <script>
@@ -181,18 +175,6 @@
       }
     },
     methods: {
-      returnFirst () {
-        console.log(this.first)
-      },
-      // editName () {
-      //   this.editNameDialog = !this.editNameDialog
-      //   console.log('editingName')
-      //   console.log(this.editNameDialog)
-      // },
-      // editEmail () {
-      //   this.editEmailDialog = !this.editEmailDialog
-      //   console.log('editing Email' + this.editEmailDialog)
-      // },
       updateEmail () {
         this.editEmailDialog = !this.editEmailDialog
         this.$store.dispatch('updateEmail', {

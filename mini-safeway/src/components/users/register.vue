@@ -9,7 +9,7 @@
               absolute
               top
               right
-              color="success"
+              color="red"
             >
               <span>Registration successful!</span>
               <v-icon dark>check_circle</v-icon>

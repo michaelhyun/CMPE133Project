@@ -191,7 +191,7 @@
                 </v-flex>
               </v-layout>
               <v-layout row>
-                <v-flex xs12>
+                <v-flex xs9>
                   <v-btn flat color="primary" 
                   @click="setLoginDialog(false)">
                   Cancel

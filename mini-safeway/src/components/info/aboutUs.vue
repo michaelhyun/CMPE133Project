@@ -1,8 +1,8 @@
 <template>
   <v-content>
-    <v-container fluid fill-height>
+    <v-container>
       <v-layout row>
-        <v-flex>
+        <v-flex xs12>
           <v-card-media src="http://locatahousingservices.org.uk/wp-content/uploads/2016/07/g-cloud-8.jpg" height="500px">
             <v-layout column class="media">
               <v-card-title>
@@ -26,7 +26,6 @@
         </v-list>
       </v-flex>
     </v-layout>
-
 </v-container>
 </v-content>
 </template>

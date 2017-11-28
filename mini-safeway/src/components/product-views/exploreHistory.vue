@@ -51,8 +51,8 @@
   // Refreshing the aisle page resets the store's state, meaning aisleProducts resets to empty so all products disappear.
   export default {
     data: () => ({
-      sortOptions: ['Sort by name', 'Sort by price, low to high', 'Sort by price, high to low'],
-      sort: 'Sort by name'
+      sortOptions: ['Sort by name', 'Sort by price, low to high', 'Sort by price, high to low', 'Sort by Date'],
+      sort: 'Sort by Date'
     }),
     computed: {
       products () {
@@ -61,8 +61,12 @@
           prod.sort((a, b) => a.price - b.price)
         } else if (this.sort === this.sortOptions[2]) {
           prod.sort((a, b) => b.price.localeCompare(a.price))
-        } else {
+        } else if (this.sort === this.sortOptions[0]) {
           prod.sort((a, b) => a.name.localeCompare(b.name))
+        } else {
+          this.$store.dispatch('retrieveOrderHistory')
+          prod = this.$store.getters.loadedOrders
+          return prod.reverse()
         }
         return prod
       }
