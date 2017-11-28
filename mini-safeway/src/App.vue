@@ -48,7 +48,7 @@
       <!-- Cart -->
       <v-btn
         icon
-        @click="setLoginDialog(true)"
+        @click="setLoginDialog(true); showRegister();"
         v-if="!userSignedIn"
       >
         <v-icon>shopping_cart</v-icon>
@@ -128,6 +128,7 @@
         <br>
         <br>
       </v-snackbar>
+
       <!-- Snackbar Popup to indicate User Logged Out -->
       <v-snackbar
           :top="true"
@@ -144,6 +145,14 @@
         </v-btn>
       </v-snackbar>
 
+      <v-snackbar
+          :top="true"
+          :timeout="3000"
+          v-model="showRegisterRequest"
+      >
+        Please sign in to access this feature.
+      </v-snackbar>
+
     </v-toolbar>
     <!-- Views Template -->
     <main>
@@ -152,7 +161,7 @@
     <v-dialog persistent v-model="loginDialog" width="400px">
       <v-card>
         <v-card-title
-          class="secondary py-4 title"
+          class="secondary title"
         >
           Log In
         </v-card-title>
@@ -183,10 +192,6 @@
               </v-layout>
               <v-layout row>
                 <v-flex xs12>
-                  <v-btn flat color="primary">Forgot Password?
-                  </v-btn>
-                  <v-spacer>
-                  </v-spacer>
                   <v-btn flat color="primary" 
                   @click="setLoginDialog(false)">
                   Cancel
@@ -200,6 +205,12 @@
                       <v-icon light>cached</v-icon>
                      </span>
                   </v-btn>
+                  <v-btn
+                  flat color="primary"
+                  @click="setLoginDialog(false); goToRegister();"
+                  > 
+                    Don't have an account? Sign up now
+                  </v-btn> 
                 </v-flex>
               </v-layout>
             </form>
@@ -226,7 +237,8 @@
       password: '',
       loginSuccessMessage: false,
       logoutMessage: false,
-      authenticationFailedMessage: false
+      authenticationFailedMessage: false,
+      showRegisterRequest: false
     }),
     computed: {
       toolbarTitle () {
@@ -254,6 +266,9 @@
     methods: {
       setLoginDialog (show) {
         this.$store.commit('setLoginDialog', show)
+      },
+      showRegister () {
+        this.showRegisterRequest = true
       },
       setTitle (title) {
         this.$store.toolbar.commit('setTitle', title)
@@ -296,6 +311,9 @@
         this.$store.commit('clearOrderHistory')
         this.$router.push('/')
         this.logoutMessage = true
+      },
+      goToRegister () {
+        this.$router.push('/register')
       }
     },
     mounted () {
