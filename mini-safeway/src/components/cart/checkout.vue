@@ -310,13 +310,16 @@
 
         <v-flex xs4 class="layout justify-center">
                   <div>
-                    <v-btn @click='addToOrderHistory'
-                    color="success" :to="'/orderConfirmation'" >
+                    <v-btn 
+                    @click="placeOrder()"
+                    color="success"  
+                    >
                       Place Order <br>
                       <v-icon>
                         send
                       </v-icon>
                     </v-btn>
+
                   </div>
                 </v-flex>
             </v-list-tile>
@@ -401,10 +404,9 @@
         }
       }
     },
-    beforeCreate () {
-    },
     methods: {
-      addToOrderHistory () {
+      placeOrder () {
+        this.$router.push('/orderConfirmation')
         this.$store.dispatch('addToOrderHistory', this.$store.getters.getShoppingCart)
         this.$store.dispatch('retrieveOrderHistory')
       },

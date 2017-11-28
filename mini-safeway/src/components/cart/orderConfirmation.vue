@@ -21,16 +21,12 @@
        <v-layout wrap>
        	<v-flex headline text-xl-center>
       		Order Complete
-      		
       	</v-flex>
-      	<v-flex xs12 >
-                    <span class="title">Total Amount Charged: $ {{ subTotal }} RN IS SUBTOTAL</span>
-                    </v-flex>
-            <v-flex xs12>
-                    <span class="title">Products to be Delivered:</span>
-                    </v-flex>
+
+        <v-flex xs12>
+          <span class="title">Products to be Delivered:</span>
+        </v-flex>
     <v-expansion-panel-content v-bind:
-       </div>
             <!-- Column Headers -->
             <v-flex xs12>
             <v-list two-line>
@@ -84,6 +80,9 @@
                 </v-flex>
               </template>
             </v-list>
+            <v-flex xs12 >
+            <span class="title">Total Amount Charged: $ {{ subTotal }}</span>
+            </v-flex>
 </v-flex>
  </v-expansion-panel-content>
  <v-flex xs12>
@@ -126,32 +125,10 @@
   </v-content>
 </template>
 <script>
-  const defaultForm = {
-    first: '',
-    last: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    zip: '',
-    cardFirst: '',
-    cardLast: '',
-    creditCardNumber: '',
-    expiration: '',
-    ccv: '',
-    creditZip: ''
-  }
-
   export default {
-    data: () => ({
-      form: Object.assign({}, defaultForm),
-      rules: {
-        name: [val => (val || '').length > 0 || 'This field is required'],
-        password: [val => (val || '').length > 7 || 'Password requires at least 8 characters']
-      },
-      days: [{ text: 'Day 1' }, { text: 'Day 2' }, { text: 'Day 3' }, { text: 'Day 4' }],
-      snackbar: false
-    }),
+    destroyed () {
+      this.$store.commit('clearCart')
+    },
     computed: {
       // Products should be retrieved from the vuex store
       products () {
@@ -168,26 +145,6 @@
       },
       user () {
         return this.$store.getters.user
-      },
-      formIsValid () {
-        return (
-          this.form.first &&
-          this.form.last &&
-          this.form.email &&
-          this.form.phone &&
-          this.form.type &&
-          this.form.address &&
-          this.form.phone &&
-          this.form.city &&
-          this.form.state &&
-          this.form.zip &&
-          this.form.cardFirst &&
-          this.form.cardLast &&
-          this.form.creditCardNumber &&
-          this.form.expiration &&
-          this.form.cvv &&
-          this.form.creditZip
-        )
       }
     },
 
@@ -198,36 +155,7 @@
         }
       }
     },
-
     methods: {
-      resetForm () {
-        this.form = Object.assign({}, defaultForm)
-        this.$refs.form.reset()
-      },
-      addToOrderHistory () {
-        this.$store.dispatch('addToOrderHistory', this.$store.getters.getShoppingCart)
-        this.$store.dispatch('retrieveOrderHistory')
-      },
-      submit () {
-        this.snackbar = true
-        this.$store.dispatch('registerUser', {
-          first: this.form.first,
-          last: this.form.last,
-          email: this.form.email,
-          address: this.form.address,
-          phone: this.form.phone,
-          city: this.form.city,
-          state: this.form.state,
-          zip: this.form.zip,
-          cardFirst: this.form.cardFirst,
-          cardLast: this.form.cardLast,
-          creditCardNumber: this.form.creditCardNumber,
-          expiration: this.form.expiration,
-          cvv: this.form.cvv,
-          creditZip: this.form.creditZip
-        })
-        this.resetForm()
-      }
     }
   }
 </script>
