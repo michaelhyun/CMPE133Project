@@ -289,6 +289,7 @@
     },
     mounted () {
       this.$store.dispatch('initializeStoreData')
+      this.$store.dispatch('getSavingsItems')
     },
     props: {
       source: String

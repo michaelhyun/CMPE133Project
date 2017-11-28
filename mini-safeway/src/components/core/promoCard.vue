@@ -97,6 +97,24 @@
         this.animatingButton = true
         setTimeout(() => { this.animatingButton = false }, 750)
       }
+    },
+    watch: {
+      // Watch the prop for carousel on home
+      promoCode: function (context) {
+        // When the component is mounted, populate promo with data from database.
+        firebase.database().ref('savings/codes/' + this.promoCodeName).once('value')
+          .then((snapshot) => {
+            var promoObj = snapshot.val()
+            this.promoCode = {
+              code: this.promoCodeName,
+              type: promoObj.type,
+              brand: promoObj.brand,
+              product: promoObj.product,
+              quantity: promoObj.quantity,
+              savings: promoObj.savings
+            }
+          })
+      }
     }
   }
 </script>
