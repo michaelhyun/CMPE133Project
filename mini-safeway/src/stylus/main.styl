@@ -1,6 +1,5 @@
 /** Stylus Styles */
 @import '../../node_modules/vuetify/src/stylus/settings/_colors'
-@import url(https://fonts.googleapis.com/css?family=Vollkorn);
 
 $theme := {
   primary: $red.darken-2
@@ -12,11 +11,10 @@ $theme := {
   success: $green.lighten-2
 }
 
-$font-family :=
-{
-	font-family: 'Vollkorn', serif;
+@font-face {
+  font-family: 'Chelsea Market';
   font-style: normal;
   font-weight: 400;
-  src: local('Vollkorn Regular'), local('Vollkorn-Regular'), url(http://themes.googleusercontent.com/static/fonts/vollkorn/v3/7jR1T900H5YEkd1UcZhA_fesZW2xOQ-xsNqO47m55DA.ttf) format('truetype');
+  src: local('Chelsea Market'), local('ChelseaMarket-Regular'), url(http://themes.googleusercontent.com/static/fonts/chelseamarket/v1/qSdzwh2A4BbNemy78sJLfOSB4-q0KehLImxSVNaiVBQ.ttf) format('truetype');
 }
 @import '../../node_modules/vuetify/src/stylus/main'

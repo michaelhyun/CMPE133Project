@@ -5,7 +5,7 @@
 
     <!-- Top navigation bar -->
     <v-toolbar
-      class="primary"
+      class="red"
       dark
       app
       clipped-left
@@ -301,6 +301,17 @@
   }
 </script>
 
-<style lang="stylus">
-  @import './stylus/main'
-</style>
+<style>
+@import url(https://fonts.googleapis.com/css?family=Chelsea+Market:400);
+
+    #app {
+      font-family: 'Chelsea Market', cursive;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-align: center;
+      color: #b20000;
+      margin-top: 20px;
+    }
+
+
+ </style>
