@@ -114,6 +114,9 @@
 <v-card flat>
       <v-layout wrap>
             <v-flex xs12>
+                    <v-divider>
+                    </v-divider>
+                    <br>
                     <span class="title">2. Payment Information</span>
                     </v-flex>
     <v-expansion-panel-content v-bind:
@@ -180,9 +183,13 @@
                        
     </v-expansion-panel-content>
   </v-layout>
+
 </v-card>
        <v-layout wrap>
             <v-flex xs12>
+                    <v-divider>
+                    </v-divider>
+                    <br>
                     <span class="title">3. Order Summary</span>
                     </v-flex>
     <v-expansion-panel-content v-bind:
@@ -285,6 +292,17 @@
               </v-footer>
             </template>
     </v-expansion-panel-content>
+              <v-flex class="text-xs-right" pa-3>
+                  <v-btn 
+                  @click="placeOrder()"
+                  color="white--text blue-grey darken-2"  
+                  >
+                    Place Order <br>
+                    <v-icon>
+                      send
+                    </v-icon>
+                  </v-btn>
+              </v-flex>
   </v-layout>
 
  </v-container>
@@ -305,23 +323,6 @@
 
 
         </v-container>
-          <!-- </v-container> -->
-        <!-- </v-flex> -->
-
-        <v-flex xs4 class="layout justify-center">
-                  <div>
-                    <v-btn 
-                    @click="placeOrder()"
-                    color="success"  
-                    >
-                      Place Order <br>
-                      <v-icon>
-                        send
-                      </v-icon>
-                    </v-btn>
-
-                  </div>
-                </v-flex>
             </v-list-tile>
           </v-flex>
         </v-card>
