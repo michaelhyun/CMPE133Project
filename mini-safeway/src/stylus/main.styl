@@ -1,12 +1,7 @@
 /** Stylus Styles */
 @import '../../node_modules/vuetify/src/stylus/settings/_colors'
+@import url(https://fonts.googleapis.com/css?family=Vollkorn);
 
-@font-face {
-  font-family: 'Vollkorn';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Vollkorn Regular'), local('Vollkorn-Regular'), url(http://themes.googleusercontent.com/static/fonts/vollkorn/v3/7jR1T900H5YEkd1UcZhA_fesZW2xOQ-xsNqO47m55DA.ttf) format('truetype');
-}
 $theme := {
   primary: $red.darken-2
   accent: $red.accent-2
@@ -17,5 +12,11 @@ $theme := {
   success: $green.lighten-2
 }
 
-@import '../../node_modules/vuetify/src/stylus/main' 
-@import url(https://fonts.googleapis.com/css?family=Vollkorn);
+$font-family :=
+{
+	font-family: 'Vollkorn', serif;
+  font-style: normal;
+  font-weight: 400;
+  src: local('Vollkorn Regular'), local('Vollkorn-Regular'), url(http://themes.googleusercontent.com/static/fonts/vollkorn/v3/7jR1T900H5YEkd1UcZhA_fesZW2xOQ-xsNqO47m55DA.ttf) format('truetype');
+}
+@import '../../node_modules/vuetify/src/stylus/main'
