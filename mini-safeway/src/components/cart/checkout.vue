@@ -311,7 +311,7 @@
         <v-flex xs4 class="layout justify-center">
                   <div>
                     <v-btn @click='addToOrderHistory'
-                    color="success">
+                    color="success" :to="'/orderConfirmation'" >
                       Place Order <br>
                       <v-icon>
                         send
