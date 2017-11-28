@@ -18,7 +18,7 @@
               <v-container grid-list-xl fluid>
                 <v-layout wrap>
                   <v-flex xs12>
-                  	<span class="title">Personal Information</span>
+                  	<span class="title"><font color= "red lighten-3">Personal Information</font></span>
                   	</v-flex>
                   	<v-flex xs12 sm6>
                     <v-text-field
@@ -48,7 +48,8 @@
                     ></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6>
-                    <v-text-field
+                    <v-text-field 
+                       color="red darken-2"
                       label="Enter your password"
                       v-model="form.password"
                       :rules="rules.password"
@@ -58,6 +59,7 @@
                   </v-flex>
                    <v-flex xs12 sm6>
                     <v-text-field
+                      color="red darken-2"
                       label="Confirm your password"
                       v-model="form.confirmPassword"
                       required
@@ -67,6 +69,7 @@
                   </v-flex>
                    <v-flex xs12 sm5>
                     <v-text-field
+                      color="red darken-2"
                       label="Phone/Club card number"
                       v-model="form.phone"
                       :rules="rules.phone"
@@ -80,10 +83,11 @@
                       v-model="form.type"></v-select>
                   </v-flex>
                    <v-flex xs12>
-                  	<span class="title">Delivery Information</span>
+                  	<span class="title"><font color= "red lighten-3">Delivery Information</font></span>
                   	</v-flex>
                   <v-flex xs12 sm6>
-                  <v-text-field
+                  <v-text-field 
+                    color="red darken-2"
                     label="Address Line"
                     placeholder="1 Washington Square"
                     hint="Address must be less than 25 characters"
@@ -95,6 +99,7 @@
                   ></v-text-field>
                    </v-flex>
                   <v-text-field
+                    color="red darken-2"
                     label="City"
                     placeholder="San Jose"
                     :rules="rules.name"
@@ -103,6 +108,7 @@
                     required
                   ></v-text-field>
                   <v-text-field
+                    color="red darken-2"
                     label="State/Province/Region"
                     v-model="form.state"
                     :rules="rules.name"
@@ -111,6 +117,7 @@
                     placeholder="CA"
                   ></v-text-field>
                   <v-text-field
+                    color="red darken-2"
                     label="ZIP / Postal Code"
                     required
                     :rules="rules.name"
@@ -122,11 +129,11 @@
                 </v-layout>
               </v-container>
               <v-card-actions>
-                <v-btn flat @click="resetForm">Cancel</v-btn>
+                <v-btn flat color="red darken-2"@click="resetForm">Cancel</v-btn>
                 <v-spacer></v-spacer>
                 <v-btn
                   flat
-                  color="primary"
+                  color="red darken-2"
                   type="submit"
                 >Register</v-btn>
               </v-card-actions>

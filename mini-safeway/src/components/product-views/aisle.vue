@@ -18,6 +18,7 @@
         </v-flex>
         <v-flex xs7 justify-end>
           <v-select
+            color="red darken-2"
             v-bind:items="sortOptions"
             v-model="sort"
             label="Sort by"

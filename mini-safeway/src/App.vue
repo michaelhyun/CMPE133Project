@@ -5,7 +5,7 @@
 
     <!-- Top navigation bar -->
     <v-toolbar
-      class="red"
+      class="red darken-1"
       dark
       app
       clipped-left
@@ -48,7 +48,7 @@
       <!-- Cart -->
       <v-btn
         icon
-        @click="setLoginDialog(true); showRegister();"
+        @click="setLoginDialog(true)"
         v-if="!userSignedIn"
       >
         <v-icon>shopping_cart</v-icon>
@@ -128,7 +128,6 @@
         <br>
         <br>
       </v-snackbar>
-
       <!-- Snackbar Popup to indicate User Logged Out -->
       <v-snackbar
           :top="true"
@@ -145,14 +144,6 @@
         </v-btn>
       </v-snackbar>
 
-      <v-snackbar
-          :top="true"
-          :timeout="3000"
-          v-model="showRegisterRequest"
-      >
-        Please sign in to access this feature.
-      </v-snackbar>
-
     </v-toolbar>
     <!-- Views Template -->
     <main>
@@ -161,7 +152,7 @@
     <v-dialog persistent v-model="loginDialog" width="400px">
       <v-card>
         <v-card-title
-          class="secondary title"
+          class="white--text red darken-1 py-4 title"
         >
           Log In
         </v-card-title>
@@ -171,6 +162,7 @@
               <v-layout row wrap>
                 <v-flex xs12>
                   <v-text-field
+                    color="red darken-2"
                     name="email"
                     label="E-mail"
                     id="email"
@@ -182,6 +174,7 @@
               <v-layout row wrap>
                 <v-flex xs12>
                   <v-text-field
+                    color="red darken-2"
                     name="password"
                     label="Password"
                     id="password"
@@ -191,12 +184,16 @@
                 </v-flex>
               </v-layout>
               <v-layout row>
-                <v-flex xs9>
-                  <v-btn flat color="primary" 
+                <v-flex xs12>
+                  <v-btn flat color="red">Forgot Password?
+                  </v-btn>
+                  <v-spacer>
+                  </v-spacer>
+                  <v-btn flat color="red" 
                   @click="setLoginDialog(false)">
                   Cancel
                   </v-btn>
-                  <v-btn flat color="primary"
+                  <v-btn flat color="red"
                   type="submit" 
                   :disabled="loading" 
                   :loading="loading">
@@ -205,12 +202,6 @@
                       <v-icon light>cached</v-icon>
                      </span>
                   </v-btn>
-                  <v-btn
-                  flat color="primary"
-                  @click="setLoginDialog(false); goToRegister();"
-                  > 
-                    Don't have an account? Sign up now
-                  </v-btn> 
                 </v-flex>
               </v-layout>
             </form>
@@ -218,13 +209,6 @@
         </v-card-text>
       </v-card>
     </v-dialog>
-    <v-footer light color="grey lighten-1" fill-height>
-        <v-layout row wrap align-center>
-          <v-flex class="text-xs-center">
-            <p class="white--text justify-center"> © 2017 MiniSafeway. All rights reserved. </p>
-          </v-flex>
-        </v-layout>
-    </v-footer>
   </v-app>
 </template>
 
@@ -237,8 +221,7 @@
       password: '',
       loginSuccessMessage: false,
       logoutMessage: false,
-      authenticationFailedMessage: false,
-      showRegisterRequest: false
+      authenticationFailedMessage: false
     }),
     computed: {
       toolbarTitle () {
@@ -266,9 +249,6 @@
     methods: {
       setLoginDialog (show) {
         this.$store.commit('setLoginDialog', show)
-      },
-      showRegister () {
-        this.showRegisterRequest = true
       },
       setTitle (title) {
         this.$store.toolbar.commit('setTitle', title)
@@ -311,9 +291,6 @@
         this.$store.commit('clearOrderHistory')
         this.$router.push('/')
         this.logoutMessage = true
-      },
-      goToRegister () {
-        this.$router.push('/register')
       }
     },
     mounted () {

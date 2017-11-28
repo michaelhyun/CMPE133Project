@@ -184,7 +184,7 @@
         <!-- Card for Promotion Code and Checkout -->
         <v-flex xs12>
           <v-card>
-            <v-flex pa-3>
+            <v-flex pa-5>
               <v-list-tile>
                 <!-- Promotion Code Text-Field -->
                 <v-flex xs3>
