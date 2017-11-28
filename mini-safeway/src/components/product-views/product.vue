@@ -70,6 +70,8 @@ class="elevation-0 transparent" -->
                       Description
                     </p>
                       </h6>
+                      <v-divider>
+                      </v-divider>
                       <p
                         v-if="product.description"
                       >
@@ -129,15 +131,21 @@ class="elevation-0 transparent" -->
               <v-flex>
                 <v-card class="elevation-0 transparent">
                   <v-card-actions>
-                    <v-btn
-                      @click="addToCart"
-                      flat
-                      color="red"
-                      class="layout justify-center"
-                      :disabled="!validQuantity"
-                    >
+                   <v-btn
+                    @click="addToCart"
+                    :disabled="!validQuantity"
+                    class="black--text justify-center"
+                    :color="colorButton"
+                    medium
+                    block
+                  >
+                  <transition name="slide-fade" mode="out-in">
+                    <v-icon v-if="animatingButton">check</v-icon>
+                    <span v-if="!animatingButton">
                       Add To Cart
-                    </v-btn>
+                    </span>
+                  </transition>
+                  </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-flex>
@@ -164,6 +172,8 @@ class="elevation-0 transparent" -->
                       <h6>
                       Instructions <br>
                       </h6>
+                      <v-divider>
+                      </v-divider>
                     </p>
                       <subheading>
                       {{ product.details }}
@@ -181,6 +191,8 @@ class="elevation-0 transparent" -->
                       <h6>
                       Nutrition Facts <br>
                       </h6>
+                      <v-divider>
+                      </v-divider>
                     </p>
                       <p>
                       {{ product.details }}
@@ -194,12 +206,12 @@ class="elevation-0 transparent" -->
             <v-flex xs12 md11>
               <v-card>
                 <v-card-title primary-title>
-                    <div>
-                      <p>
+                    <div> 
                       <h6>
                       Reviews <br>
                       </h6>
-                    </p>
+                      <v-divider>
+                      </v-divider>
                       <p>
                       {{ product.details }}
                       </p>
@@ -234,6 +246,7 @@ class="elevation-0 transparent" -->
     data: () => ({
       // Favorited Item
       starred: false,
+      animatingButton: false,
       // Number of products to add to cart.
       quantity: 1,
       // Product details populated by firebase.
@@ -268,10 +281,20 @@ class="elevation-0 transparent" -->
       })
     },
     methods: {
-      star () {
-        this.starred = !this.starred
+      animateButton () {
+        if (this.animatingButton === true) {
+          return true
+        } else {
+          return false
+        }
       },
-
+      colorButton () {
+        if (this.animatingButton === true) {
+          return 'green accent-3'
+        } else {
+          return 'grey lighten-2'
+        }
+      },
       addToCart () {
         const payload = {
           name: this.product.name,
@@ -280,6 +303,11 @@ class="elevation-0 transparent" -->
           price: this.product.price
         }
         this.$store.commit('addToCart', payload)
+        this.initButtonChange()
+      },
+      initButtonChange () {
+        this.animatingButton = true
+        setTimeout(() => { this.animatingButton = false }, 750)
       }
     },
     watch: {
