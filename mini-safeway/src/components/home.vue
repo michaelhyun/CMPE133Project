@@ -1,5 +1,13 @@
 <template>
   <v-content>
+        <!--  Top bar -->
+    <v-container fluid mx-0 my-0 px-0 py-0 elevation-4>
+      <v-card-media
+        src="https://alittleyum.files.wordpress.com/2015/10/mealbox-grocery-spread.jpg"
+        height="100px"
+        class="layout justify-center">
+      </v-card-media>
+    </v-container>
     <v-container fluid>
       <h2
         class="red--text text--darken-2 text-xs-center"

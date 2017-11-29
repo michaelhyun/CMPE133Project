@@ -4,7 +4,7 @@
       <v-layout row>
         <v-flex xs11>
         <v-card pa-5>
-          <v-card-media src="https://steamuserimages-a.akamaihd.net/ugc/269463939060234411/47F1E70BD90DB25A97F3B761B07764F7F947287E/"
+          <v-card-media src="http://www.cshqa.com/content/uploads/2015/11/Safeway-1.jpg"
           height="300px">
             <v-layout column class="media">
               <v-card-title>
